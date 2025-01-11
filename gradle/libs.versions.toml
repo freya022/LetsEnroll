@@ -1,0 +1,17 @@
+[versions]
+kotlin = "2.1.0"
+jackson = "2.17.2"
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+[libraries]
+logback-classic = { module = "ch.qos.logback:logback-classic", version = "1.5.12" }
+stacktrace-decoroutinator = { module = "dev.reformator.stacktracedecoroutinator:stacktrace-decoroutinator-jvm", version = "2.4.8" }
+
+ktoml = { module = "com.akuleshov7:ktoml-core", version = "0.5.1" }
+jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
+
+botcommands = { module = "io.github.freya022:BotCommands", version = "3.0.0-alpha.22" }
+jda = { module = "net.dv8tion:JDA", version = "5.2.2" }
