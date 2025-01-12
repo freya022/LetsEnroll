@@ -22,6 +22,11 @@ dependencies {
 
     implementation(libs.botcommands)
     implementation(libs.jda)
+
+    implementation(libs.postgresql)
+    implementation(libs.hikaricp)
+
+    implementation(libs.bundles.flyway)
 }
 
 java {

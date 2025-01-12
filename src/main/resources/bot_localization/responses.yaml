@@ -1,0 +1,44 @@
+setup:
+  version:
+    message:
+      content: Choose the version of the framework you're using
+    components:
+      select_menu:
+        options:
+          v3.description: Based AF
+          v2.description: Why?
+  language:
+    message:
+      content: Choose the language you're using
+    components:
+      select_menu:
+        options:
+          kotlin.description: Kotlin supremacy
+          java.description: Verbose but does the job well around
+  build_tool:
+    message:
+      content: Choose the build tool you're using
+    components:
+      select_menu:
+        options:
+          maven.description: Can't go wrong with it for simple projects
+          gradle.description: Fast, at the cost of your sanity
+  di:
+    message:
+      content: Choose the dependency injection framework you're using
+    components:
+      select_menu:
+        options:
+          builtin.description: Less headaches and often better error messages
+          spring.description: Like bringing a gun to a fist fight
+  bc_updates:
+    message:
+      content: Use this button to toggle <@&{roleId}>
+    components:
+      toggle:
+        label: Toggle BC update pings
+        responses:
+          added: Successfully added <@&{roleId}>!
+          removed: Successfully removed <@&{roleId}>!
+  done: Done
+  applied_roles: Successfully set <@&{roleId}>!

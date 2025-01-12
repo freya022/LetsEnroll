@@ -1,6 +1,7 @@
 [versions]
 kotlin = "2.1.0"
 jackson = "2.17.2"
+flyway = "11.1.1"
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -15,3 +16,11 @@ jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-d
 
 botcommands = { module = "io.github.freya022:BotCommands", version = "3.0.0-alpha.22" }
 jda = { module = "net.dv8tion:JDA", version = "5.2.2" }
+
+postgresql = { module = "org.postgresql:postgresql", version = "42.7.4" }
+hikaricp = { module = "com.zaxxer:HikariCP", version = "6.2.1" }
+flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
+
+[bundles]
+flyway = ["flyway-core", "flyway-database-postgresql"]

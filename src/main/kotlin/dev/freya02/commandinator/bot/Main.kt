@@ -40,10 +40,16 @@ fun main(args: Array<String>) {
                     @OptIn(DevConfig::class)
                     checkOnline = Environment.isDev
                 }
+
+                addLocalizations("commands")
             }
 
             components {
                 enable = true
+            }
+
+            localization {
+                addResponseBundle("responses")
             }
 
             appEmojis {
