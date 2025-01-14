@@ -1,7 +1,7 @@
 package dev.freya02.commandinator.bot.commands.slash
 
 import dev.freya02.commandinator.bot.AppEmojis
-import dev.freya02.commandinator.bot.localization.ClassFileBasedSetupMessagesFactory
+import dev.freya02.commandinator.bot.localization.SetupMessagesFactory
 import dev.minn.jda.ktx.coroutines.await
 import dev.minn.jda.ktx.interactions.components.SelectOption
 import dev.minn.jda.ktx.interactions.components.row
@@ -44,7 +44,7 @@ class SlashSetup(
     private val buttons: Buttons,
     private val selectMenus: SelectMenus,
     private val defaultMessagesFactory: DefaultMessagesFactory,
-    private val setupMessagesFactory: ClassFileBasedSetupMessagesFactory,
+    private val setupMessagesFactory: SetupMessagesFactory,
 ) : ApplicationCommand() {
 
     // Descriptions are in [[commands.yaml]]
