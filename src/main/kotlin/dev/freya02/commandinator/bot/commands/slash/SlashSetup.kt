@@ -1,6 +1,7 @@
 package dev.freya02.commandinator.bot.commands.slash
 
 import dev.freya02.commandinator.bot.AppEmojis
+import dev.freya02.commandinator.bot.localization.ClassFileBasedSetupMessagesFactory
 import dev.minn.jda.ktx.coroutines.await
 import dev.minn.jda.ktx.interactions.components.SelectOption
 import dev.minn.jda.ktx.interactions.components.row
@@ -24,8 +25,6 @@ import io.github.freya022.botcommands.api.core.utils.enumSetOf
 import io.github.freya022.botcommands.api.core.utils.lazyUnicodeEmoji
 import io.github.freya022.botcommands.api.localization.DefaultMessagesFactory
 import io.github.freya022.botcommands.api.localization.LocalizableAction
-import io.github.freya022.botcommands.api.localization.interaction.getGuildMessage
-import io.github.freya022.botcommands.api.localization.interaction.replyUser
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Role
@@ -45,6 +44,7 @@ class SlashSetup(
     private val buttons: Buttons,
     private val selectMenus: SelectMenus,
     private val defaultMessagesFactory: DefaultMessagesFactory,
+    private val setupMessagesFactory: ClassFileBasedSetupMessagesFactory,
 ) : ApplicationCommand() {
 
     // Descriptions are in [[commands.yaml]]
@@ -53,79 +53,61 @@ class SlashSetup(
         event: GuildSlashEvent,
         @SlashOption channel: TextChannel
     ) {
+        val messages = setupMessagesFactory.create(event)
+
         event.deferReply(true).queue()
 
         val guild = event.guild
         val versionMessage = MessageCreate {
-            event.withPrefix("setup.version") {
-                content = event.getGuildMessage("message.content")
+            content = messages.getVersionMessageContent()
 
-                components += row(selectMenus.stringSelectMenu().persistent {
-                    event.withAppendedPrefix("components.select_menu") {
-                        options += guild.getOrCreateRole("V3").toOption(event.getGuildMessage("options.v3.description"), emoji = fire)
-                        options += guild.getOrCreateRole("V2").toOption(event.getGuildMessage("options.v2.description"), emoji = confused)
-                    }
+            components += row(selectMenus.stringSelectMenu().persistent {
+                options += guild.getOrCreateRole("V3").toOption(messages.getV3SelectOptionDescription(), emoji = fire)
+                options += guild.getOrCreateRole("V2").toOption(messages.getV2SelectOptionDescription(), emoji = confused)
 
-                    bindWith(::onVersionRoleSelect)
-                })
-            }
+                bindWith(::onVersionRoleSelect)
+            })
         }
 
         val languageMessage = MessageCreate {
-            event.withPrefix("setup.language") {
-                content = event.getGuildMessage("message.content")
+            content = messages.getLanguageMessageContent()
 
-                components += row(selectMenus.stringSelectMenu().persistent {
-                    event.withAppendedPrefix("components.select_menu") {
-                        options += guild.getOrCreateRole("Kotlin").toOption(event.getGuildMessage("options.kotlin.description"), AppEmojis.kotlin)
-                        options += guild.getOrCreateRole("Java").toOption(event.getGuildMessage("options.java.description"), AppEmojis.java)
-                    }
+            components += row(selectMenus.stringSelectMenu().persistent {
+                options += guild.getOrCreateRole("Kotlin").toOption(messages.getKotlinSelectOptionDescription(), AppEmojis.kotlin)
+                options += guild.getOrCreateRole("Java").toOption(messages.getJavaSelectOptionDescription(), AppEmojis.java)
 
-                    bindWith(::onLanguageRoleSelect)
-                })
-            }
+                bindWith(::onLanguageRoleSelect)
+            })
         }
 
         val buildToolMessage = MessageCreate {
-            event.withPrefix("setup.build_tool") {
-                content = event.getGuildMessage("message.content")
+            content = messages.getBuildToolMessageContent()
 
-                components += row(selectMenus.stringSelectMenu().persistent {
-                    event.withAppendedPrefix("components.select_menu") {
-                        options += guild.getOrCreateRole("Maven").toOption(event.getGuildMessage("options.maven.description"), AppEmojis.maven)
-                        options += guild.getOrCreateRole("Gradle").toOption(event.getGuildMessage("options.gradle.description"), AppEmojis.gradle)
-                    }
+            components += row(selectMenus.stringSelectMenu().persistent {
+                options += guild.getOrCreateRole("Maven").toOption(messages.getMavenSelectOptionDescription(), AppEmojis.maven)
+                options += guild.getOrCreateRole("Gradle").toOption(messages.getGradleSelectOptionDescription(), AppEmojis.gradle)
 
-                    bindWith(::onBuildToolRoleSelect)
-                })
-            }
+                bindWith(::onBuildToolRoleSelect)
+            })
         }
 
         val diMessage = MessageCreate {
-            event.withPrefix("setup.di") {
-                content = event.getGuildMessage("message.content")
+            content = messages.getDiMessageContent()
 
-                components += row(selectMenus.stringSelectMenu().persistent {
-                    event.withAppendedPrefix("components.select_menu") {
-                        options += guild.getOrCreateRole("Built-in DI").toOption(event.getGuildMessage("options.builtin.description"), AppEmojis.bc)
-                        options += guild.getOrCreateRole("Spring").toOption(event.getGuildMessage("options.spring.description"), AppEmojis.spring)
-                    }
+            components += row(selectMenus.stringSelectMenu().persistent {
+                options += guild.getOrCreateRole("Built-in DI").toOption(messages.getBuiltinSelectOptionDescription(), AppEmojis.bc)
+                options += guild.getOrCreateRole("Spring").toOption(messages.getSpringSelectOptionDescription(), AppEmojis.spring)
 
-                    bindWith(::onDiRoleSelect)
-                })
-            }
+                bindWith(::onDiRoleSelect)
+            })
         }
 
         val bcUpdatesMessage = MessageCreate(mentions = Mentions.of()) {
-            event.withPrefix("setup.bc_updates") {
-                content = event.getGuildMessage("message.content", "roleId" to guild.getOrCreateRole("BC Updates").id)
+            content = messages.getBcUpdatesMessageContent(guild.getOrCreateRole("BC Updates").id)
 
-                event.withAppendedPrefix("components.toggle") {
-                    components += row(buttons.success(event.getGuildMessage("label"), emoji = bell).persistent {
-                        bindWith(::onToggleBcUpdatePingsClicked)
-                    })
-                }
-            }
+            components += row(buttons.success(messages.getBcUpdatesToggleLabel(), emoji = bell).persistent {
+                bindWith(::onToggleBcUpdatePingsClicked)
+            })
         }
 
         //TODO find a good way to delete all messages if one fails
@@ -170,21 +152,20 @@ class SlashSetup(
             return event.reply_(botPermErrorMsg, ephemeral = true).awaitUnit()
         }
 
+        val messages = setupMessagesFactory.create(event)
         val role = guild.getOrCreateRole("BC Updates")
-        event.withPrefix("setup.bc_updates.components.toggle") {
-            if (role in member.roles) {
-                guild.removeRoleFromMember(member, role).await()
-                event.replyUser("responses.removed", "roleId" to role.id)
-                    .setEphemeral(true)
-                    .setAllowedMentions(emptyList())
-                    .await()
-            } else {
-                guild.addRoleToMember(member, role).await()
-                event.replyUser("responses.added", "roleId" to role.id)
-                    .setEphemeral(true)
-                    .setAllowedMentions(emptyList())
-                    .await()
-            }
+        if (role in member.roles) {
+            guild.removeRoleFromMember(member, role).await()
+            event.reply(messages.getBcUpdatesRemovedResponse(role.id))
+                .setEphemeral(true)
+                .setAllowedMentions(emptyList())
+                .await()
+        } else {
+            guild.addRoleToMember(member, role).await()
+            event.reply(messages.getBcUpdatesAddedResponse(role.id))
+                .setEphemeral(true)
+                .setAllowedMentions(emptyList())
+                .await()
         }
     }
 
@@ -211,6 +192,7 @@ class SlashSetup(
             return event.reply_(botPermErrorMsg, ephemeral = true).awaitUnit()
         }
 
+        val messages = setupMessagesFactory.create(event)
         val role = guild.getOrCreateRole(roleName)
         val roleGroup = roleGroupNames.map { guild.getOrCreateRole(it) }
 
@@ -221,7 +203,7 @@ class SlashSetup(
 
         // Add the role
         guild.addRoleToMember(member, role).await()
-        event.replyUser("setup.applied_roles", "roleId" to role.id)
+        event.reply(messages.getAppliedRolesMessageContent(role.id))
             .setEphemeral(true)
             .setAllowedMentions(emptyList())
             .await()
