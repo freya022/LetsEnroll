@@ -3,12 +3,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.jib)
 
     id("me.champeau.jmh") version "0.7.2"
 }
 
 group = "dev.freya02"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenLocal()
@@ -89,4 +90,14 @@ jmh {
 //    jmhVersion = '1.37' // Specifies JMH version
 //    includeTests = true // Allows to include test sources into generate JMH jar, i.e. use it when benchmarks depend on the test classes.
 //    duplicateClassesStrategy = DuplicatesStrategy.FAIL // Strategy to apply when encountring duplicate classes during creation of the fat jar (i.e. while executing jmhJar task)
+}
+
+jib {
+    from {
+        image = "eclipse-temurin:23-jre"
+    }
+
+    container {
+        mainClass = "dev.freya02.commandinator.bot.Main"
+    }
 }
