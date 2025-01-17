@@ -2,6 +2,7 @@ package dev.freya02.commandinator.bot.commands.slash
 
 import dev.freya02.commandinator.bot.AppEmojis
 import dev.freya02.commandinator.bot.localization.SetupMessagesFactory
+import dev.freya02.commandinator.bot.utils.none
 import dev.minn.jda.ktx.coroutines.await
 import dev.minn.jda.ktx.interactions.components.SelectOption
 import dev.minn.jda.ktx.interactions.components.row
@@ -102,7 +103,7 @@ class SlashSetup(
             })
         }
 
-        val bcUpdatesMessage = MessageCreate(mentions = Mentions.of()) {
+        val bcUpdatesMessage = MessageCreate(mentions = Mentions.none()) {
             content = messages.getBcUpdatesMessageContent(guild.getOrCreateRole("BC Updates").id)
 
             components += row(buttons.success(messages.getBcUpdatesToggleLabel(), emoji = bell).persistent {
