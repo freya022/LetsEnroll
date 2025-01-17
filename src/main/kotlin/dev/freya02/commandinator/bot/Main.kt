@@ -8,9 +8,7 @@ import io.github.freya022.botcommands.api.core.BotCommands
 import io.github.freya022.botcommands.api.core.config.DevConfig
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.lang.management.ManagementFactory
-import kotlin.io.path.Path
-import kotlin.io.path.absolutePathString
-import kotlin.io.path.exists
+import kotlin.io.path.*
 import kotlin.system.exitProcess
 
 private val logger by lazy { KotlinLogging.logger { } }
@@ -20,9 +18,9 @@ fun main(args: Array<String>) {
         val logbackPath = Path("logback.xml")
         if (logbackPath.exists()) {
             System.setProperty(ClassicConstants.CONFIG_FILE_PROPERTY, logbackPath.absolutePathString())
-            logger.info { "Loading logback configuration from current directory (${logbackPath.parent.absolutePathString()})" }
+            logger.info { "Loading logback configuration from current directory (${logbackPath.absolute().parent.pathString})" }
         } else {
-            logger.info { "Using packaged logback configuration as there is no logback.xml in ${logbackPath.parent.absolutePathString()}" }
+            logger.info { "Using packaged logback configuration as there is no logback.xml in ${logbackPath.absolute().parent.pathString}" }
         }
 
         // I use hotswap agent to update my code without restarting the bot
