@@ -21,7 +21,9 @@ data class Config(
 
         @get:BService
         val instance: Config by lazy {
-            val env = dotenv()
+            val env = dotenv {
+                directory = "./config"
+            }
 
             Config(
                 env["BOT_TOKEN"],
