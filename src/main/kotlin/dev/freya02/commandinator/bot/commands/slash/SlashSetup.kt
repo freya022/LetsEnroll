@@ -14,6 +14,7 @@ import io.github.freya022.botcommands.api.commands.application.ApplicationComman
 import io.github.freya022.botcommands.api.commands.application.slash.GuildSlashEvent
 import io.github.freya022.botcommands.api.commands.application.slash.annotations.JDASlashCommand
 import io.github.freya022.botcommands.api.commands.application.slash.annotations.SlashOption
+import io.github.freya022.botcommands.api.commands.application.slash.annotations.TopLevelSlashCommandData
 import io.github.freya022.botcommands.api.components.Buttons
 import io.github.freya022.botcommands.api.components.SelectMenus
 import io.github.freya022.botcommands.api.components.annotations.JDAButtonListener
@@ -49,6 +50,7 @@ class SlashSetup(
 ) : ApplicationCommand() {
 
     // Descriptions are in [[commands.yaml]]
+    @TopLevelSlashCommandData(defaultLocked = true)
     @JDASlashCommand(name = "setup")
     suspend fun onSlashSetup(
         event: GuildSlashEvent,
