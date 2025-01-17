@@ -6,7 +6,7 @@ services:
   bot:
     image: commandinator:latest
     restart: unless-stopped
-    volumes:
-      - type: bind
-        source: ./config
-        target: /app
+#    volumes:
+#      - type: bind
+#        source: ./config
+#        target: /app
