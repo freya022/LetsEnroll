@@ -59,6 +59,6 @@ interface SetupMessages : IMessageSource {
     fun getBcUpdatesRemovedResponse(roleId: String): String
 
 
-    @LocalizedContent("setup.applied_role")
+    @LocalizedContent("setup.applied_roles")
     fun getAppliedRolesMessageContent(roleId: String): String
 }
