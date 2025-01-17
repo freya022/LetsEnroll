@@ -21,6 +21,8 @@ dependencies {
     implementation(libs.logback.classic)
     implementation(libs.stacktrace.decoroutinator)
 
+    implementation(libs.dotenv.kotlin)
+
     implementation(libs.ktoml)
     implementation(libs.jackson.dataformat.yaml)
 
