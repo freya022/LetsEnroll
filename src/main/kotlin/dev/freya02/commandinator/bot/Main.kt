@@ -15,7 +15,7 @@ private val logger by lazy { KotlinLogging.logger { } }
 
 fun main(args: Array<String>) {
     try {
-        val logbackPath = Path("logback.xml")
+        val logbackPath = Path("config", "logback.xml")
         if (logbackPath.exists()) {
             System.setProperty(ClassicConstants.CONFIG_FILE_PROPERTY, logbackPath.absolutePathString())
             logger.info { "Loading logback configuration from current directory (${logbackPath.absolute().parent.pathString})" }
