@@ -30,9 +30,9 @@ data class Config(
                 Database(
                     env["DATABASE_HOST"],
                     env["DATABASE_PORT"].toInt(),
-                    env["DATABASE_USERNAME"],
-                    env["DATABASE_PASSWORD"],
-                    env["DATABASE_NAME"],
+                    env["POSTGRES_USER"],
+                    env["POSTGRES_PASSWORD"],
+                    env["POSTGRES_DB"],
                 ),
             )
         }
