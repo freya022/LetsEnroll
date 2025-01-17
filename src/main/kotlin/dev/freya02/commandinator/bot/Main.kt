@@ -20,7 +20,7 @@ fun main(args: Array<String>) {
         val logbackPath = Path("logback.xml")
         if (logbackPath.exists()) {
             System.setProperty(ClassicConstants.CONFIG_FILE_PROPERTY, logbackPath.absolutePathString())
-            logger.info { "Loading logback configuration from current directory" }
+            logger.info { "Loading logback configuration from current directory (${logbackPath.parent.absolutePathString()})" }
         } else {
             logger.info { "Using packaged logback configuration" }
         }
