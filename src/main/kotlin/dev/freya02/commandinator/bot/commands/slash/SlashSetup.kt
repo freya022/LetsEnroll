@@ -9,6 +9,7 @@ import dev.minn.jda.ktx.interactions.components.row
 import dev.minn.jda.ktx.messages.Mentions
 import dev.minn.jda.ktx.messages.MessageCreate
 import dev.minn.jda.ktx.messages.reply_
+import io.github.freya022.botcommands.api.commands.annotations.BotPermissions
 import io.github.freya022.botcommands.api.commands.annotations.Command
 import io.github.freya022.botcommands.api.commands.application.ApplicationCommand
 import io.github.freya022.botcommands.api.commands.application.slash.GuildSlashEvent
@@ -50,8 +51,9 @@ class SlashSetup(
 ) : ApplicationCommand() {
 
     // Descriptions are in [[commands.yaml]]
-    @TopLevelSlashCommandData(defaultLocked = true)
     @JDASlashCommand(name = "setup")
+    @BotPermissions(Permission.MANAGE_ROLES)
+    @TopLevelSlashCommandData(defaultLocked = true)
     suspend fun onSlashSetup(
         event: GuildSlashEvent,
         @SlashOption channel: TextChannel
