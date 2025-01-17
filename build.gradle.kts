@@ -97,6 +97,10 @@ jib {
         image = "eclipse-temurin:23-jre"
     }
 
+    to {
+        image = "commandinator"
+    }
+
     container {
         mainClass = "dev.freya02.commandinator.bot.Main"
     }
