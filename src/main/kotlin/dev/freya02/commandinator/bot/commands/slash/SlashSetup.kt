@@ -127,12 +127,12 @@ class SlashSetup(
         val existingRole = getRolesByName(name, false).singleOrNull()
         if (existingRole == null) {
             return createRole()
-                .setPermissions(enumSetOf()) // No permissions
+                .setPermissions(emptySet())
                 .setName(name)
                 .await()
         } else if (!selfMember.canInteract(existingRole)) {
             return createRole()
-                .setPermissions(enumSetOf()) // No permissions
+                .setPermissions(emptySet())
                 .setName(name)
                 .reason("Existing role (${existingRole.id}) cannot be interacted with")
                 .await()
