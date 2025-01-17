@@ -104,6 +104,6 @@ jib {
     }
 
     container {
-        mainClass = "dev.freya02.commandinator.bot.Main"
+        mainClass = "dev.freya02.commandinator.bot.MainKt"
     }
 }
