@@ -17,7 +17,7 @@ stacktrace-decoroutinator = { module = "dev.reformator.stacktracedecoroutinator:
 ktoml = { module = "com.akuleshov7:ktoml-core", version = "0.5.1" }
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
 
-botcommands = { module = "io.github.freya022:BotCommands", version = "3.0.0-alpha.22" }
+botcommands = { module = "io.github.freya022:BotCommands", version = "2ab988a32c" }
 jda = { module = "net.dv8tion:JDA", version = "5.2.2" }
 
 postgresql = { module = "org.postgresql:postgresql", version = "42.7.4" }

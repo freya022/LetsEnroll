@@ -2,6 +2,7 @@ package dev.freya02.commandinator.bot
 
 import ch.qos.logback.classic.ClassicConstants
 import dev.freya02.commandinator.bot.config.Environment
+import dev.freya02.commandinator.bot.localization.messages.MessageSourceFactoryClassGraphProcessor
 import dev.reformator.stacktracedecoroutinator.jvm.DecoroutinatorJvmApi
 import io.github.freya022.botcommands.api.core.BotCommands
 import io.github.freya022.botcommands.api.core.config.DevConfig
@@ -34,6 +35,8 @@ fun main(args: Array<String>) {
             disableExceptionsInDMs = Environment.isDev
 
             addSearchPath("dev.freya02.commandinator.bot")
+
+            classGraphProcessors += MessageSourceFactoryClassGraphProcessor
 
             applicationCommands {
                 fileCache {
