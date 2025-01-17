@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
             System.setProperty(ClassicConstants.CONFIG_FILE_PROPERTY, logbackPath.absolutePathString())
             logger.info { "Loading logback configuration from current directory (${logbackPath.parent.absolutePathString()})" }
         } else {
-            logger.info { "Using packaged logback configuration" }
+            logger.info { "Using packaged logback configuration as there is no logback.xml in ${logbackPath.parent.absolutePathString()}" }
         }
 
         // I use hotswap agent to update my code without restarting the bot
