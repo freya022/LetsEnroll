@@ -44,7 +44,7 @@ fun main(args: Array<String>) {
             classGraphProcessors += MessageSourceFactoryClassGraphProcessor
 
             applicationCommands {
-                fileCache {
+                databaseCache {
                     @OptIn(DevConfig::class)
                     checkOnline = Environment.isDev
                 }
