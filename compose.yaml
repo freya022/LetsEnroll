@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    env_file: ./config/.env
+    volumes:
+      - type: volume
+        source: db-data
+        target: /var/lib/postgresql/data
+  bot:
+    image: commandinator:latest
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ./config
+        target: /config
+      - type: bind
+        source: ./logs
+        target: /logs
+
+volumes:
+  db-data:
