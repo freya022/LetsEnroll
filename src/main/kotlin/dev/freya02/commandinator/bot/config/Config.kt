@@ -4,6 +4,7 @@ import io.github.cdimascio.dotenv.dotenv
 import io.github.freya022.botcommands.api.core.service.annotations.BService
 
 data class Config(
+    val isDev: Boolean,
     val token: String,
     @get:BService
     val database: Database,
@@ -26,6 +27,7 @@ data class Config(
             }
 
             Config(
+                env["DEV"].toBooleanStrict(),
                 env["BOT_TOKEN"],
                 Database(
                     env["DATABASE_HOST"],

@@ -1,7 +1,7 @@
 package dev.freya02.commandinator.bot
 
 import ch.qos.logback.classic.ClassicConstants
-import dev.freya02.commandinator.bot.config.Environment
+import dev.freya02.commandinator.bot.config.Config
 import dev.freya02.commandinator.bot.localization.messages.MessageSourceFactoryClassGraphProcessor
 import dev.reformator.stacktracedecoroutinator.jvm.DecoroutinatorJvmApi
 import io.github.freya022.botcommands.api.core.BotCommands
@@ -36,8 +36,9 @@ fun main(args: Array<String>) {
             DecoroutinatorJvmApi.install()
         }
 
+        val config = Config.instance
         BotCommands.create {
-            disableExceptionsInDMs = Environment.isDev
+            disableExceptionsInDMs = config.isDev
 
             addSearchPath("dev.freya02.commandinator.bot")
 
@@ -46,7 +47,7 @@ fun main(args: Array<String>) {
             applicationCommands {
                 databaseCache {
                     @OptIn(DevConfig::class)
-                    checkOnline = Environment.isDev
+                    checkOnline = config.isDev
                 }
 
                 addLocalizations("commands")
