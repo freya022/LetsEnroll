@@ -27,7 +27,6 @@ import io.github.freya022.botcommands.api.core.utils.awaitUnit
 import io.github.freya022.botcommands.api.core.utils.enumSetOf
 import io.github.freya022.botcommands.api.core.utils.lazyUnicodeEmoji
 import io.github.freya022.botcommands.api.localization.DefaultMessagesFactory
-import io.github.freya022.botcommands.api.localization.LocalizableAction
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Role
@@ -212,28 +211,5 @@ class SlashSetup(
             .setEphemeral(true)
             .setAllowedMentions(emptyList())
             .await()
-    }
-}
-
-private inline fun LocalizableAction.withPrefix(prefix: String, block: () -> Unit) {
-    val oldPrefix = localizationPrefix
-    try {
-        localizationPrefix = prefix
-        block()
-    } finally {
-        localizationPrefix = oldPrefix
-    }
-}
-
-private inline fun LocalizableAction.withAppendedPrefix(prefix: String, block: () -> Unit) {
-    val oldPrefix = localizationPrefix
-    try {
-        localizationPrefix = when {
-            oldPrefix != null -> "$oldPrefix.$prefix"
-            else -> prefix
-        }
-        block()
-    } finally {
-        localizationPrefix = oldPrefix
     }
 }
