@@ -97,7 +97,7 @@ jmh {
 
 jib {
     from {
-        image = "eclipse-temurin:23-jre@sha256:0c8b0ed419ad7a9e0cf27ba01e69f6853afd8f28836cb82ffa041b65f4137904"
+        image = "eclipse-temurin:23-jre"
     }
 
     to {
