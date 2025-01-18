@@ -17,7 +17,6 @@ stacktrace-decoroutinator = { module = "dev.reformator.stacktracedecoroutinator:
 
 dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version = "6.5.0" }
 
-ktoml = { module = "com.akuleshov7:ktoml-core", version = "0.5.1" }
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
 
 botcommands = { module = "io.github.freya022:BotCommands", version = "2ab988a32c" }

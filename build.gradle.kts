@@ -21,9 +21,10 @@ dependencies {
     implementation(libs.logback.classic)
     implementation(libs.stacktrace.decoroutinator)
 
+    // Configuration
     implementation(libs.dotenv.kotlin)
 
-    implementation(libs.ktoml)
+    // Localization
     implementation(libs.jackson.dataformat.yaml)
 
     implementation(libs.botcommands)
