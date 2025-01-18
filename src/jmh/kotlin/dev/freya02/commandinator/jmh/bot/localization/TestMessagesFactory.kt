@@ -77,7 +77,7 @@ class ClassFileBasedTestMessagesFactory(
 
     private val clazz = run {
         val classFile = ClassFile.of()
-        val newClassDesc = ClassDesc.of("dev.freya02.commandinator.bot.localization", "TestMessagesImplGenerated")
+        val newClassDesc = ClassDesc.of(ClassFileBasedTestMessagesFactory::class.java.packageName, "TestMessagesImplGenerated")
         val newClassBytes = classFile.build(newClassDesc) { classBuilder ->
             classBuilder.withFlags(ClassFile.ACC_PUBLIC or ClassFile.ACC_FINAL)
             classBuilder.withInterfaceSymbols(classDesc<TestMessages>())

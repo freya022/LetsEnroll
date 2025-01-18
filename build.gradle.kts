@@ -63,7 +63,7 @@ jmh {
 //    benchmarkMode = ['thrpt','ss'] // Benchmark mode. Available modes are: [Throughput/thrpt, AverageTime/avgt, SampleTime/sample, SingleShotTime/ss, All/all]
 //    batchSize = 1 // Batch size: number of benchmark method calls per operation. (some benchmark modes can ignore this setting)
 //    fork = 2 // How many times to forks a single benchmark. Use 0 to disable forking altogether
-//    failOnError = false // Should JMH fail immediately if any benchmark had experienced the unrecoverable error?
+    failOnError = true // Should JMH fail immediately if any benchmark had experienced the unrecoverable error?
 //    forceGC = false // Should JMH force GC between iterations?
 //    jvm = 'myjvm' // Custom JVM to use when forking.
 //    jvmArgs = ['Custom JVM args to use when forking.']

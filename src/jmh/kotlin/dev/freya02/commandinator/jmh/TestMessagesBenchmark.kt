@@ -23,10 +23,6 @@ open class TestMessagesBenchmark {
     @State(Scope.Benchmark)
     open class Lib {
 
-        val interaction = mockk<Interaction> {
-            every { userLocale } returns DiscordLocale.FRENCH
-            every { guildLocale } returns DiscordLocale.ENGLISH_US
-        }
         lateinit var manual: TestMessages
         lateinit var proxy: TestMessages
         lateinit var classfile: TestMessages
@@ -58,6 +54,11 @@ open class TestMessagesBenchmark {
                 }
             }
 
+            val interaction = mockk<Interaction> {
+                every { userLocale } returns DiscordLocale.FRENCH
+                every { guildLocale } returns DiscordLocale.ENGLISH_US
+            }
+
             manual = context.getService<ManualBasedTestMessagesFactory>().create(interaction)
             proxy = context.getService<ProxyBasedTestMessagesFactory>().create(interaction)
             classfile = context.getService<ClassFileBasedTestMessagesFactory>().create(interaction)
@@ -76,21 +77,21 @@ open class TestMessagesBenchmark {
 
     @Benchmark
     fun classFileBasedWithNoArguments(lib: Lib): String {
-        return lib.proxy.args0()
+        return lib.classfile.args0()
     }
 
     @Benchmark
     fun classFileBasedWith3Arguments(lib: Lib): String {
-        return lib.proxy.args3(Random.nextBytes(16).decodeToString(), Random.nextInt(), Any())
+        return lib.classfile.args3(Random.nextBytes(16).decodeToString(), Random.nextInt(), Any())
     }
 
     @Benchmark
     fun manualWithNoArguments(lib: Lib): String {
-        return lib.proxy.args0()
+        return lib.manual.args0()
     }
 
     @Benchmark
     fun manualWith3Arguments(lib: Lib): String {
-        return lib.proxy.args3(Random.nextBytes(16).decodeToString(), Random.nextInt(), Any())
+        return lib.manual.args3(Random.nextBytes(16).decodeToString(), Random.nextInt(), Any())
     }
 }
