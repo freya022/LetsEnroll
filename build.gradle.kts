@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.jib)
 
-    id("me.champeau.jmh") version "0.7.2"
+    alias(libs.plugins.jmh)
 }
 
 group = "dev.freya02"
