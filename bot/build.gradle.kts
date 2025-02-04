@@ -5,10 +5,6 @@ plugins {
     alias(libs.plugins.jmh)
 }
 
-repositories {
-    maven("https://jitpack.io")
-}
-
 dependencies {
     // Configuration
     implementation(libs.dotenv.kotlin)

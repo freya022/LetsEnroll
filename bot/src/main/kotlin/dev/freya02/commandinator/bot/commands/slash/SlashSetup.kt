@@ -3,6 +3,7 @@ package dev.freya02.commandinator.bot.commands.slash
 import dev.freya02.commandinator.bot.AppEmojis
 import dev.freya02.commandinator.bot.localization.SetupMessagesFactory
 import dev.freya02.commandinator.bot.utils.none
+import dev.freya02.jda.emojis.unicode.Emojis
 import dev.minn.jda.ktx.coroutines.await
 import dev.minn.jda.ktx.interactions.components.SelectOption
 import dev.minn.jda.ktx.interactions.components.row
@@ -25,7 +26,6 @@ import io.github.freya022.botcommands.api.components.event.ButtonEvent
 import io.github.freya022.botcommands.api.components.event.StringSelectEvent
 import io.github.freya022.botcommands.api.core.utils.awaitUnit
 import io.github.freya022.botcommands.api.core.utils.enumSetOf
-import io.github.freya022.botcommands.api.core.utils.lazyUnicodeEmoji
 import io.github.freya022.botcommands.api.localization.DefaultMessagesFactory
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
@@ -33,13 +33,8 @@ import net.dv8tion.jda.api.entities.Role
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
 import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.interactions.components.selections.SelectOption
-import net.fellbaum.jemoji.Emojis
 
 private typealias RoleName = String
-
-private val bell by lazyUnicodeEmoji { Emojis.BELL }
-private val fire by lazyUnicodeEmoji { Emojis.FIRE }
-private val confused by lazyUnicodeEmoji { Emojis.CONFUSED_FACE }
 
 @Command
 class SlashSetup(
@@ -66,8 +61,8 @@ class SlashSetup(
             content = messages.getVersionMessageContent()
 
             components += row(selectMenus.stringSelectMenu().persistent {
-                options += guild.getOrCreateRole("V3").toOption(messages.getV3SelectOptionDescription(), emoji = fire)
-                options += guild.getOrCreateRole("V2").toOption(messages.getV2SelectOptionDescription(), emoji = confused)
+                options += guild.getOrCreateRole("V3").toOption(messages.getV3SelectOptionDescription(), Emojis.FIRE)
+                options += guild.getOrCreateRole("V2").toOption(messages.getV2SelectOptionDescription(), Emojis.CONFUSED)
 
                 bindWith(::onVersionRoleSelect)
             })
@@ -109,7 +104,7 @@ class SlashSetup(
         val bcUpdatesMessage = MessageCreate(mentions = Mentions.none()) {
             content = messages.getBcUpdatesMessageContent(guild.getOrCreateRole("BC Updates").id)
 
-            components += row(buttons.success(messages.getBcUpdatesToggleLabel(), emoji = bell).persistent {
+            components += row(buttons.success(messages.getBcUpdatesToggleLabel(), Emojis.BELL).persistent {
                 bindWith(::onToggleBcUpdatePingsClicked)
             })
         }
