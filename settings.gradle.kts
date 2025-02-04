@@ -1,2 +1,3 @@
-rootProject.name = "Commandinator"
+rootProject.name = "Commandinator-backend"
 
+include("bot")

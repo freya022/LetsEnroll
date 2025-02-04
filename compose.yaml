@@ -8,7 +8,7 @@ services:
         source: db-data
         target: /var/lib/postgresql/data
   bot:
-    image: commandinator:latest
+    image: commandinator-bot:latest
     restart: unless-stopped
     volumes:
       - type: bind

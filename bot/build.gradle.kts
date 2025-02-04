@@ -1,26 +1,15 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
-    alias(libs.plugins.kotlin)
+    id("commandinator-conventions")
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.jib)
 
     alias(libs.plugins.jmh)
 }
 
-group = "dev.freya02"
-version = "1.0"
-
 repositories {
-    mavenLocal()
-    mavenCentral()
     maven("https://jitpack.io")
 }
 
 dependencies {
-    implementation(libs.logback.classic)
-    implementation(libs.stacktrace.decoroutinator)
-
     // Configuration
     implementation(libs.dotenv.kotlin)
 
@@ -38,21 +27,6 @@ dependencies {
     // Mockk needs bytebuddy to be upgraded to support Java 24
     jmh(libs.mockk)
     jmh(libs.bytebuddy)
-}
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
-    }
-
-    sourceCompatibility = JavaVersion.VERSION_23
-    targetCompatibility = JavaVersion.VERSION_23
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_23
-    }
 }
 
 jmh {
@@ -101,7 +75,7 @@ jib {
     }
 
     to {
-        image = "commandinator"
+        image = "commandinator-bot"
     }
 
     container {

@@ -1,6 +1,4 @@
 /config
-/dev-data
-/reports
 
 .gradle
 build/

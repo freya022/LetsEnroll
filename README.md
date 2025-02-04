@@ -12,13 +12,17 @@ As this bot is made with this framework, you can take it as an example.
   - Auto-generated implementation of interfaces containing localized message getters
 
 ## Running the dev bot
-1. Copy `config-template` as `config`
-2. Fill the values in `config/.env`
-3. (Optional) Delete `logback.xml`
-4. Run the `Main` class in your editor
+1. Go in the `bot` folder
+2. Copy `config-template` as `config`
+3. Fill the values in `config/.env`
+4. (Optional) Delete `logback.xml`
+5. Run the `Main` class in your editor
 
 ## Running in docker
-1. Copy `config-template` as `config`
-2. Fill the values in `config/.env`
-3. Generate the latest image with `./gradlew jibDockerBuild`
-4. Start up the stack with `docker compose up -d`
+1. Go in the `bot` folder
+2. Copy `config-template` as `config`
+3. Fill the values in `config/.env`
+4. Generate the latest image with `./gradlew jibDockerBuild`
+5. Move `config` to same folder as `compose.yaml`
+6. Go back to the root folder
+7. Start up the stack with `docker compose up -d`
