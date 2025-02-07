@@ -27,7 +27,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
 
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.0")
-    implementation("ch.qos.logback:logback-classic:1.5.12")
+    implementation("ch.qos.logback:logback-classic:1.5.16")
     implementation("dev.reformator.stacktracedecoroutinator:stacktrace-decoroutinator-jvm:2.4.8")
 }
 

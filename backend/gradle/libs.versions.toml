@@ -4,6 +4,10 @@ jackson = "2.17.2"
 flyway = "11.1.1"
 
 [plugins]
+spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version = "3.4.2" }
+spring-dependency-management = { id = "io.spring.dependency-management", version = "1.1.7" }
+jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jmh = { id = "me.champeau.jmh", version = "0.7.2" }
 
