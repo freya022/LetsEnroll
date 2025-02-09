@@ -1,3 +1,6 @@
+server:
+  port: 16423
+
 spring:
   application:
     name: api
