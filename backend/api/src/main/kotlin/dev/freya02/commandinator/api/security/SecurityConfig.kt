@@ -1,5 +1,6 @@
 package dev.freya02.commandinator.api.security
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
@@ -8,11 +9,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig(
+    @Value("\${api.front-url}") private val frontUrl: String,
+) {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -32,7 +36,9 @@ class SecurityConfig {
             }
 
             oauth2Login {
-
+                authenticationSuccessHandler = SimpleUrlAuthenticationSuccessHandler("${frontUrl}/dashboard").apply {
+                    setAlwaysUseDefaultTargetUrl(true)
+                }
             }
 
             anonymous {
