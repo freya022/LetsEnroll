@@ -7,6 +7,8 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import DiscordLogo from "@/assets/discord-mark-blue.svg";
 
 interface Props {
   user?: UserDTO;
@@ -71,5 +73,12 @@ function getAvatarUrl({ id, avatarHash }: UserDTO) {
 }
 
 function LogIn() {
-  return <button>Log in</button>;
+  return (
+    <Button asChild>
+      <a href="/oauth2/authorization/discord">
+        <img alt="Discord logo" src={DiscordLogo} className="size-6" />
+        Log in
+      </a>
+    </Button>
+  );
 }
