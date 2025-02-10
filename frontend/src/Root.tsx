@@ -51,16 +51,13 @@ export function Root() {
 
 function User({ user }: { user: UserDTO }) {
   return (
-    <div className="flex items-center gap-x-2">
-      <span>{user.effectiveName}</span>
-      <Avatar>
-        <AvatarImage
-          src={getAvatarUrl(user)}
-          alt={`${user.effectiveName} avatar`}
-        />
-        <AvatarFallback>{user.effectiveName}</AvatarFallback>
-      </Avatar>
-    </div>
+    <Avatar>
+      <AvatarImage
+        src={getAvatarUrl(user)}
+        alt={`${user.effectiveName} avatar`}
+      />
+      <AvatarFallback>{user.effectiveName}</AvatarFallback>
+    </Avatar>
   );
 }
 
