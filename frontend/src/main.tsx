@@ -1,11 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import { loader as rootLoader, Root } from "./Root.tsx";
-import ErrorPage from "./ErrorPage.tsx";
-import { Main } from "./routes/Main.tsx";
-import { Dashboard } from "./routes/Dashboard.tsx";
-import { ThemeProvider } from "./components/theme-provider.tsx";
+import { loader as rootLoader, Root } from "@/Root.tsx";
+import ErrorPage from "@/ErrorPage.tsx";
+import { Main } from "@/routes/Main.tsx";
+import { Dashboard } from "@/routes/Dashboard.tsx";
+import { ThemeProvider } from "@/components/theme-provider.tsx";
 
 const router = createBrowserRouter([
   {

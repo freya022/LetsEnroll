@@ -1,7 +1,7 @@
-import "./App.css";
+import "@/App.css";
 import { Link, Outlet, useLoaderData } from "react-router";
-import { UserDTO } from "./dto/UserDTO.ts";
-import { ModeToggle } from "./components/mode-toggle.tsx";
+import { UserDTO } from "@/dto/UserDTO.ts";
+import { ModeToggle } from "@/components/mode-toggle.tsx";
 import {
   Avatar,
   AvatarFallback,
