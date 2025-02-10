@@ -1,12 +1,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Root from "./Root.tsx";
+import { loader as rootLoader, Root } from "./Root.tsx";
 import ErrorPage from "./ErrorPage.tsx";
+import { Main } from "./routes/Main.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    loader: rootLoader,
     element: <Root />,
     errorElement: <ErrorPage />,
   },
