@@ -21,7 +21,7 @@ export function Root() {
 
   return (
     <>
-      <div className="bg-background flex items-center px-4 py-2">
+      <div className="flex items-center border-b px-4 py-2">
         <div className="grow">
           <Link to={`/`} className="flex max-w-min items-center gap-x-1">
             <img
