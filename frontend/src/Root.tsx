@@ -10,7 +10,7 @@ export default function Root() {
             <img
               alt="Commandinator Logo"
               src="/logo-round.svg"
-              className="size-8"
+              className="size-8 rounded-full"
             />
             <span className="grow">Commandinator</span>
           </Link>
