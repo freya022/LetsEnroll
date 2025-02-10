@@ -2,6 +2,11 @@ import "./App.css";
 import { Link, Outlet, useLoaderData } from "react-router";
 import { UserDTO } from "./dto/UserDTO.ts";
 import { ModeToggle } from "./components/mode-toggle.tsx";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar.tsx";
 
 interface Props {
   user?: UserDTO;
@@ -48,11 +53,13 @@ function User({ user }: { user: UserDTO }) {
   return (
     <div className="flex items-center gap-x-2">
       <span>{user.effectiveName}</span>
-      <img
-        className="size-8 rounded-full"
-        alt={`${user.effectiveName} avatar`}
-        src={getAvatarUrl(user)}
-      />
+      <Avatar>
+        <AvatarImage
+          src={getAvatarUrl(user)}
+          alt={`${user.effectiveName} avatar`}
+        />
+        <AvatarFallback>{user.effectiveName}</AvatarFallback>
+      </Avatar>
     </div>
   );
 }
