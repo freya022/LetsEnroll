@@ -1,6 +1,7 @@
 import "./App.css";
 import { Link, Outlet, useLoaderData } from "react-router";
 import { UserDTO } from "./dto/UserDTO.ts";
+import { ModeToggle } from "./components/mode-toggle.tsx";
 
 interface Props {
   user?: UserDTO;
@@ -31,7 +32,10 @@ export function Root() {
             <span className="grow">Commandinator</span>
           </Link>
         </div>
-        {user ? <User user={user} /> : <LogIn />}
+        <div className="flex items-center gap-x-2">
+          <ModeToggle />
+          {user ? <User user={user} /> : <LogIn />}
+        </div>
       </div>
       <div className="h-auto p-2">
         <Outlet />

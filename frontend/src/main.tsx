@@ -5,6 +5,7 @@ import { loader as rootLoader, Root } from "./Root.tsx";
 import ErrorPage from "./ErrorPage.tsx";
 import { Main } from "./routes/Main.tsx";
 import { Dashboard } from "./routes/Dashboard.tsx";
+import { ThemeProvider } from "./components/theme-provider.tsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>,
 );
