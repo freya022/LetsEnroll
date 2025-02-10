@@ -22,13 +22,11 @@ class SecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http {
             authorizeHttpRequests {
-//                authorize("/api/authorized/discord", permitAll)
-//                authorize("/oauth2/**", permitAll)
-//                authorize("/api/**", authenticated)
-                authorize("/api/something", authenticated)
+                authorize("/oauth2/**", permitAll)
+                authorize("/error", permitAll) // Exceptions and messages are removed
+                authorize("/api/**", authenticated)
 
-                authorize(anyRequest, permitAll)
-//                authorize(anyRequest, denyAll)
+                authorize(anyRequest, denyAll)
             }
 
             exceptionHandling {

@@ -1,5 +1,9 @@
 server:
   port: 16423
+  # https://www.baeldung.com/exception-handling-for-rest-with-spring#spring-boot
+  error:
+    include-stacktrace: never
+    include-message: never
 
 spring:
   application:
