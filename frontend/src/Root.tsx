@@ -20,7 +20,7 @@ export function Root() {
 
   return (
     <>
-      <div className="flex items-center px-4 py-2 dark:bg-neutral-950">
+      <div className="bg-background flex items-center px-4 py-2">
         <div className="grow">
           <Link to={`/`} className="flex max-w-min items-center gap-x-1">
             <img
