@@ -9,6 +9,14 @@ import {
 } from "@/components/ui/avatar.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import DiscordLogo from "@/assets/discord-mark-blue.svg";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu.tsx";
 
 interface Props {
   user?: UserDTO;
@@ -53,13 +61,22 @@ export function Root() {
 
 function User({ user }: { user: UserDTO }) {
   return (
-    <Avatar>
-      <AvatarImage
-        src={getAvatarUrl(user)}
-        alt={`${user.effectiveName} avatar`}
-      />
-      <AvatarFallback>{user.effectiveName}</AvatarFallback>
-    </Avatar>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Avatar>
+          <AvatarImage
+            src={getAvatarUrl(user)}
+            alt={`${user.effectiveName} avatar`}
+          />
+          <AvatarFallback>{user.effectiveName}</AvatarFallback>
+        </Avatar>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-40">
+        <DropdownMenuLabel>{user.effectiveName}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="destructive">Log out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
