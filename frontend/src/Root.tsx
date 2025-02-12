@@ -17,6 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
+import { fetcher } from "@/utils.ts";
 
 interface Props {
   user?: UserDTO;
@@ -60,6 +61,13 @@ export function Root() {
 }
 
 function User({ user }: { user: UserDTO }) {
+  async function handleLogout() {
+    await fetcher("/logout", {
+      method: "POST",
+    });
+    window.location.href = "/";
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="hover:bg-accent hover:text-accent-foreground cursor-pointer rounded-md p-1">
@@ -74,7 +82,9 @@ function User({ user }: { user: UserDTO }) {
       <DropdownMenuContent className="w-40">
         <DropdownMenuLabel>{user.effectiveName}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive">Log out</DropdownMenuItem>
+        <DropdownMenuItem variant="destructive" onClick={handleLogout}>
+          Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -16,6 +16,7 @@ export default defineConfig({
     proxy: {
       "/api": "http://localhost:16423",
       "/oauth2": "http://localhost:16423",
+      "/logout": "http://localhost:16423",
     },
   },
 });
