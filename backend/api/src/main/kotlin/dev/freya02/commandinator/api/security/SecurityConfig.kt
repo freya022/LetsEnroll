@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler
 
 @Configuration
 @EnableWebSecurity
@@ -41,6 +42,10 @@ class SecurityConfig(
 
             anonymous {
                 disable()
+            }
+
+            logout {
+                logoutSuccessHandler = HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)
             }
 
             csrf {
