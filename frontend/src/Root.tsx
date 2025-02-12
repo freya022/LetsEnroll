@@ -62,8 +62,8 @@ export function Root() {
 function User({ user }: { user: UserDTO }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Avatar>
+      <DropdownMenuTrigger className="hover:bg-accent hover:text-accent-foreground cursor-pointer rounded-md p-1">
+        <Avatar className="size-7">
           <AvatarImage
             src={getAvatarUrl(user)}
             alt={`${user.effectiveName} avatar`}
