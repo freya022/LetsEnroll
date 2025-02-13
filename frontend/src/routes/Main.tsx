@@ -1,38 +1,41 @@
-import { ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip.tsx";
+import { cn } from "@/lib/utils.ts";
 
 export function Main() {
   return (
-    <div className="flex justify-center">
-      {/*TODO w-2xl maybe not the right way of sizing*/}
-      <div className="flex w-2xl flex-col gap-y-2">
-        <article className="flex flex-col gap-y-2">
-          <h1 className="text-center text-3xl font-semibold">Welcome!</h1>
-          <p>
-            Commandinator is a simple bot to set up self-assigned roles on your
-            server!
-          </p>
-        </article>
-        <article className="flex flex-col gap-y-2">
+    <div className="flex flex-col items-center gap-y-14">
+      <div className="flex flex-col gap-y-2">
+        <h1 className="text-center text-3xl font-semibold">Welcome!</h1>
+        <p className="text-xl">
+          Commandinator is a simple bot to set up self-assigned roles on your
+          server!
+        </p>
+      </div>
+      <div className="flex max-w-7xl flex-col gap-4 px-4 lg:flex-row">
+        <Article>
           <h2 className="text-center text-2xl font-semibold">Features!</h2>
           <p>
-            This website will enable you to configure the controls sent by the
-            bot, such as:
+            This website enables you to configure the controls sent by the bot,
+            such as:
           </p>
-          {/*TODO maybe use some icons instead of the default "discs"*/}
-          <ul className="list-disc pl-4">
-            <li>Buttons for single-role toggles</li>
-            <li>Select menus with any selectable role choices</li>
-            <li>Select menus with a single selectable from a list</li>
+          <ul className={`list-image-[url('./assets/checkmark.svg')] pl-5`}>
+            <li className="pl-1">Buttons for single-role toggles</li>
+            <li className="pl-1">
+              Select menus with any selectable role choices
+            </li>
+            <li className="pl-1">
+              Select menus with a single selectable from a list
+            </li>
           </ul>
           <p>You can, of course, customize every aspect of these components.</p>
-        </article>
-        <article className="flex flex-col gap-y-2">
+        </Article>
+        <Article>
           <h2 className="text-center text-2xl font-semibold">But why?</h2>
           <p>
             "<i>Another bot</i>" you say? Well yes, I needed one in my{" "}
@@ -50,8 +53,8 @@ export function Main() {
             of course, <OverengineeredFeatureLabel />, wouldn't really be my
             work if it wasn't overengineered in some way, huh?
           </p>
-        </article>
-        <article className="flex flex-col gap-y-2">
+        </Article>
+        <Article>
           <h2 className="text-center text-2xl font-semibold">
             What about the website?
           </h2>
@@ -67,9 +70,21 @@ export function Main() {
               outside of university, but shh.
             </i>
           </p>
-        </article>
+        </Article>
       </div>
     </div>
+  );
+}
+
+function Article({ className, ...props }: ComponentProps<"article">) {
+  return (
+    <article
+      {...props}
+      className={cn(
+        className,
+        "flex flex-1 flex-col gap-y-2 rounded-lg border-2 border-blue-900 p-2",
+      )}
+    />
   );
 }
 
