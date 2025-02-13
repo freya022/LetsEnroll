@@ -37,7 +37,7 @@ export function Root() {
 
   return (
     <>
-      <div className="flex items-center border-b px-4 py-2">
+      <header className="flex items-center border-b px-4 py-2">
         <div className="grow">
           <Link to={`/`} className="flex max-w-min items-center gap-x-1">
             <img
@@ -52,10 +52,10 @@ export function Root() {
           <ModeToggle />
           {user ? <User user={user} /> : <LogIn />}
         </div>
-      </div>
-      <div className="h-auto p-2">
+      </header>
+      <main className="h-auto p-2">
         <Outlet />
-      </div>
+      </main>
     </>
   );
 }
