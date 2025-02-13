@@ -17,9 +17,8 @@ export function Main() {
           server!
         </p>
       </div>
-      <div className="flex max-w-7xl flex-col gap-4 px-4 lg:flex-row">
-        <Article>
-          <h2 className="text-center text-2xl font-semibold">Features!</h2>
+      <div className="flex max-w-7xl flex-col gap-4 lg:flex-row">
+        <Article heading="Features!" className="flex-1">
           <p>
             This website enables you to configure the controls sent by the bot,
             such as:
@@ -35,8 +34,7 @@ export function Main() {
           </ul>
           <p>You can, of course, customize every aspect of these components.</p>
         </Article>
-        <Article>
-          <h2 className="text-center text-2xl font-semibold">But why?</h2>
+        <Article heading="But why?" className="flex-1">
           <p>
             "<i>Another bot</i>" you say? Well yes, I needed one in my{" "}
             <BCLink content="lib" />
@@ -54,10 +52,7 @@ export function Main() {
             work if it wasn't overengineered in some way, huh?
           </p>
         </Article>
-        <Article>
-          <h2 className="text-center text-2xl font-semibold">
-            What about the website?
-          </h2>
+        <Article heading="What about the website?" className="flex-1">
           <p>
             Not so long after finishing the bot, I remembered the bot managing
             the notification roles in JDA no longer existed, so I just thought
@@ -76,15 +71,23 @@ export function Main() {
   );
 }
 
-function Article({ className, ...props }: ComponentProps<"article">) {
+function Article({
+  heading,
+  children,
+  className,
+  ...props
+}: ComponentProps<"article"> & { heading: string }) {
   return (
     <article
       {...props}
       className={cn(
         className,
-        "flex flex-1 flex-col gap-y-2 rounded-lg border-2 border-blue-900 p-2",
+        "flex flex-col gap-y-2 rounded-lg border-2 border-blue-900 p-2",
       )}
-    />
+    >
+      <h2 className="text-center text-2xl font-semibold">{heading}</h2>
+      {children}
+    </article>
   );
 }
 
