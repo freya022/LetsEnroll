@@ -6,6 +6,8 @@ plugins {
 	alias(libs.plugins.jpa)
 	alias(libs.plugins.spring.boot)
 	alias(libs.plugins.spring.dependency.management)
+
+	alias(libs.plugins.kotlinx.serialization)
 }
 
 dependencies {
@@ -23,6 +25,8 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.security:spring-security-test")
+
+	implementation(libs.kotlinx.serialization.json)
 }
 
 allOpen {
