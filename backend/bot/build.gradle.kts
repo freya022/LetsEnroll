@@ -9,8 +9,9 @@ dependencies {
     // Configuration
     implementation(libs.dotenv.kotlin)
 
-    // Localization
+    // Serialization (data and localization)
     implementation(libs.jackson.dataformat.yaml)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.botcommands)
     implementation(libs.jda)
@@ -24,6 +25,8 @@ dependencies {
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.content.negociation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
     // Mockk needs bytebuddy to be upgraded to support Java 24
     jmh(libs.mockk)

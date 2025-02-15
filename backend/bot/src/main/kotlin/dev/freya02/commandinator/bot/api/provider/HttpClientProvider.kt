@@ -5,6 +5,8 @@ import io.github.freya022.botcommands.api.core.service.annotations.BConfiguratio
 import io.github.freya022.botcommands.api.core.service.annotations.BService
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.*
 
 @BConfiguration
 object HttpClientProvider {
@@ -21,6 +23,10 @@ object HttpClientProvider {
                         .build()
                     chain.proceed(request)
                 }
+            }
+
+            install(ContentNegotiation) {
+                json()
             }
         }
     }
