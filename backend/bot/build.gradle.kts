@@ -1,5 +1,6 @@
 plugins {
     id("commandinator-conventions")
+    id("commandinator-app-conventions")
     alias(libs.plugins.kotlinx.serialization)
 
     alias(libs.plugins.jmh)
