@@ -26,6 +26,7 @@ dependencies {
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.security:spring-security-test")
 
+	implementation(project(":api:data"))
 	implementation(libs.kotlinx.serialization.json)
 }
 
