@@ -1,0 +1,12 @@
+# Get a new JWT
+GET http://localhost:16423/api/jwt
+
+> {%
+  client.global.set("jwt_token", response.body)
+%}
+
+###
+
+# Test the token works
+GET http://localhost:16423/api/jwt/test
+Authorization: Bearer {{jwt_token}}

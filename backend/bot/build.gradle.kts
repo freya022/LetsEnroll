@@ -20,6 +20,11 @@ dependencies {
 
     implementation(libs.bundles.flyway)
 
+    implementation(libs.nimbus.jose.jwt)
+
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+
     // Mockk needs bytebuddy to be upgraded to support Java 24
     jmh(libs.mockk)
     jmh(libs.bytebuddy)

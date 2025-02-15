@@ -29,3 +29,10 @@ spring:
             token-uri: https://discord.com/api/oauth2/token
             userInfoUri: https://discordapp.com/api/users/@me
             user-name-attribute: username
+
+api:
+  jwt:
+    # On Windows: use Git Bash in the 'config' directory
+    # On Linux: Open terminal in the 'config' directory
+    # openssl rand -out private.key -base64 64
+    secret-key-file: ${API_PRIVATE_KEY_FILE}

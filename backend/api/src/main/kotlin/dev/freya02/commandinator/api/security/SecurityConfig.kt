@@ -28,6 +28,7 @@ class SecurityConfig(
             authorizeHttpRequests {
                 authorize("/oauth2/**", permitAll)
                 authorize("/error", permitAll) // Exceptions and messages are removed
+                authorize("/api/jwt", permitAll) // Only on dev profile
                 authorize("/api/**", authenticated)
 
                 authorize(anyRequest, denyAll)
@@ -40,6 +41,12 @@ class SecurityConfig(
             oauth2Login {
                 authenticationSuccessHandler = SimpleUrlAuthenticationSuccessHandler("${frontUrl}/dashboard").apply {
                     setAlwaysUseDefaultTargetUrl(true)
+                }
+            }
+
+            oauth2ResourceServer {
+                jwt {
+
                 }
             }
 
