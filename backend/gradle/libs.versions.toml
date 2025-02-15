@@ -2,6 +2,7 @@
 kotlin = "2.1.0"
 jackson = "2.17.2"
 flyway = "11.1.1"
+ktor = "3.1.0"
 
 [plugins]
 spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
@@ -26,6 +27,11 @@ postgresql = { module = "org.postgresql:postgresql", version = "42.7.4" }
 hikaricp = { module = "com.zaxxer:HikariCP", version = "6.2.1" }
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
+
+nimbus-jose-jwt = { module = "com.nimbusds:nimbus-jose-jwt", version = "10.0.1" }
+
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 
 [bundles]
 flyway = ["flyway-core", "flyway-database-postgresql"]
