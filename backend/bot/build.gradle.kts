@@ -29,6 +29,8 @@ dependencies {
     implementation(libs.ktor.client.content.negociation)
     implementation(libs.ktor.serialization.kotlinx.json)
 
+    implementation(project(":api:data"))
+
     // Mockk needs bytebuddy to be upgraded to support Java 24
     jmh(libs.mockk)
     jmh(libs.bytebuddy)
