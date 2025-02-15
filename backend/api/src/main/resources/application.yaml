@@ -1,5 +1,5 @@
 server:
-  port: 16423
+  port: ${API_PORT}
   # https://www.baeldung.com/exception-handling-for-rest-with-spring#spring-boot
   error:
     include-stacktrace: never
@@ -8,6 +8,9 @@ server:
 spring:
   application:
     name: api
+
+  config:
+    import: file:./config/.env[.properties]
 
   security:
     oauth2:
