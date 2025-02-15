@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/commandinator?currentSchema=public
+    username: postgres
+    password:
+
+api:
+  discord-client-id: 1234
+  discord-client-secret: abcd
+  front-url: http://localhost:5173
