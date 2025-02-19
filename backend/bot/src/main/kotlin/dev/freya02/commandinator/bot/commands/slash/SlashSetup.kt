@@ -28,6 +28,7 @@ import io.github.freya022.botcommands.api.components.annotations.JDASelectMenuLi
 import io.github.freya022.botcommands.api.components.builder.bindWith
 import io.github.freya022.botcommands.api.components.event.ButtonEvent
 import io.github.freya022.botcommands.api.components.event.StringSelectEvent
+import io.github.freya022.botcommands.api.components.serialization.annotations.SerializableComponentData
 import io.github.freya022.botcommands.api.components.utils.ButtonContent
 import io.github.freya022.botcommands.api.core.utils.awaitUnit
 import io.github.freya022.botcommands.api.core.utils.enumSetOf
@@ -103,7 +104,7 @@ class SlashSetup(
             placeholder = this@toJDA.placeholder
             options += this@toJDA.choices.map { choice -> choice.toJDA(guild, builder) }
 
-            bindWith(::onRoleSelect)
+            bindWith(SlashSetup::onRoleSelect, this@toJDA.choices.map { it.roleName })
         }
     }
 
@@ -172,10 +173,13 @@ class SlashSetup(
     }
 
     @JDASelectMenuListener
-    suspend fun onRoleSelect(event: StringSelectEvent) = applyRole(event, event.values[0], listOf(TODO("This needs to be queried from the database unfortunately, until BC is capable of (de)serializing more complex data")))
+    suspend fun onRoleSelect(event: StringSelectEvent, @SerializableComponentData roleGroupNames: List<RoleName>) =
+        applyRole(event, event.values[0], roleGroupNames)
 
     private suspend fun applyRole(event: StringSelectEvent, roleName: RoleName, roleGroupNames: List<RoleName>) {
-        require(roleName in roleGroupNames)
+        require(roleName in roleGroupNames) {
+            "Role '$roleName' is not in role group: $roleGroupNames"
+        }
 
         val member = event.member!!
         val guild = member.guild
