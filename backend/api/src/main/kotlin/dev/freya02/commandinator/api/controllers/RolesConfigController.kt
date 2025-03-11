@@ -1,15 +1,21 @@
 package dev.freya02.commandinator.api.controllers
 
 import dev.freya02.commandinator.api.dto.RolesConfig
+import dev.freya02.commandinator.api.repository.RolesConfigRepository
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class RolesConfigController {
+class RolesConfigController(
+    private val rolesConfigRepository: RolesConfigRepository,
+) {
 
     // This is only to test that the JWTs are recognized, with [[JWT.http]]
     @GetMapping("/api/roles")
     fun retrieveConfiguredRoles(): RolesConfig {
+        val rolesConfigs = rolesConfigRepository.findAll()
+        println("rolesConfigs = $rolesConfigs")
+
         return RolesConfig(
             listOf(
                 RolesConfig.Message(
