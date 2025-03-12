@@ -20,10 +20,22 @@ data class RoleMessageRow(
     val components: MutableList<RoleMessageComponent> = arrayListOf(),
 ) : RoleMessageComponent()
 
+enum class ButtonStyle {
+    PRIMARY,
+    SECONDARY,
+    SUCCESS,
+    DANGER
+}
+
 @Entity
 @PrimaryKeyJoinColumn(name = "component_id")
 data class RoleMessageButton(
-    val label: String,
+    val roleName: String,
+    @Enumerated(EnumType.STRING)
+    val style: ButtonStyle,
+    val label: String? = null,
+    @ManyToOne(cascade = [CascadeType.ALL])
+    val emoji: Emoji? = null,
 ) : RoleMessageComponent()
 
 @Entity
