@@ -1,3 +1,5 @@
+@file:Suppress("JpaDataSourceORMInspection") // IJ is dumb
+
 package dev.freya02.commandinator.api.entity
 
 import jakarta.persistence.*
@@ -12,13 +14,11 @@ class RoleMessageComponent(
 
 @Entity
 @PrimaryKeyJoinColumn(name = "component_id")
-class RoleMessageRow(
-
-) : RoleMessageComponent() {
+data class RoleMessageRow(
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "parent_id")
-    val components: MutableList<RoleMessageComponent> = arrayListOf()
-}
+    val components: MutableList<RoleMessageComponent> = arrayListOf(),
+) : RoleMessageComponent()
 
 @Entity
 @PrimaryKeyJoinColumn(name = "component_id")

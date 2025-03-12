@@ -32,11 +32,20 @@ CREATE TABLE role_message_component
 (
     id         serial         NOT NULL,
     parent_id  int            NULL,
-    message_id int            NULL,
     type       component_type NOT NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (message_id) REFERENCES role_message
+    FOREIGN KEY (parent_id) REFERENCES role_message_component
+);
+
+CREATE TABLE role_message_role_message_component
+(
+    message_id   INT NOT NULL,
+    component_id INT NOT NULL,
+
+    PRIMARY KEY (message_id, component_id),
+    FOREIGN KEY (message_id) REFERENCES role_message,
+    FOREIGN KEY (component_id) REFERENCES role_message_component
 );
 
 CREATE TABLE role_message_row

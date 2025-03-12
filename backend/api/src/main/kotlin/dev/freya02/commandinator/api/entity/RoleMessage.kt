@@ -5,10 +5,12 @@ import jakarta.persistence.*
 @Entity
 data class RoleMessage(
     val content: String,
-    // TODO should use a 3rd table to join message <-> top-level components
-    //  so we don't have message_id on every component
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JoinColumn(name = "message_id")
+    @JoinTable(
+        name = "role_message_role_message_component",
+        joinColumns = [JoinColumn(name = "message_id")],
+        inverseJoinColumns = [JoinColumn(name = "component_id")],
+    )
     val messageComponents: MutableList<RoleMessageComponent>,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
