@@ -50,4 +50,19 @@ data class RoleMessageButton(
 @PrimaryKeyJoinColumn(name = "component_id")
 data class RoleMessageSelectMenu(
     val placeholder: String?,
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "menu_id", nullable = false)
+    val choices: MutableList<RoleMessageSelectMenuChoice> = arrayListOf(),
 ) : RoleMessageComponent(ComponentType.SELECT_MENU)
+
+@Entity
+data class RoleMessageSelectMenuChoice(
+    val roleName: String,
+    val label: String,
+    val description: String? = null,
+    @ManyToOne(cascade = [CascadeType.ALL])
+    val emoji: Emoji? = null,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Int = 0,
+)
