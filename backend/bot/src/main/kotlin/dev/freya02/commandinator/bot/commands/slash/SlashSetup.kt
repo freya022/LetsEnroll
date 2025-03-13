@@ -1,6 +1,6 @@
 package dev.freya02.commandinator.bot.commands.slash
 
-import dev.freya02.commandinator.api.dto.RolesConfig
+import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.bot.api.roles.RolesConfigAPI
 import dev.freya02.commandinator.bot.localization.SetupMessagesFactory
 import dev.freya02.commandinator.bot.utils.none
@@ -77,20 +77,20 @@ class SlashSetup(
             .await()
     }
 
-    private suspend fun RolesConfig.Message.toJDA(guild: Guild) = MessageCreate(mentions = Mentions.none()) {
+    private suspend fun RolesConfigDTO.Message.toJDA(guild: Guild) = MessageCreate(mentions = Mentions.none()) {
         content = this@toJDA.content
 
         components += this@toJDA.components.map { row ->
             row.map { component ->
                 when (component) {
-                    is RolesConfig.Message.Button -> component.toJDA(guild, this)
-                    is RolesConfig.Message.SelectMenu -> component.toJDA(guild, this)
+                    is RolesConfigDTO.Message.Button -> component.toJDA(guild, this)
+                    is RolesConfigDTO.Message.SelectMenu -> component.toJDA(guild, this)
                 }
             }.row()
         }
     }
 
-    private suspend fun RolesConfig.Message.Button.toJDA(guild: Guild, builder: InlineMessage<*>): Button {
+    private suspend fun RolesConfigDTO.Message.Button.toJDA(guild: Guild, builder: InlineMessage<*>): Button {
         val role = guild.getOrCreateRole(roleName)
         builder.replaceRoleTemplates(role)
 
@@ -99,7 +99,7 @@ class SlashSetup(
         }
     }
 
-    private suspend fun RolesConfig.Message.SelectMenu.toJDA(guild: Guild, builder: InlineMessage<*>): StringSelectMenu {
+    private suspend fun RolesConfigDTO.Message.SelectMenu.toJDA(guild: Guild, builder: InlineMessage<*>): StringSelectMenu {
         return selectMenus.stringSelectMenu().persistent {
             placeholder = this@toJDA.placeholder
             options += this@toJDA.choices.map { choice -> choice.toJDA(guild, builder) }
@@ -108,17 +108,17 @@ class SlashSetup(
         }
     }
 
-    private suspend fun RolesConfig.Message.SelectMenu.Choice.toJDA(guild: Guild, builder: InlineMessage<*>): SelectOption {
+    private suspend fun RolesConfigDTO.Message.SelectMenu.Choice.toJDA(guild: Guild, builder: InlineMessage<*>): SelectOption {
         val role = guild.getOrCreateRole(roleName)
         builder.replaceRoleTemplates(role)
 
         return SelectOption(label, role.name, description, emoji?.toJDA())
     }
 
-    private fun RolesConfig.Message.Emoji.toJDA(): Emoji {
+    private fun RolesConfigDTO.Message.Emoji.toJDA(): Emoji {
         return when (this) {
-            is RolesConfig.Message.CustomEmoji -> Emoji.fromCustom(name, id, animated)
-            is RolesConfig.Message.UnicodeEmoji -> EmojiUtils.resolveJDAEmoji(unicode)
+            is RolesConfigDTO.Message.CustomEmoji -> Emoji.fromCustom(name, id, animated)
+            is RolesConfigDTO.Message.UnicodeEmoji -> EmojiUtils.resolveJDAEmoji(unicode)
         }
     }
 

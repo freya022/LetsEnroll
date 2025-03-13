@@ -1,6 +1,6 @@
 package dev.freya02.commandinator.api.controllers
 
-import dev.freya02.commandinator.api.dto.RolesConfig
+import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.repository.RolesConfigRepository
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -12,29 +12,29 @@ class RolesConfigController(
 
     // This is only to test that the JWTs are recognized, with [[JWT.http]]
     @GetMapping("/api/roles")
-    fun retrieveConfiguredRoles(): RolesConfig {
+    fun retrieveConfiguredRoles(): RolesConfigDTO {
         val rolesConfigs = rolesConfigRepository.findAll()
         println("rolesConfigs = $rolesConfigs")
 
-        return RolesConfig(
+        return RolesConfigDTO(
             listOf(
-                RolesConfig.Message(
+                RolesConfigDTO.Message(
                     "Choose the version of the framework you're using",
                     listOf(
                         listOf(
-                            RolesConfig.Message.SelectMenu(
+                            RolesConfigDTO.Message.SelectMenu(
                                 placeholder = null,
                                 listOf(
-                                    RolesConfig.Message.SelectMenu.Choice(
+                                    RolesConfigDTO.Message.SelectMenu.Choice(
                                         roleName = "V3",
                                         label = "V3",
-                                        emoji = RolesConfig.Message.UnicodeEmoji("fire"),
+                                        emoji = RolesConfigDTO.Message.UnicodeEmoji("fire"),
                                         description = "Based AF",
                                     ),
-                                    RolesConfig.Message.SelectMenu.Choice(
+                                    RolesConfigDTO.Message.SelectMenu.Choice(
                                         roleName = "V2",
                                         label = "V2",
-                                        emoji = RolesConfig.Message.UnicodeEmoji("confused"),
+                                        emoji = RolesConfigDTO.Message.UnicodeEmoji("confused"),
                                         description = "Why?",
                                     )
                                 )
@@ -42,23 +42,23 @@ class RolesConfigController(
                         )
                     )
                 ),
-                RolesConfig.Message(
+                RolesConfigDTO.Message(
                     "Choose the language you're using",
                     listOf(
                         listOf(
-                            RolesConfig.Message.SelectMenu(
+                            RolesConfigDTO.Message.SelectMenu(
                                 placeholder = null,
                                 listOf(
-                                    RolesConfig.Message.SelectMenu.Choice(
+                                    RolesConfigDTO.Message.SelectMenu.Choice(
                                         roleName = "Kotlin",
                                         label = "Kotlin",
-                                        emoji = RolesConfig.Message.CustomEmoji(false, "kotlin", 1327959227381055539),
+                                        emoji = RolesConfigDTO.Message.CustomEmoji(false, "kotlin", 1327959227381055539),
                                         description = "Kotlin supremacy",
                                     ),
-                                    RolesConfig.Message.SelectMenu.Choice(
+                                    RolesConfigDTO.Message.SelectMenu.Choice(
                                         roleName = "Java",
                                         label = "Java",
-                                        emoji = RolesConfig.Message.CustomEmoji(false, "java", 1327959228421242983),
+                                        emoji = RolesConfigDTO.Message.CustomEmoji(false, "java", 1327959228421242983),
                                         description = "Verbose but does the job well around",
                                     )
                                 )
@@ -66,23 +66,23 @@ class RolesConfigController(
                         )
                     )
                 ),
-                RolesConfig.Message(
+                RolesConfigDTO.Message(
                     "Choose the build tool you're using",
                     listOf(
                         listOf(
-                            RolesConfig.Message.SelectMenu(
+                            RolesConfigDTO.Message.SelectMenu(
                                 placeholder = null,
                                 listOf(
-                                    RolesConfig.Message.SelectMenu.Choice(
+                                    RolesConfigDTO.Message.SelectMenu.Choice(
                                         roleName = "Maven",
                                         label = "Maven",
-                                        emoji = RolesConfig.Message.CustomEmoji(false, "maven", 1327959229209907263),
+                                        emoji = RolesConfigDTO.Message.CustomEmoji(false, "maven", 1327959229209907263),
                                         description = "Can't go wrong with it for simple projects",
                                     ),
-                                    RolesConfig.Message.SelectMenu.Choice(
+                                    RolesConfigDTO.Message.SelectMenu.Choice(
                                         roleName = "Gradle",
                                         label = "Gradle",
-                                        emoji = RolesConfig.Message.CustomEmoji(false, "gradle", 1327959230681976854),
+                                        emoji = RolesConfigDTO.Message.CustomEmoji(false, "gradle", 1327959230681976854),
                                         description = "Fast, at the cost of your sanity",
                                     )
                                 )
@@ -90,23 +90,23 @@ class RolesConfigController(
                         )
                     )
                 ),
-                RolesConfig.Message(
+                RolesConfigDTO.Message(
                     "Choose the dependency injection framework you're using",
                     listOf(
                         listOf(
-                            RolesConfig.Message.SelectMenu(
+                            RolesConfigDTO.Message.SelectMenu(
                                 placeholder = null,
                                 listOf(
-                                    RolesConfig.Message.SelectMenu.Choice(
+                                    RolesConfigDTO.Message.SelectMenu.Choice(
                                         roleName = "Built-in DI",
                                         label = "Built-in DI",
-                                        emoji = RolesConfig.Message.CustomEmoji(false, "bc", 1327959231940395031),
+                                        emoji = RolesConfigDTO.Message.CustomEmoji(false, "bc", 1327959231940395031),
                                         description = "Less headaches and often better error messages",
                                     ),
-                                    RolesConfig.Message.SelectMenu.Choice(
+                                    RolesConfigDTO.Message.SelectMenu.Choice(
                                         roleName = "Spring",
                                         label = "Spring",
-                                        emoji = RolesConfig.Message.CustomEmoji(false, "spring", 1327959233047691338),
+                                        emoji = RolesConfigDTO.Message.CustomEmoji(false, "spring", 1327959233047691338),
                                         description = "Like bringing a gun to a fist fight",
                                     )
                                 )
@@ -114,15 +114,15 @@ class RolesConfigController(
                         )
                     )
                 ),
-                RolesConfig.Message(
+                RolesConfigDTO.Message(
                     "Use this button to toggle <@&{roleId[BC Updates]}>",
                     listOf(
                         listOf(
-                            RolesConfig.Message.Button(
+                            RolesConfigDTO.Message.Button(
                                 roleName = "BC Updates",
-                                RolesConfig.Message.Button.Style.SUCCESS,
+                                RolesConfigDTO.Message.Button.Style.SUCCESS,
                                 label = "Toggle BC update pings",
-                                emoji = RolesConfig.Message.UnicodeEmoji("bell"),
+                                emoji = RolesConfigDTO.Message.UnicodeEmoji("bell"),
                             )
                         )
                     )
