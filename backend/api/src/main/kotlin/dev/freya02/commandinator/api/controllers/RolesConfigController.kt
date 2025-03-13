@@ -10,7 +10,6 @@ class RolesConfigController(
     private val rolesConfigRepository: RolesConfigRepository,
 ) {
 
-    // This is only to test that the JWTs are recognized, with [[JWT.http]]
     @GetMapping("/api/roles")
     fun retrieveConfiguredRoles(): RolesConfigDTO {
         val rolesConfigs = rolesConfigRepository.findAll()
