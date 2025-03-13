@@ -4,9 +4,17 @@ package dev.freya02.commandinator.api.entity
 
 import jakarta.persistence.*
 
+enum class ComponentType {
+    ROW,
+    BUTTON,
+    SELECT_MENU
+}
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 class RoleMessageComponent(
+    @Enumerated(EnumType.STRING)
+    val type: ComponentType,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
@@ -18,7 +26,7 @@ data class RoleMessageRow(
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "parent_id", nullable = false)
     val components: MutableList<RoleMessageComponent> = arrayListOf(),
-) : RoleMessageComponent()
+) : RoleMessageComponent(ComponentType.ROW)
 
 enum class ButtonStyle {
     PRIMARY,
@@ -36,10 +44,10 @@ data class RoleMessageButton(
     val label: String? = null,
     @ManyToOne(cascade = [CascadeType.ALL])
     val emoji: Emoji? = null,
-) : RoleMessageComponent()
+) : RoleMessageComponent(ComponentType.BUTTON)
 
 @Entity
 @PrimaryKeyJoinColumn(name = "component_id")
 data class RoleMessageSelectMenu(
     val placeholder: String?,
-) : RoleMessageComponent()
+) : RoleMessageComponent(ComponentType.SELECT_MENU)
