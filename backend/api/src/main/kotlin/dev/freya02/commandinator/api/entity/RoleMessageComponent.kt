@@ -16,7 +16,7 @@ class RoleMessageComponent(
 @PrimaryKeyJoinColumn(name = "component_id")
 data class RoleMessageRow(
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JoinColumn(name = "parent_id")
+    @JoinColumn(name = "parent_id", nullable = false)
     val components: MutableList<RoleMessageComponent> = arrayListOf(),
 ) : RoleMessageComponent()
 

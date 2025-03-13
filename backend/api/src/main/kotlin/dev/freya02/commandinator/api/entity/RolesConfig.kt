@@ -6,7 +6,7 @@ import jakarta.persistence.*
 data class RolesConfig(
     val guildId: Long,
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JoinColumn(name = "config_id")
+    @JoinColumn(name = "config_id", nullable = false)
     val messages: MutableList<RoleMessage>,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

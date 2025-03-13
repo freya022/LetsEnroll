@@ -8,8 +8,8 @@ data class RoleMessage(
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinTable(
         name = "role_message_role_message_component",
-        joinColumns = [JoinColumn(name = "message_id")],
-        inverseJoinColumns = [JoinColumn(name = "component_id")],
+        joinColumns = [JoinColumn(name = "message_id", nullable = false)],
+        inverseJoinColumns = [JoinColumn(name = "component_id", nullable = false)],
     )
     val messageComponents: MutableList<RoleMessageComponent>,
     @Id
