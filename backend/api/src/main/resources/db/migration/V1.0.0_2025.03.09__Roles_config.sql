@@ -27,12 +27,13 @@ CREATE TABLE role_message
 );
 
 CREATE TYPE component_type AS ENUM ('ROW', 'BUTTON', 'SELECT_MENU');
+CREATE CAST (character varying AS component_type) WITH INOUT AS IMPLICIT;
 
 CREATE TABLE role_message_component
 (
-    id         serial         NOT NULL,
-    parent_id  int            NULL,
-    type       component_type NOT NULL,
+    id        serial         NOT NULL,
+    parent_id int            NULL,
+    type      component_type NOT NULL,
 
     PRIMARY KEY (id),
     FOREIGN KEY (parent_id) REFERENCES role_message_component
@@ -57,13 +58,14 @@ CREATE TABLE role_message_row
 );
 
 CREATE TYPE button_style AS ENUM ('PRIMARY', 'SECONDARY', 'SUCCESS', 'DANGER');
+CREATE CAST (character varying AS button_style) WITH INOUT AS IMPLICIT;
 
 CREATE TABLE role_message_button
 (
     component_id int          NOT NULL,
     role_name    text         NOT NULL,
     style        button_style NOT NULL,
-    label        text         NOT NULL,
+    label        text         NULL,
     emoji_id     int          NULL,
 
     PRIMARY KEY (component_id),
@@ -73,7 +75,7 @@ CREATE TABLE role_message_button
 
 CREATE TABLE role_message_select_menu
 (
-    component_id int,
+    component_id int  NOT NULL,
     placeholder  text NULL,
 
     PRIMARY KEY (component_id),
@@ -82,13 +84,16 @@ CREATE TABLE role_message_select_menu
 
 CREATE TABLE role_message_select_menu_choice
 (
-    menu_id     int  NOT NULL,
+    id          serial NOT NULL,
+    menu_id     int    NOT NULL,
     -- Checking that each role is present once per message would require a trigger
-    role_name   text NOT NULL,
-    label       text NOT NULL,
-    description text NULL,
-    emoji_id    int  NULL,
+    role_name   text   NOT NULL,
+    label       text   NOT NULL,
+    description text   NULL,
+    emoji_id    int    NULL,
 
+    PRIMARY KEY (id),
+    UNIQUE (menu_id, role_name),
     FOREIGN KEY (menu_id) REFERENCES role_message_select_menu,
     FOREIGN KEY (emoji_id) REFERENCES emoji
 );
