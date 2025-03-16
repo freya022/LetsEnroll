@@ -10,9 +10,11 @@ enum class ComponentType {
     SELECT_MENU
 }
 
+// TODO test if this being abstract doesn't cause issues when you remove one of the subclass's @Entity
+//  (try printing freshly retrieved entity, must not be retrieved from cache)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-class RoleMessageComponent(
+abstract class RoleMessageComponent(
     @Enumerated(EnumType.STRING)
     val type: ComponentType,
     @Id
