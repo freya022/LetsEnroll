@@ -10,7 +10,7 @@ data class RolesConfigDTO(
     @Serializable
     data class Message(
         val content: String,
-        val components: List<List<Component>>,
+        val components: List<Component>,
     ) {
 
         @Serializable
@@ -22,6 +22,12 @@ data class RolesConfigDTO(
 
         @Serializable
         sealed interface Component
+        @Serializable
+        data class Row(
+            val components: List<Component>,
+        ) : Component {
+            constructor(vararg components: Component) : this(listOf(*components))
+        }
         @Serializable
         data class Button(
             val roleName: String,

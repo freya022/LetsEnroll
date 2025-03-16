@@ -39,6 +39,7 @@ import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Role
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
 import net.dv8tion.jda.api.entities.emoji.Emoji
+import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle
 import net.dv8tion.jda.api.interactions.components.selections.SelectOption
 
@@ -80,14 +81,23 @@ class SlashSetup(
     private suspend fun RolesConfigDTO.Message.toJDA(guild: Guild) = MessageCreate(mentions = Mentions.none()) {
         content = this@toJDA.content
 
-        components += this@toJDA.components.map { row ->
-            row.map { component ->
-                when (component) {
-                    is RolesConfigDTO.Message.Button -> component.toJDA(guild, this)
-                    is RolesConfigDTO.Message.SelectMenu -> component.toJDA(guild, this)
-                }
-            }.row()
+        components += this@toJDA.components.map { component ->
+            when (component) {
+                is RolesConfigDTO.Message.Row -> component.toJDA(guild, this)
+                is RolesConfigDTO.Message.Button -> error("Button is not top level")
+                is RolesConfigDTO.Message.SelectMenu -> error("Button is not top level")
+            }
         }
+    }
+
+    private suspend fun RolesConfigDTO.Message.Row.toJDA(guild: Guild, builder: InlineMessage<*>): ActionRow {
+        return components.map { component ->
+            when (component) {
+                is RolesConfigDTO.Message.Row -> error("Can't new rows")
+                is RolesConfigDTO.Message.Button -> component.toJDA(guild, builder)
+                is RolesConfigDTO.Message.SelectMenu -> component.toJDA(guild, builder)
+            }
+        }.row()
     }
 
     private suspend fun RolesConfigDTO.Message.Button.toJDA(guild: Guild, builder: InlineMessage<*>): Button {

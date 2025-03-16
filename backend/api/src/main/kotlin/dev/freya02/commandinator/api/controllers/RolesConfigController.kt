@@ -20,7 +20,7 @@ class RolesConfigController(
                 RolesConfigDTO.Message(
                     "Choose the version of the framework you're using",
                     listOf(
-                        listOf(
+                        RolesConfigDTO.Message.Row(
                             RolesConfigDTO.Message.SelectMenu(
                                 placeholder = null,
                                 listOf(
@@ -44,7 +44,7 @@ class RolesConfigController(
                 RolesConfigDTO.Message(
                     "Choose the language you're using",
                     listOf(
-                        listOf(
+                        RolesConfigDTO.Message.Row(
                             RolesConfigDTO.Message.SelectMenu(
                                 placeholder = null,
                                 listOf(
@@ -68,7 +68,7 @@ class RolesConfigController(
                 RolesConfigDTO.Message(
                     "Choose the build tool you're using",
                     listOf(
-                        listOf(
+                        RolesConfigDTO.Message.Row(
                             RolesConfigDTO.Message.SelectMenu(
                                 placeholder = null,
                                 listOf(
@@ -92,7 +92,7 @@ class RolesConfigController(
                 RolesConfigDTO.Message(
                     "Choose the dependency injection framework you're using",
                     listOf(
-                        listOf(
+                        RolesConfigDTO.Message.Row(
                             RolesConfigDTO.Message.SelectMenu(
                                 placeholder = null,
                                 listOf(
@@ -116,7 +116,7 @@ class RolesConfigController(
                 RolesConfigDTO.Message(
                     "Use this button to toggle <@&{roleId[BC Updates]}>",
                     listOf(
-                        listOf(
+                        RolesConfigDTO.Message.Row(
                             RolesConfigDTO.Message.Button(
                                 roleName = "BC Updates",
                                 RolesConfigDTO.Message.Button.Style.SUCCESS,
