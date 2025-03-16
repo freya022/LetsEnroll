@@ -1,9 +1,10 @@
 package dev.freya02.commandinator.api.entity
 
+import dev.freya02.commandinator.api.mapper.MapStructConstructor
 import jakarta.persistence.*
 
 @Entity
-data class RolesConfig(
+data class RolesConfig @MapStructConstructor constructor(
     val guildId: Long,
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "config_id", nullable = false)

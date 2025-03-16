@@ -1,9 +1,10 @@
 package dev.freya02.commandinator.api.entity
 
+import dev.freya02.commandinator.api.mapper.MapStructConstructor
 import jakarta.persistence.*
 
 @Entity
-data class RoleMessage(
+data class RoleMessage @MapStructConstructor constructor(
     val content: String,
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinTable(

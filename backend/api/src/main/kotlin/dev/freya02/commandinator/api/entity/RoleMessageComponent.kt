@@ -2,6 +2,7 @@
 
 package dev.freya02.commandinator.api.entity
 
+import dev.freya02.commandinator.api.mapper.MapStructConstructor
 import jakarta.persistence.*
 
 enum class ComponentType {
@@ -24,7 +25,7 @@ abstract class RoleMessageComponent(
 
 @Entity
 @PrimaryKeyJoinColumn(name = "component_id")
-data class RoleMessageRow(
+data class RoleMessageRow @MapStructConstructor constructor(
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "parent_id", nullable = false)
     val components: MutableList<RoleMessageComponent> = arrayListOf(),
@@ -39,7 +40,7 @@ enum class ButtonStyle {
 
 @Entity
 @PrimaryKeyJoinColumn(name = "component_id")
-data class RoleMessageButton(
+data class RoleMessageButton @MapStructConstructor constructor(
     val roleName: String,
     @Enumerated(EnumType.STRING)
     val style: ButtonStyle,
@@ -50,7 +51,7 @@ data class RoleMessageButton(
 
 @Entity
 @PrimaryKeyJoinColumn(name = "component_id")
-data class RoleMessageSelectMenu(
+data class RoleMessageSelectMenu @MapStructConstructor constructor(
     val placeholder: String?,
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "menu_id", nullable = false)
@@ -58,7 +59,7 @@ data class RoleMessageSelectMenu(
 ) : RoleMessageComponent(ComponentType.SELECT_MENU)
 
 @Entity
-data class RoleMessageSelectMenuChoice(
+data class RoleMessageSelectMenuChoice @MapStructConstructor constructor(
     val roleName: String,
     val label: String,
     val description: String? = null,

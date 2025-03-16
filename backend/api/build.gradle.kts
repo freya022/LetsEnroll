@@ -8,6 +8,8 @@ plugins {
 	alias(libs.plugins.spring.dependency.management)
 
 	alias(libs.plugins.kotlinx.serialization)
+
+	kotlin("kapt")
 }
 
 dependencies {
@@ -28,6 +30,9 @@ dependencies {
 
 	implementation(project(":api:data"))
 	implementation(libs.kotlinx.serialization.json)
+
+	implementation(libs.mapstruct)
+	kapt(libs.mapstruct.processor)
 }
 
 allOpen {

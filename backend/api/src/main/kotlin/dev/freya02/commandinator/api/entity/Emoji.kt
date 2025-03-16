@@ -1,5 +1,6 @@
 package dev.freya02.commandinator.api.entity
 
+import dev.freya02.commandinator.api.mapper.MapStructConstructor
 import jakarta.persistence.*
 
 // TODO test if this being abstract doesn't cause issues when you remove one of the subclass's @Entity
@@ -15,13 +16,13 @@ abstract class Emoji(
 
 @Entity
 @DiscriminatorValue("UNICODE")
-data class UnicodeEmoji(
+data class UnicodeEmoji @MapStructConstructor constructor(
     val unicode: String,
 ) : Emoji()
 
 @Entity
 @DiscriminatorValue("CUSTOM")
-data class CustomEmoji(
+data class CustomEmoji @MapStructConstructor constructor(
     val discordId: Long,
     val name: String,
     val animated: Boolean

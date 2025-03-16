@@ -3,6 +3,7 @@ kotlin = "2.1.0"
 jackson = "2.17.2"
 flyway = "11.1.1"
 ktor = "3.1.0"
+mapstruct = "1.6.3"
 
 [plugins]
 spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
@@ -35,6 +36,9 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-content-negociation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
 
 [bundles]
 flyway = ["flyway-core", "flyway-database-postgresql"]
