@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
+private const val GUILD_ID = 168617561649182
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class RolesConfigTests(
@@ -21,7 +23,7 @@ class RolesConfigTests(
         val config = assertDoesNotThrow {
             rolesConfigRepository.save(
                 RolesConfig(
-                    guildId = 1234,
+                    guildId = GUILD_ID,
                     messages = arrayListOf(
                         RoleMessage(
                             content = "content",
@@ -62,6 +64,6 @@ class RolesConfigTests(
             )
         }
 
-        assertDoesNotThrow { rolesConfigRepository.findById(config.id) }
+        assertDoesNotThrow { rolesConfigRepository.findByGuildId(GUILD_ID) }
     }
 }
