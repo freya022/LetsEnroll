@@ -117,7 +117,7 @@ class SlashSetup(
 
     private fun RolesConfigDTO.Message.Emoji.toJDA(): Emoji {
         return when (this) {
-            is RolesConfigDTO.Message.CustomEmoji -> Emoji.fromCustom(name, id, animated)
+            is RolesConfigDTO.Message.CustomEmoji -> Emoji.fromCustom(name, discordId, animated)
             is RolesConfigDTO.Message.UnicodeEmoji -> EmojiUtils.resolveJDAEmoji(unicode)
         }
     }

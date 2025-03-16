@@ -25,7 +25,7 @@ class RolesConfigTests(
                     messages = arrayListOf(
                         RoleMessage(
                             content = "content",
-                            messageComponents = arrayListOf(
+                            components = arrayListOf(
                                 RoleMessageRow(
                                     components = arrayListOf(
                                         RoleMessageButton(

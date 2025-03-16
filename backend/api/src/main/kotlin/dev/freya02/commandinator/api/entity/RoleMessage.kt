@@ -11,7 +11,7 @@ data class RoleMessage(
         joinColumns = [JoinColumn(name = "message_id", nullable = false)],
         inverseJoinColumns = [JoinColumn(name = "component_id", nullable = false)],
     )
-    val messageComponents: MutableList<RoleMessageComponent>,
+    val components: MutableList<RoleMessageComponent>,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
