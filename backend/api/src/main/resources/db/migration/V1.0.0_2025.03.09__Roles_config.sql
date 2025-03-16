@@ -1,10 +1,15 @@
+CREATE FUNCTION digits(value numeric) RETURNS INT AS
+'SELECT ceil(log(value + 1))' LANGUAGE sql;
+
+CREATE DOMAIN snowflake AS bigint CHECK (value > 0 AND digits(value) <= 20);
+
 CREATE TYPE emoji_type AS ENUM ('UNICODE', 'CUSTOM');
 
 CREATE TABLE emoji
 (
     id         serial     NOT NULL,
     type       emoji_type NOT NULL,
-    discord_id bigint     NULL,
+    discord_id snowflake  NULL,
     name       text       NULL,
     unicode    text       NULL,
     animated   boolean    NULL,
@@ -14,8 +19,8 @@ CREATE TABLE emoji
 
 CREATE TABLE roles_config
 (
-    id       serial NOT NULL,
-    guild_id bigint NOT NULL,
+    id       serial    NOT NULL,
+    guild_id snowflake NOT NULL,
 
     PRIMARY KEY (id)
 );
