@@ -1,23 +1,26 @@
 package dev.freya02.commandinator.api.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity
-data class Emoji(
-    val discordId: Long?,
-    val name: String,
-    val animated: Boolean?,
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+class Emoji(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0
-) {
+)
 
-    companion object {
+@Entity
+@DiscriminatorValue("UNICODE")
+data class UnicodeEmoji(
+    val unicode: String,
+) : Emoji()
 
-        fun ofUnicode(unicode: String) = Emoji(discordId = null, name = unicode, animated = null)
-        fun ofCustom(id: Long, name: String, animated: Boolean) = Emoji(id, name, animated)
-    }
-}
+@Entity
+@DiscriminatorValue("CUSTOM")
+data class CustomEmoji(
+    val discordId: Long,
+    val name: String,
+    val animated: Boolean
+) : Emoji()

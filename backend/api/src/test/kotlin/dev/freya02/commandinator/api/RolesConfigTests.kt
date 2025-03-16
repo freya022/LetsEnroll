@@ -32,7 +32,7 @@ class RolesConfigTests(
                                             roleName = "BC Updates",
                                             style = ButtonStyle.SUCCESS,
                                             label = "Toggle BC update pings",
-                                            emoji = Emoji.ofUnicode("\uD83D\uDD14")
+                                            emoji = UnicodeEmoji("\uD83D\uDD14")
                                         )
                                     )
                                 ),
@@ -44,12 +44,12 @@ class RolesConfigTests(
                                                 RoleMessageSelectMenuChoice(
                                                     roleName = "V3",
                                                     label = "V3",
-                                                    emoji = Emoji.ofUnicode("\uD83D\uDD25")
+                                                    emoji = UnicodeEmoji("\uD83D\uDD25")
                                                 ),
                                                 RoleMessageSelectMenuChoice(
                                                     roleName = "V2",
                                                     label = "V2",
-                                                    emoji = Emoji.ofUnicode("\uD83D\uDE15")
+                                                    emoji = UnicodeEmoji("\uD83D\uDE15")
                                                 ),
                                             )
                                         )

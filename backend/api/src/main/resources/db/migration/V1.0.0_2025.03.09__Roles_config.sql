@@ -1,9 +1,13 @@
+CREATE TYPE emoji_type AS ENUM ('UNICODE', 'CUSTOM');
+
 CREATE TABLE emoji
 (
-    id         serial  NOT NULL,
-    discord_id bigint  NULL,
-    name       text    NOT NULL,
-    animated   boolean NULL,
+    id         serial     NOT NULL,
+    type       emoji_type NOT NULL,
+    discord_id bigint     NULL,
+    name       text       NULL,
+    unicode    text       NULL,
+    animated   boolean    NULL,
 
     PRIMARY KEY (id)
 );
