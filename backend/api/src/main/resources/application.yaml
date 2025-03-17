@@ -10,7 +10,13 @@ spring:
     name: api
 
   config:
-    import: file:./config/.env[.properties]
+    import:
+      # PWD is module root
+      - optional:file:../../config/.env[.properties]
+      # PWD is backend root
+      - optional:file:../config/.env[.properties]
+      # PWD is project root
+      - optional:file:./config/.env[.properties]
 
   security:
     oauth2:
