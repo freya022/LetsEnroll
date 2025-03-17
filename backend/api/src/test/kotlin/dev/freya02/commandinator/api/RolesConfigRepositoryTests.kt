@@ -15,7 +15,7 @@ private const val GUILD_ID = 168617561649182
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class RolesConfigTests(
+class RolesConfigRepositoryTests(
     @Autowired
     private val rolesConfigRepository: RolesConfigRepository,
 ) {
