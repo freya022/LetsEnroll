@@ -2,6 +2,7 @@ package dev.freya02.commandinator.api.controllers
 
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.exceptions.RolesConfigAlreadyExistsException
+import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
 import dev.freya02.commandinator.api.exceptions.exceptionResponse
 import dev.freya02.commandinator.api.service.RolesConfigService
 import org.springframework.http.HttpStatus
@@ -142,4 +143,8 @@ class RolesConfigController(
     @ExceptionHandler
     fun handleException(exception: RolesConfigAlreadyExistsException) =
         exceptionResponse(HttpStatus.CONFLICT, "A config already exists.")
+
+    @ExceptionHandler
+    fun handleException(exception: RolesConfigEmptyException) =
+        exceptionResponse(HttpStatus.BAD_REQUEST, "The config contains no messages.")
 }
