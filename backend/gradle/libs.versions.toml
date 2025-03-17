@@ -15,6 +15,7 @@ jmh = { id = "me.champeau.jmh", version = "0.7.2" }
 
 [libraries]
 mockk = { module = "io.mockk:mockk", version = "1.13.16" }
+springmockk = { module = "com.ninja-squad:springmockk", version = "4.0.2" }
 bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.15.11" }
 
 dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version = "6.5.0" }
