@@ -1,6 +1,7 @@
 package dev.freya02.commandinator.api.service
 
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
+import dev.freya02.commandinator.api.exceptions.RolesConfigAlreadyExistsException
 import dev.freya02.commandinator.api.mapper.RolesConfigMapper
 import dev.freya02.commandinator.api.mapper.mapper
 import dev.freya02.commandinator.api.repository.RolesConfigRepository
@@ -14,6 +15,9 @@ class RolesConfigService(
 ) {
 
     fun createConfig(guildId: Long, config: RolesConfigDTO) {
+        if (rolesConfigRepository.existsByGuildId(guildId))
+            throw RolesConfigAlreadyExistsException("A configuration for guild $guildId already exists.")
+
         rolesConfigRepository.save(mapper.toRolesConfig(config, guildId))
     }
 
