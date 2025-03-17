@@ -1,20 +1,29 @@
 package dev.freya02.commandinator.api.controllers
 
+import dev.freya02.commandinator.api.bot.BotClient
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.exceptions.RolesConfigAlreadyExistsException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
 import dev.freya02.commandinator.api.exceptions.exceptionResponse
 import dev.freya02.commandinator.api.service.RolesConfigService
+import dev.freya02.commandinator.api.utils.get
 import org.springframework.http.HttpStatus
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 class RolesConfigController(
     private val rolesConfigService: RolesConfigService,
+    private val botClient: BotClient
 ) {
 
     @PostMapping("/api/guilds/{guildId}/roles")
-    fun createRoleConfig(@PathVariable guildId: Long, @RequestBody config: RolesConfigDTO) {
+    fun createRoleConfig(@PathVariable guildId: Long, @RequestBody config: RolesConfigDTO, @AuthenticationPrincipal user: OAuth2User) {
+        if (!botClient.isInGuild(guildId, user.get<String>("id")!!.toLong()))
+            throw ResponseStatusException(HttpStatus.FORBIDDEN)
+
         rolesConfigService.createConfig(guildId, config)
     }
 
