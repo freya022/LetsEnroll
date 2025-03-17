@@ -10,6 +10,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import kotlin.test.assertEquals
 
 private const val GUILD_ID = 168617561649182
 
@@ -88,7 +89,9 @@ class RolesConfigRepositoryTests @Autowired constructor(
             )
         )
 
-        rolesConfigRepository.save(mapper.toRolesConfig(oldDto, GUILD_ID))
+        val oldEntity = rolesConfigRepository.save(mapper.toRolesConfig(oldDto, GUILD_ID))
+        assertEquals("content", oldEntity.messages[0].content)
+        assertEquals("label", ((oldEntity.messages[0].components[0] as RoleMessageRow).components[0] as RoleMessageButton).label)
 
         val newDto = RolesConfigDTO(
             listOf(
@@ -108,6 +111,8 @@ class RolesConfigRepositoryTests @Autowired constructor(
             )
         )
 
-        rolesConfigRepository.save(mapper.toRolesConfig(newDto, GUILD_ID))
+        val newEntity = rolesConfigRepository.save(mapper.updateRolesConfig(newDto, rolesConfigRepository.findByGuildId(GUILD_ID)))
+        assertEquals("Use this button to toggle <@&{roleId[BC Updates]}>", newEntity.messages[0].content)
+        assertEquals("Toggle BC update pings", ((newEntity.messages[0].components[0] as RoleMessageRow).components[0] as RoleMessageButton).label)
     }
 }
