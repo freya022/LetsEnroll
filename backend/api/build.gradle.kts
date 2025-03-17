@@ -5,7 +5,6 @@ plugins {
 	alias(libs.plugins.spring)
 	alias(libs.plugins.jpa)
 	alias(libs.plugins.spring.boot)
-	alias(libs.plugins.spring.dependency.management)
 
 	alias(libs.plugins.kotlinx.serialization)
 
@@ -13,6 +12,8 @@ plugins {
 }
 
 dependencies {
+	implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
