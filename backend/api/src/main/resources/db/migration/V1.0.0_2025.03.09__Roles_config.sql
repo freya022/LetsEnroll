@@ -22,7 +22,8 @@ CREATE TABLE roles_config
     id       serial    NOT NULL,
     guild_id snowflake NOT NULL,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE (guild_id)
 );
 
 CREATE TABLE role_message
