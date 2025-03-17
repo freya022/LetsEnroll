@@ -15,15 +15,14 @@ private const val GUILD_ID = 168617561649182
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class RolesConfigRepositoryTests(
-    @Autowired
+class RolesConfigRepositoryTests @Autowired constructor(
     private val rolesConfigRepository: RolesConfigRepository,
 ) {
 
     // No need to delete or make sure exceptions don't prevent cleanup, as transactions are rolled back
     @Test
     fun `Insert and retrieve RolesConfig`() {
-        val config = rolesConfigRepository.save(
+        rolesConfigRepository.save(
             RolesConfig(
                 guildId = GUILD_ID,
                 messages = arrayListOf(
