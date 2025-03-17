@@ -1,20 +1,29 @@
 package dev.freya02.commandinator.api.controllers
 
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
-import dev.freya02.commandinator.api.repository.RolesConfigRepository
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
+import dev.freya02.commandinator.api.exceptions.RolesConfigAlreadyExistsException
+import dev.freya02.commandinator.api.exceptions.exceptionResponse
+import dev.freya02.commandinator.api.service.RolesConfigService
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class RolesConfigController(
-    private val rolesConfigRepository: RolesConfigRepository,
+    private val rolesConfigService: RolesConfigService,
 ) {
+
+    @PostMapping("/api/guilds/{guildId}/roles")
+    fun createRoleConfig(@PathVariable guildId: Long, @RequestBody config: RolesConfigDTO) {
+        rolesConfigService.createConfig(guildId, config)
+    }
+
+    @GetMapping("/api/guilds/{guildId}/roles")
+    fun getRoleConfig(@PathVariable guildId: Long): RolesConfigDTO? {
+        return rolesConfigService.retrieveConfig(guildId)
+    }
 
     @GetMapping("/api/roles")
     fun retrieveConfiguredRoles(): RolesConfigDTO {
-        val rolesConfigs = rolesConfigRepository.findAll()
-        println("rolesConfigs = $rolesConfigs")
-
         return RolesConfigDTO(
             listOf(
                 RolesConfigDTO.Message(
@@ -129,4 +138,8 @@ class RolesConfigController(
             )
         )
     }
+
+    @ExceptionHandler
+    fun handleException(exception: RolesConfigAlreadyExistsException) =
+        exceptionResponse(HttpStatus.CONFLICT, "A config already exists.")
 }
