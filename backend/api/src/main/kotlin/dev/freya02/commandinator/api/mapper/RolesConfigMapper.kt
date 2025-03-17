@@ -2,17 +2,16 @@ package dev.freya02.commandinator.api.mapper
 
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.entity.*
-import dev.freya02.commandinator.api.service.RoleConfigService
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.SubclassMapping
 
 // TODO toRolesConfigDTO
-@Mapper(imports = [RoleConfigService::class])
+@Mapper
 abstract class RolesConfigMapper {
 
-    @Mapping(target = "guildId", expression = "java(RoleConfigService.getGuildId())")
-    abstract fun toRolesConfig(dto: RolesConfigDTO): RolesConfig
+    @Mapping(target = "guildId", expression = "java(guildId)")
+    abstract fun toRolesConfig(dto: RolesConfigDTO, guildId: Long): RolesConfig
 
     @SubclassMapping(source = RolesConfigDTO.Message.Row::class, target = RoleMessageRow::class)
     @SubclassMapping(source = RolesConfigDTO.Message.Button::class, target = RoleMessageButton::class)
