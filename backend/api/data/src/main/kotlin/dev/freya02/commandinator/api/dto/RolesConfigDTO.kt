@@ -1,5 +1,6 @@
 package dev.freya02.commandinator.api.dto
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,19 +17,23 @@ data class RolesConfigDTO(
         @Serializable
         sealed interface Emoji
         @Serializable
+        @SerialName("unicode")
         data class UnicodeEmoji(val unicode: String) : Emoji
         @Serializable
+        @SerialName("custom")
         data class CustomEmoji(val animated: Boolean, val name: String, val discordId: Long) : Emoji
 
         @Serializable
         sealed interface Component
         @Serializable
+        @SerialName("row")
         data class Row(
             val components: List<Component>,
         ) : Component {
             constructor(vararg components: Component) : this(listOf(*components))
         }
         @Serializable
+        @SerialName("button")
         data class Button(
             val roleName: String,
             val style: Style,
@@ -44,6 +49,7 @@ data class RolesConfigDTO(
             }
         }
         @Serializable
+        @SerialName("string_select_menu")
         data class SelectMenu(
             val placeholder: String? = null,
             val choices: List<Choice>,
