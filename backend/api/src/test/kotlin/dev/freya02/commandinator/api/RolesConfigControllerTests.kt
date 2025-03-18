@@ -55,7 +55,11 @@ class RolesConfigControllerTests @Autowired constructor(
         }.andExpect {
             status { isForbidden() }
         }
+    }
 
+    @Test
+    fun `Insert roles config with polymorphic components and emojis`() {
+        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
         every { rolesConfigService.createConfig(any(), any()) } just runs
         every { botClient.isInGuild(EXAMPLE_GUILD_ID, EXAMPLE_USER_ID) } returns true
 
@@ -70,9 +74,30 @@ class RolesConfigControllerTests @Autowired constructor(
             contentType = MediaType.APPLICATION_JSON
             //language=json
             content = """
+            {
+              "messages": [
                 {
-                    "messages": []
+                  "content": "content",
+                  "components": [
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "button",
+                          "roleName": "role name",
+                          "style": "PRIMARY",
+                          "label": "label",
+                          "emoji": {
+                            "type": "unicode",
+                            "unicode": "bell"
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
+              ]
+            }
             """.trimIndent()
         }.andExpect {
             status { isOk() }
