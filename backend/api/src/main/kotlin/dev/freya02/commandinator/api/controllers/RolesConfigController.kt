@@ -1,6 +1,7 @@
 package dev.freya02.commandinator.api.controllers
 
 import dev.freya02.commandinator.api.bot.BotClient
+import dev.freya02.commandinator.api.bot.isInGuild
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.exceptions.RolesConfigAlreadyExistsException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException

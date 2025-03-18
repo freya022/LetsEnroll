@@ -2,10 +2,12 @@ package dev.freya02.commandinator.api
 
 import com.ninjasquad.springmockk.MockkBean
 import dev.freya02.commandinator.api.bot.BotClient
+import dev.freya02.commandinator.api.bot.isInGuild
 import dev.freya02.commandinator.api.controllers.RolesConfigController
 import dev.freya02.commandinator.api.service.RolesConfigService
 import io.mockk.every
 import io.mockk.just
+import io.mockk.mockkStatic
 import io.mockk.runs
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,6 +34,7 @@ class RolesConfigControllerTests @Autowired constructor(
 
     @Test
     fun `Must be in guild to create config`() {
+        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
         every { botClient.isInGuild(any(), any()) } returns false
 
         mockMvc.post("/api/guilds/$EXAMPLE_GUILD_ID/roles") {

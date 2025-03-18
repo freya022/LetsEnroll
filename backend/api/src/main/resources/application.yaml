@@ -45,3 +45,7 @@ api:
     # On Linux: Open terminal in the 'config' directory
     # openssl rand -out private.key -base64 64
     secret-key-file: ${API_PRIVATE_KEY_FILE}
+  bot:
+    server:
+      host: ${BOT_SERVER_HOST}
+      port: ${BOT_SERVER_PORT}
