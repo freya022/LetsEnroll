@@ -23,7 +23,7 @@ interface Props {
   user?: UserDTO;
 }
 
-export async function loader(): Promise<Props> {
+async function loader(): Promise<Props> {
   const userResponse = await fetch("/api/user");
   const user: UserDTO = userResponse.ok ? await userResponse.json() : undefined;
 
@@ -32,7 +32,9 @@ export async function loader(): Promise<Props> {
   };
 }
 
-export function Root() {
+Root.loader = loader;
+
+export default function Root() {
   const { user } = useLoaderData<Props>();
 
   return (

@@ -28,8 +28,8 @@ async function loader(): Promise<Props> {
   };
 }
 
-export function Dashboard() {
+Dashboard.loader = loader;
+
+export default function Dashboard() {
   return <></>;
 }
-
-Dashboard.loader = loader;
