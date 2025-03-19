@@ -18,6 +18,10 @@ spring:
       # PWD is project root
       - optional:file:./config/.env[.properties]
 
+  session:
+    jdbc:
+      initialize-schema: always
+
   security:
     oauth2:
       client:

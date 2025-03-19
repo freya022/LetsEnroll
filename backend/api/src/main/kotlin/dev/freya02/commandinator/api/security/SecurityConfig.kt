@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.invoke
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizedClientRepository
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
@@ -21,6 +23,14 @@ import java.util.function.Supplier
 class SecurityConfig(
     @Value("\${api.front-url}") private val frontUrl: String,
 ) {
+
+    // Otherwise the default is [[AuthenticatedPrincipalOAuth2AuthorizedClientRepository]],
+    // which delegates to an in-memory [[OAuth2AuthorizedClientService]],
+    // which gets lost on restart.
+    @Bean
+    fun authorizedClientRepository(): OAuth2AuthorizedClientRepository {
+        return HttpSessionOAuth2AuthorizedClientRepository()
+    }
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
