@@ -48,3 +48,9 @@ export function getErrorMessage(error: AxiosError): string {
 
   return error.message;
 }
+
+export function hasPermission(set: string, ...requested: bigint[]): boolean {
+  return requested.every(
+    (permission) => (BigInt(set) & permission) === permission,
+  );
+}

@@ -28,6 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
+        loader: Dashboard.loader,
         element: <Dashboard />,
       },
     ],
