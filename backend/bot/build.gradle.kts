@@ -34,7 +34,7 @@ dependencies {
     implementation(libs.ktor.server.resources)
     implementation(libs.ktor.server.content.negotiation)
 
-    implementation(projects.api.data)
+    implementation(projects.data)
 
     // Mockk needs bytebuddy to be upgraded to support Java 24
     jmh(libs.mockk)
