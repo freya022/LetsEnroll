@@ -32,7 +32,7 @@ spring:
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_post
             redirect-uri: "{baseUrl}/login/oauth2/code/discord"
-            scope: identify
+            scope: identify,guilds
         provider:
           discord:
             authorization-uri: https://discord.com/oauth2/authorize?prompt=none
