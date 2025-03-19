@@ -1,5 +1,6 @@
 package dev.freya02.commandinator.api.bot
 
+import dev.freya02.commandinator.api.dto.GuildDTO
 import dev.freya02.commandinator.api.dto.MemberDTO
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -18,6 +19,9 @@ import org.springframework.web.service.invoker.createClient
 interface BotClient {
     @GetExchange("/guilds/{guildId}/members/{userId}")
     fun getMember(@PathVariable guildId: Long, @PathVariable userId: Long): ResponseEntity<MemberDTO>
+
+    @GetExchange("/guilds")
+    fun getBotGuilds(): List<GuildDTO>
 }
 
 fun BotClient.isInGuild(guildId: Long, userId: Long): Boolean {

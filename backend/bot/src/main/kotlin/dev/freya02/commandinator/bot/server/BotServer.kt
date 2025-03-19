@@ -1,5 +1,6 @@
 package dev.freya02.commandinator.bot.server
 
+import dev.freya02.commandinator.api.dto.GuildDTO
 import dev.freya02.commandinator.api.dto.MemberDTO
 import dev.freya02.commandinator.bot.config.Config
 import io.github.freya022.botcommands.api.core.annotations.BEventListener
@@ -19,6 +20,7 @@ import io.ktor.server.resources.Resources
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.entities.Guild
 
 @Resource("/guilds")
 private class Guilds {
@@ -54,6 +56,7 @@ class BotServer {
             install(RoutingRoot) {
                 routing {
                     getGuildMember(jda)
+                    getBotGuilds(jda)
                 }
             }
         }.start(wait = false)
@@ -78,4 +81,12 @@ class BotServer {
 
         call.respond(MemberDTO(member.permissions.mapTo(hashSetOf()) { it.name }))
     }
+
+    private fun Route.getBotGuilds(jda: JDA) = get<Guilds> { _ ->
+        call.respond(jda.guilds.map { it.toDTO() })
+    }
+
+    private fun Guild.toDTO(): GuildDTO = GuildDTO(
+        idLong,
+    )
 }
