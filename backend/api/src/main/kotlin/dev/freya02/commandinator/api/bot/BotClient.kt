@@ -16,7 +16,7 @@ import org.springframework.web.service.invoker.createClient
 
 @HttpExchange
 interface BotClient {
-    @GetExchange("/guilds/{guildId}/users/{userId}")
+    @GetExchange("/guilds/{guildId}/members/{userId}")
     fun getMember(@PathVariable guildId: Long, @PathVariable userId: Long): ResponseEntity<MemberDTO>
 }
 
