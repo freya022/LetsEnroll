@@ -33,7 +33,29 @@ class RolesConfigMapperTest {
             )
         )
 
-        assertDoesNotThrow { mapper.toRolesConfig(dto, EXAMPLE_GUILD_ID) }
+        val actualEntity = mapper.toRolesConfig(dto, EXAMPLE_GUILD_ID)
+        val expectedEntity = RolesConfig(
+            guildId = EXAMPLE_GUILD_ID,
+            messages = arrayListOf(
+                RoleMessage(
+                    content = "Use this button to toggle <@&{roleId[BC Updates]}>",
+                    components = arrayListOf(
+                        RoleMessageRow(
+                            components = arrayListOf(
+                                RoleMessageButton(
+                                    roleName = "BC Updates",
+                                    style = ButtonStyle.SUCCESS,
+                                    label = "Toggle BC update pings",
+                                    emoji = UnicodeEmoji("\uD83D\uDD14")
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+        assertEquals(expectedEntity, actualEntity)
     }
 
     @Test
