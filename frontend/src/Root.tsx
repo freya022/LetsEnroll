@@ -38,7 +38,7 @@ export default function Root() {
   const { user } = useLoaderData<Props>();
 
   return (
-    <>
+    <div className="flex h-full flex-col">
       <header className="flex items-center border-b px-4 py-2">
         <div className="grow">
           <Link to={`/`} className="flex max-w-min items-center gap-x-1">
@@ -55,10 +55,10 @@ export default function Root() {
           {user ? <User user={user} /> : <LogIn />}
         </div>
       </header>
-      <main className="h-auto p-2">
+      <main className="h-auto grow p-2">
         <Outlet />
       </main>
-    </>
+    </div>
   );
 }
 
