@@ -4,6 +4,7 @@ import com.ninjasquad.springmockk.MockkBean
 import dev.freya02.commandinator.api.bot.BotClient
 import dev.freya02.commandinator.api.bot.isInGuild
 import dev.freya02.commandinator.api.controllers.RolesConfigController
+import dev.freya02.commandinator.api.exceptions.NoSuchRolesConfigException
 import dev.freya02.commandinator.api.service.RolesConfigService
 import io.mockk.every
 import io.mockk.just
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
 @WebMvcTest(controllers = [RolesConfigController::class])
@@ -98,6 +100,36 @@ class RolesConfigControllerTests @Autowired constructor(
             """.trimIndent()
         }.andExpect {
             status { isOk() }
+        }
+    }
+
+    @Test
+    fun `Must be in guild to receive config`() {
+        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
+        every { botClient.isInGuild(any(), any()) } returns false
+
+        mockMvc.get("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
+            // https://docs.spring.io/spring-security/reference/servlet/test/mockmvc/csrf.html
+            with(csrf().asHeader())
+            // https://docs.spring.io/spring-security/reference/servlet/test/mockmvc/oauth2.html#testing-oauth2-login
+            with(oauth2Login().attributes {
+                it["id"] = EXAMPLE_USER_ID.toString()
+            })
+        }.andExpect {
+            status { isForbidden() }
+        }
+    }
+
+    @Test
+    fun `No config returns 404`() {
+        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
+        every { botClient.isInGuild(any(), any()) } returns true
+        every { rolesConfigService.retrieveConfig(EXAMPLE_GUILD_ID) } throws(NoSuchRolesConfigException("No roles config found for guild"))
+
+        mockMvc.get("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
+            withLoggedInInvalidUser()
+        }.andExpect {
+            status { isNotFound() }
         }
     }
 }

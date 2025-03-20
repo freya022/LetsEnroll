@@ -3,6 +3,7 @@ package dev.freya02.commandinator.api.controllers
 import dev.freya02.commandinator.api.bot.BotClient
 import dev.freya02.commandinator.api.bot.isInGuild
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
+import dev.freya02.commandinator.api.exceptions.NoSuchRolesConfigException
 import dev.freya02.commandinator.api.exceptions.RolesConfigAlreadyExistsException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
 import dev.freya02.commandinator.api.exceptions.exceptionResponse
@@ -29,7 +30,10 @@ class RolesConfigController(
     }
 
     @GetMapping("/api/guilds/{guildId}/roles")
-    fun getRoleConfig(@PathVariable guildId: Long): RolesConfigDTO? {
+    fun getRoleConfig(@PathVariable guildId: Long, @DashboardUser user: OAuth2User): RolesConfigDTO? {
+        if (!botClient.isInGuild(guildId, user.get<String>("id")!!.toLong()))
+            throw ResponseStatusException(HttpStatus.FORBIDDEN)
+
         return rolesConfigService.retrieveConfig(guildId)
     }
 
@@ -157,4 +161,8 @@ class RolesConfigController(
     @ExceptionHandler
     fun handleException(exception: RolesConfigEmptyException) =
         exceptionResponse(HttpStatus.BAD_REQUEST, "The config contains no messages.")
+
+    @ExceptionHandler
+    fun handleException(exception: NoSuchRolesConfigException) =
+        exceptionResponse(HttpStatus.NOT_FOUND, "No config exists for this guild.")
 }

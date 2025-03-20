@@ -1,6 +1,7 @@
 package dev.freya02.commandinator.api.service
 
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
+import dev.freya02.commandinator.api.exceptions.NoSuchRolesConfigException
 import dev.freya02.commandinator.api.exceptions.RolesConfigAlreadyExistsException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
 import dev.freya02.commandinator.api.mapper.RolesConfigMapper
@@ -28,7 +29,10 @@ class RolesConfigService(
         TODO()
     }
 
-    fun retrieveConfig(guildId: Long): RolesConfigDTO? {
-        TODO()
+    fun retrieveConfig(guildId: Long): RolesConfigDTO {
+        val rolesConfig = rolesConfigRepository.findByGuildId(guildId)
+            ?: throw NoSuchRolesConfigException("No roles config found for guild $guildId")
+
+        return mapper.toRolesConfigDTO(rolesConfig)
     }
 }
