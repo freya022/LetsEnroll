@@ -18,9 +18,6 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 
-private const val EXAMPLE_GUILD_ID: Long = 1568581531818
-private const val EXAMPLE_USER_ID: Long = 6186188134619
-
 @WebMvcTest(controllers = [RolesConfigController::class])
 class RolesConfigControllerTests @Autowired constructor(
     private val mockMvc: MockMvc,

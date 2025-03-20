@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
-private const val EXAMPLE_GUILD_ID = 18198613161618
-
 class RolesConfigServiceTests {
 
     @Test

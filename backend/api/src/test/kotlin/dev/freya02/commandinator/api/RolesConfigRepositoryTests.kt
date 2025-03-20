@@ -12,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import kotlin.test.assertEquals
 
-private const val GUILD_ID = 168617561649182
-
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class RolesConfigRepositoryTests @Autowired constructor(
@@ -25,7 +23,7 @@ class RolesConfigRepositoryTests @Autowired constructor(
     fun `Insert and retrieve RolesConfig`() {
         rolesConfigRepository.save(
             RolesConfig(
-                guildId = GUILD_ID,
+                guildId = EXAMPLE_GUILD_ID,
                 messages = arrayListOf(
                     RoleMessage(
                         content = "content",
@@ -65,7 +63,7 @@ class RolesConfigRepositoryTests @Autowired constructor(
             )
         )
 
-        assertDoesNotThrow { rolesConfigRepository.findByGuildId(GUILD_ID) }
+        assertDoesNotThrow { rolesConfigRepository.findByGuildId(EXAMPLE_GUILD_ID)!! }
     }
 
     @Test
