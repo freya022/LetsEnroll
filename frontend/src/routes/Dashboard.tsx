@@ -1,5 +1,7 @@
 import axios from "axios";
 import { hasPermission } from "@/utils.ts";
+import { useLoaderData } from "react-router";
+import { ChevronRight } from "lucide-react";
 
 const MANAGE_SERVER = BigInt(1) << BigInt(5);
 const MANAGE_ROLES = BigInt(1) << BigInt(28);
@@ -31,5 +33,31 @@ async function loader(): Promise<Props> {
 Dashboard.loader = loader;
 
 export default function Dashboard() {
-  return <></>;
+  const { managedGuilds } = useLoaderData<Props>();
+
+  return (
+    <div className="flex h-full flex-col p-1">
+      <ul className="border-border flex w-sm grow flex-col rounded-lg border-2">
+        {managedGuilds.map((guild) => (
+          <li key={guild.id}>
+            <Guild guild={guild} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Guild({ guild }: { guild: GuildDTO }) {
+  return (
+    <div className="hover:bg-accent flex cursor-pointer items-center gap-2 p-2">
+      <img
+        src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp?animated=true`}
+        alt={`${guild.name} icon`}
+        className="border-border size-16 rounded-full border-1"
+      />
+      <span className="grow">{guild.name}</span>
+      <ChevronRight />
+    </div>
+  );
 }
