@@ -2,13 +2,12 @@ package dev.freya02.commandinator.api.mapper
 
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.entity.*
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.MappingTarget
-import org.mapstruct.SubclassMapping
+import org.mapstruct.*
 
-// TODO toRolesConfigDTO
-@Mapper
+@Mapper(
+    // JPA entities are always non-final, so mapping them to DTOs 1:1 cannot be guaranteed by MapStruct
+    subclassExhaustiveStrategy = SubclassExhaustiveStrategy.RUNTIME_EXCEPTION
+)
 abstract class RolesConfigMapper {
 
     @Mapping(target = "guildId", expression = "java(guildId)")
@@ -24,4 +23,17 @@ abstract class RolesConfigMapper {
     @SubclassMapping(source = RolesConfigDTO.Message.UnicodeEmoji::class, target = UnicodeEmoji::class)
     @SubclassMapping(source = RolesConfigDTO.Message.CustomEmoji::class, target = CustomEmoji::class)
     abstract fun toEmoji(dto: RolesConfigDTO.Message.Emoji): Emoji
+
+    // Entity ==> DTO
+
+    abstract fun toRolesConfigDTO(entity: RolesConfig): RolesConfigDTO
+
+    @SubclassMapping(source = RoleMessageRow::class, target = RolesConfigDTO.Message.Row::class)
+    @SubclassMapping(source = RoleMessageButton::class, target = RolesConfigDTO.Message.Button::class)
+    @SubclassMapping(source = RoleMessageSelectMenu::class, target = RolesConfigDTO.Message.SelectMenu::class)
+    abstract fun toComponentDTO(entity: RoleMessageComponent): RolesConfigDTO.Message.Component
+
+    @SubclassMapping(source = UnicodeEmoji::class, target = RolesConfigDTO.Message.UnicodeEmoji::class)
+    @SubclassMapping(source = CustomEmoji::class, target = RolesConfigDTO.Message.CustomEmoji::class)
+    abstract fun toEmojiDTO(entity: Emoji): RolesConfigDTO.Message.Emoji
 }

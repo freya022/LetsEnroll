@@ -109,6 +109,46 @@ class RolesConfigMapperTest {
 
     @Test
     fun `Map entity to DTO`() {
+        val entity = RolesConfig(
+            guildId = EXAMPLE_GUILD_ID,
+            messages = arrayListOf(
+                RoleMessage(
+                    content = "Use this button to toggle <@&{roleId[BC Updates]}>",
+                    components = arrayListOf(
+                        RoleMessageRow(
+                            components = arrayListOf(
+                                RoleMessageButton(
+                                    roleName = "BC Updates",
+                                    style = ButtonStyle.SUCCESS,
+                                    label = "Toggle BC update pings",
+                                    emoji = UnicodeEmoji("\uD83D\uDD14")
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
 
+        val actualDto = mapper.toRolesConfigDTO(entity)
+        val expectedDto = RolesConfigDTO(
+            listOf(
+                RolesConfigDTO.Message(
+                    "Use this button to toggle <@&{roleId[BC Updates]}>",
+                    listOf(
+                        RolesConfigDTO.Message.Row(
+                            RolesConfigDTO.Message.Button(
+                                roleName = "BC Updates",
+                                RolesConfigDTO.Message.Button.Style.SUCCESS,
+                                label = "Toggle BC update pings",
+                                emoji = RolesConfigDTO.Message.UnicodeEmoji("\uD83D\uDD14"),
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+        assertEquals(expectedDto, actualDto)
     }
 }

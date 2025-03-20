@@ -27,7 +27,7 @@ data class RolesConfigDTO(
         sealed interface Component
         @Serializable
         @SerialName("row")
-        data class Row(
+        data class Row @MapStructConstructor constructor(
             val components: List<Component>,
         ) : Component {
             constructor(vararg components: Component) : this(listOf(*components))
