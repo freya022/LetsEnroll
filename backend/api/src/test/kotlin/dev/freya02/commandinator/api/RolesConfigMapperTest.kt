@@ -25,7 +25,7 @@ class RolesConfigMapperTest {
                                 roleName = "BC Updates",
                                 RolesConfigDTO.Message.Button.Style.SUCCESS,
                                 label = "Toggle BC update pings",
-                                emoji = RolesConfigDTO.Message.UnicodeEmoji("bell"),
+                                emoji = RolesConfigDTO.Message.UnicodeEmoji("\uD83D\uDD14"),
                             )
                         )
                     )
@@ -71,7 +71,7 @@ class RolesConfigMapperTest {
                                 roleName = "BC Updates",
                                 style = RolesConfigDTO.Message.Button.Style.SUCCESS,
                                 label = newLabel,
-                                emoji = RolesConfigDTO.Message.UnicodeEmoji("bell"),
+                                emoji = RolesConfigDTO.Message.UnicodeEmoji("\uD83D\uDD14"),
                             )
                         )
                     )
