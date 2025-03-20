@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
@@ -37,12 +35,7 @@ class RolesConfigControllerTests @Autowired constructor(
         every { botClient.isInGuild(any(), any()) } returns false
 
         mockMvc.post("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
-            // https://docs.spring.io/spring-security/reference/servlet/test/mockmvc/csrf.html
-            with(csrf().asHeader())
-            // https://docs.spring.io/spring-security/reference/servlet/test/mockmvc/oauth2.html#testing-oauth2-login
-            with(oauth2Login().attributes {
-                it["id"] = "1234"
-            })
+            withLoggedInInvalidUser()
 
             contentType = MediaType.APPLICATION_JSON
             //language=json
@@ -63,12 +56,7 @@ class RolesConfigControllerTests @Autowired constructor(
         every { botClient.isInGuild(EXAMPLE_GUILD_ID, EXAMPLE_USER_ID) } returns true
 
         mockMvc.post("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
-            // https://docs.spring.io/spring-security/reference/servlet/test/mockmvc/csrf.html
-            with(csrf().asHeader())
-            // https://docs.spring.io/spring-security/reference/servlet/test/mockmvc/oauth2.html#testing-oauth2-login
-            with(oauth2Login().attributes {
-                it["id"] = EXAMPLE_USER_ID.toString()
-            })
+            withLoggedInUser()
 
             contentType = MediaType.APPLICATION_JSON
             //language=json
@@ -109,12 +97,7 @@ class RolesConfigControllerTests @Autowired constructor(
         every { botClient.isInGuild(any(), any()) } returns false
 
         mockMvc.get("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
-            // https://docs.spring.io/spring-security/reference/servlet/test/mockmvc/csrf.html
-            with(csrf().asHeader())
-            // https://docs.spring.io/spring-security/reference/servlet/test/mockmvc/oauth2.html#testing-oauth2-login
-            with(oauth2Login().attributes {
-                it["id"] = EXAMPLE_USER_ID.toString()
-            })
+            withLoggedInInvalidUser()
         }.andExpect {
             status { isForbidden() }
         }
