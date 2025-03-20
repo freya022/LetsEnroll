@@ -2,7 +2,7 @@
 
 package dev.freya02.commandinator.api.entity
 
-import dev.freya02.commandinator.api.mapper.MapStructConstructor
+import dev.freya02.commandinator.api.dto.MapStructConstructor
 import jakarta.persistence.*
 
 enum class ComponentType {
