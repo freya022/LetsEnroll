@@ -6,9 +6,7 @@ import {
 import axios from "axios";
 import { Button as ButtonComponent } from "@/components/ui/button.tsx";
 import { Dispatch, SetStateAction, useState } from "react";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -125,14 +123,6 @@ export default function RolesConfigPanel() {
   );
 }
 
-const roleMessage = z.object({
-  content: z.string(),
-});
-const rolesConfigSchema = z.object({
-  messages: z.array(roleMessage),
-  // .nonempty("You must create at least one message"),
-});
-
 function RolesConfigEditor({
   rolesConfig,
   setRolesConfig,
@@ -140,15 +130,8 @@ function RolesConfigEditor({
   rolesConfig: RolesConfig;
   setRolesConfig: Dispatch<SetStateAction<RolesConfig | undefined>>;
 }) {
-  console.log("default values", rolesConfig);
-  const form = useForm<z.infer<typeof rolesConfigSchema>>({
-    resolver: zodResolver(rolesConfigSchema),
-    values: rolesConfig,
-    resetOptions: {
-      keepDirtyValues: true,
-      keepDefaultValues: true,
-      keepValues: false,
-    },
+  const form = useForm<RolesConfig>({
+    defaultValues: rolesConfig,
   });
 
   function handleCreateMessage() {
@@ -165,7 +148,7 @@ function RolesConfigEditor({
     }));
   }
 
-  function onSubmit(values: z.infer<typeof rolesConfigSchema>) {
+  function onSubmit(values: RolesConfig) {
     console.log(values);
   }
 
@@ -176,6 +159,12 @@ function RolesConfigEditor({
           <FormField
             control={form.control}
             name={`messages`}
+            rules={{
+              required: {
+                value: true,
+                message: "You must create at least one message",
+              },
+            }}
             render={() => (
               <FormItem>
                 <FormLabel>Messages</FormLabel>
