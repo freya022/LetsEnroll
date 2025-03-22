@@ -6,7 +6,7 @@ import {
 import axios from "axios";
 import { Button as ButtonComponent } from "@/components/ui/button.tsx";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -73,7 +73,6 @@ type SelectMenu = {
 };
 
 type RoleMessage = {
-  uuid: string;
   content: string;
   components: Component[];
 };
@@ -134,18 +133,24 @@ function RolesConfigEditor({
     defaultValues: rolesConfig,
   });
 
+  const { fields: msgFields, append: appendMessage } = useFieldArray({
+    control: form.control,
+    name: "messages",
+    rules: {
+      required: {
+        value: true,
+        message: "You must create at least one message",
+      },
+    },
+  });
+
+  const watchMessages = form.watch("messages");
+
   function handleCreateMessage() {
-    setRolesConfig((current) => ({
-      ...current,
-      messages: [
-        ...current!.messages,
-        {
-          uuid: nextUUID(),
-          content: "Sample text",
-          components: [],
-        },
-      ],
-    }));
+    appendMessage({
+      content: "Sample text",
+      components: [],
+    });
   }
 
   function onSubmit(values: RolesConfig) {
@@ -156,23 +161,10 @@ function RolesConfigEditor({
     <div className="h-full w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name={`messages`}
-            rules={{
-              required: {
-                value: true,
-                message: "You must create at least one message",
-              },
-            }}
-            render={() => (
-              <FormItem>
-                <FormLabel>Messages</FormLabel>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {rolesConfig.messages.map((msg, msgIndex) => {
+          {watchMessages.length == 0 && (
+            <FormMessage>You must create at least one message</FormMessage>
+          )}
+          {msgFields.map((msg, msgIndex) => {
             function handleAddRow() {
               const newRow: Row = {
                 type: "row",
@@ -186,7 +178,7 @@ function RolesConfigEditor({
             }
 
             return (
-              <div key={msg.uuid}>
+              <div key={msg.id}>
                 <FormLabel>Message #{msgIndex}</FormLabel>
                 <FormField
                   control={form.control}
@@ -351,7 +343,6 @@ function CreateConfigButton({
     setRolesConfig({
       messages: [
         {
-          uuid: nextUUID(),
           content: "a",
           components: [],
         },
