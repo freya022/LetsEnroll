@@ -101,14 +101,18 @@ export default function RolesConfigPanel() {
   const [rolesConfig, setRolesConfig] = useState(props.rolesConfig);
 
   return (
-    <div
-      className={`h-full w-full transition-opacity delay-100 duration-200 ease-in-out ${state === "loading" ? "opacity-25" : ""}`}
-    >
-      {rolesConfig ? (
-        <RolesConfigEditor rolesConfig={rolesConfig} />
-      ) : (
-        <CreateConfigPrompt setRolesConfig={setRolesConfig} />
-      )}
+    <div className="h-full w-full p-1">
+      <div className="border-border h-full w-full rounded-lg border-2">
+        <div
+          className={`h-full w-full transition-opacity delay-100 duration-200 ease-in-out ${state === "loading" ? "opacity-25" : ""}`}
+        >
+          {rolesConfig ? (
+            <RolesConfigEditor rolesConfig={rolesConfig} />
+          ) : (
+            <CreateConfigPrompt setRolesConfig={setRolesConfig} />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
