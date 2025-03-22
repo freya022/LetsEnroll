@@ -173,7 +173,16 @@ function RolesConfigEditor({
     <div className="h-full w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormLabel>Messages</FormLabel>
+          <FormField
+            control={form.control}
+            name={`messages`}
+            render={() => (
+              <FormItem>
+                <FormLabel>Messages</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           {rolesConfig.messages.map((msg, msgIndex) => {
             function handleAddRow() {
               const newRow: Row = {
