@@ -1,7 +1,8 @@
 import axios from "axios";
 import { hasPermission } from "@/utils.ts";
-import { useLoaderData } from "react-router";
+import { Link, Outlet, useLoaderData, useNavigation } from "react-router";
 import { ChevronRight } from "lucide-react";
+import Spinner from "@/assets/spinner.svg?react";
 
 const MANAGE_SERVER = BigInt(1) << BigInt(5);
 const MANAGE_ROLES = BigInt(1) << BigInt(28);
@@ -36,19 +37,27 @@ export default function Dashboard() {
   const { managedGuilds } = useLoaderData<Props>();
 
   return (
-    <div className="flex h-full flex-col p-1">
-      <ul className="border-border flex w-sm grow flex-col rounded-lg border-2">
-        {managedGuilds.map((guild) => (
-          <li key={guild.id}>
-            <Guild guild={guild} />
-          </li>
-        ))}
-      </ul>
+    <div className="flex h-full">
+      <div className="flex h-full flex-col p-1">
+        <ul className="border-border flex w-sm grow flex-col rounded-lg border-2">
+          {managedGuilds.map((guild) => (
+            <li key={guild.id}>
+              <Link to={`./${guild.id}`}>
+                <Guild guild={guild} />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Outlet />
     </div>
   );
 }
 
 function Guild({ guild }: { guild: GuildDTO }) {
+  const { location } = useNavigation();
+  const loading = location?.pathname.endsWith(guild.id) ?? false;
+
   return (
     <div className="hover:bg-accent flex cursor-pointer items-center gap-2 p-2">
       <img
@@ -57,7 +66,11 @@ function Guild({ guild }: { guild: GuildDTO }) {
         className="border-border size-16 rounded-full border-1"
       />
       <span className="grow">{guild.name}</span>
-      <ChevronRight />
+      {loading ? (
+        <Spinner className="dark:stroke-foreground stroke-foreground size-6 animate-spin" />
+      ) : (
+        <ChevronRight className="size-6" />
+      )}
     </div>
   );
 }
