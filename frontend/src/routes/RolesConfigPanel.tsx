@@ -24,55 +24,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { Lens, useLens } from "@hookform/lenses";
+import {
+  Component,
+  RoleMessage,
+  RolesConfig,
+  Row,
+} from "@/dto/RolesConfigDTO.ts";
 
 type Params = {
   guildId: string;
-};
-
-type UnicodeEmoji = {
-  unicode: string;
-};
-type CustomEmoji = {
-  name: string;
-  discordId: string;
-  animated: boolean;
-};
-type Emoji = UnicodeEmoji | CustomEmoji;
-
-type Component = Row | Button | SelectMenu;
-
-type Row = {
-  type: "row";
-  components: Component[];
-};
-
-type ButtonStyle = "PRIMARY" | "SECONDARY" | "SUCCESS" | "DANGER";
-type Button = {
-  type: "button";
-  roleName: string;
-  style: ButtonStyle;
-  label?: string;
-  emoji?: Emoji;
-};
-
-type SelectMenuChoice = {
-  roleName: string;
-  name: string;
-  description?: string;
-  emoji?: Emoji;
-};
-type SelectMenu = {
-  type: "string_select_menu";
-  choices: SelectMenuChoice[];
-};
-
-type RoleMessage = {
-  content: string;
-  components: Component[];
-};
-
-type RolesConfig = {
-  messages: RoleMessage[];
 };
 
 type Props = {
