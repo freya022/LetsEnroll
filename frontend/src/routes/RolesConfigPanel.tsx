@@ -154,7 +154,7 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
           )}
           {msgFields.map((msg, msgIndex) => {
             return (
-              <FormRoleMessage
+              <MessageEditor
                 messageLens={lens.focus("messages").focus(`${msgIndex}`)}
                 msgIndex={msgIndex}
                 key={msg.id}
@@ -179,7 +179,7 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
   );
 }
 
-function FormRoleMessage({
+function MessageEditor({
   messageLens,
   msgIndex,
 }: {
@@ -224,7 +224,7 @@ function FormRoleMessage({
         )}
       />
       {componentFields.map((component, componentIndex) => (
-        <FormComponent
+        <ComponentEditor
           componentLens={componentsLens.focus(`${componentIndex}`)}
           component={component}
           key={component.id}
@@ -240,7 +240,7 @@ function FormRoleMessage({
   );
 }
 
-function FormComponent({
+function ComponentEditor({
   componentLens,
   component,
 }: {
@@ -252,11 +252,11 @@ function FormComponent({
   } else if (component.type === "string_select_menu") {
     return <div>select menu</div>;
   } else if (component.type === "row") {
-    return <FormRow rowLens={componentLens as Lens<Row>} />;
+    return <RowEditor rowLens={componentLens as Lens<Row>} />;
   }
 }
 
-function FormRow({ rowLens }: { rowLens: Lens<Row> }) {
+function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
   const componentsLens = rowLens.focus("components");
 
   const { fields: componentFields, append: appendComponent } = useFieldArray({
@@ -289,7 +289,7 @@ function FormRow({ rowLens }: { rowLens: Lens<Row> }) {
       )}
       {componentFields.map((component, componentIndex) => {
         return (
-          <FormComponent
+          <ComponentEditor
             componentLens={componentsLens.focus(`${componentIndex}`)}
             component={component}
             key={component.id}
