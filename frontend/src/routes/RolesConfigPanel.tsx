@@ -6,7 +6,7 @@ import {
 import axios from "axios";
 import { Button as ButtonComponent } from "@/components/ui/button.tsx";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -23,10 +23,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
-
-function nextUUID() {
-  return crypto.randomUUID().toString();
-}
+import { Lens, useLens } from "@hookform/lenses";
 
 type Params = {
   guildId: string;
@@ -46,14 +43,12 @@ type Component = Row | Button | SelectMenu;
 
 type Row = {
   type: "row";
-  uuid: string;
   components: Component[];
 };
 
 type ButtonStyle = "PRIMARY" | "SECONDARY" | "SUCCESS" | "DANGER";
 type Button = {
   type: "button";
-  uuid: string;
   roleName: string;
   style: ButtonStyle;
   label?: string;
@@ -68,7 +63,6 @@ type SelectMenuChoice = {
 };
 type SelectMenu = {
   type: "string_select_menu";
-  uuid: string;
   choices: SelectMenuChoice[];
 };
 
@@ -111,10 +105,7 @@ export default function RolesConfigPanel() {
       className={`h-full w-full transition-opacity delay-100 duration-200 ease-in-out ${state === "loading" ? "opacity-25" : ""}`}
     >
       {rolesConfig ? (
-        <RolesConfigEditor
-          rolesConfig={rolesConfig}
-          setRolesConfig={setRolesConfig}
-        />
+        <RolesConfigEditor rolesConfig={rolesConfig} />
       ) : (
         <CreateConfigPrompt setRolesConfig={setRolesConfig} />
       )}
@@ -122,25 +113,18 @@ export default function RolesConfigPanel() {
   );
 }
 
-function RolesConfigEditor({
-  rolesConfig,
-  setRolesConfig,
-}: {
-  rolesConfig: RolesConfig;
-  setRolesConfig: Dispatch<SetStateAction<RolesConfig | undefined>>;
-}) {
+function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
   const form = useForm<RolesConfig>({
     defaultValues: rolesConfig,
   });
+
+  const lens = useLens({ control: form.control });
 
   const { fields: msgFields, append: appendMessage } = useFieldArray({
     control: form.control,
     name: "messages",
     rules: {
-      required: {
-        value: true,
-        message: "You must create at least one message",
-      },
+      required: true,
     },
   });
 
@@ -165,53 +149,12 @@ function RolesConfigEditor({
             <FormMessage>You must create at least one message</FormMessage>
           )}
           {msgFields.map((msg, msgIndex) => {
-            function handleAddRow() {
-              const newRow: Row = {
-                type: "row",
-                uuid: nextUUID(),
-                components: [],
-              };
-
-              msg.components = [...msg.components, newRow];
-
-              setRolesConfig({ ...rolesConfig });
-            }
-
             return (
-              <div key={msg.id}>
-                <FormLabel>Message #{msgIndex}</FormLabel>
-                <FormField
-                  control={form.control}
-                  name={`messages.${msgIndex}.content`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Content</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormDescription>
-                        The main content of the message.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {msg.components.map((component) => (
-                  <FormComponent
-                    setRolesConfig={setRolesConfig}
-                    rolesConfig={rolesConfig}
-                    component={component}
-                    key={component.uuid}
-                  />
-                ))}
-                <ButtonComponent
-                  variant="secondary"
-                  type="button"
-                  onClick={handleAddRow}
-                >
-                  Add row
-                </ButtonComponent>
-              </div>
+              <FormRoleMessage
+                messageLens={lens.focus("messages").focus(`${msgIndex}`)}
+                msgIndex={msgIndex}
+                key={msg.id}
+              />
             );
           })}
           <div>
@@ -232,13 +175,72 @@ function RolesConfigEditor({
   );
 }
 
+function FormRoleMessage({
+  messageLens,
+  msgIndex,
+}: {
+  messageLens: Lens<RoleMessage>;
+  msgIndex: number;
+}) {
+  const componentsLens = messageLens.focus("components");
+
+  const { fields: componentFields, append: appendComponent } = useFieldArray({
+    ...componentsLens.interop(),
+    rules: {
+      required: true,
+    },
+  });
+
+  const components = useWatch({
+    name: componentsLens.interop().name,
+    control: componentsLens.interop().control,
+  });
+
+  function handleAddRow() {
+    appendComponent({
+      type: "row",
+      components: [],
+    });
+  }
+
+  return (
+    <div>
+      <FormLabel>Message #{msgIndex}</FormLabel>
+      <FormField
+        {...messageLens.focus("content").interop()}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Content</FormLabel>
+            <FormControl>
+              <Input {...field} />
+            </FormControl>
+            <FormDescription>The main content of the message.</FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      {componentFields.map((component, componentIndex) => (
+        <FormComponent
+          componentLens={componentsLens.focus(`${componentIndex}`)}
+          component={component}
+          key={component.id}
+        />
+      ))}
+      {components.length == 0 && (
+        <FormMessage>A message must have at least one component</FormMessage>
+      )}
+      <ButtonComponent variant="secondary" type="button" onClick={handleAddRow}>
+        Add row
+      </ButtonComponent>
+    </div>
+  );
+}
+
 function FormComponent({
-  rolesConfig,
-  setRolesConfig,
+  componentLens,
   component,
 }: {
-  rolesConfig: RolesConfig;
-  setRolesConfig: Dispatch<SetStateAction<RolesConfig | undefined>>;
+  componentLens: Lens<Component>;
   component: Component;
 }) {
   if (component.type === "button") {
@@ -246,36 +248,31 @@ function FormComponent({
   } else if (component.type === "string_select_menu") {
     return <div>select menu</div>;
   } else if (component.type === "row") {
-    return (
-      <FormRow
-        row={component}
-        rolesConfig={rolesConfig}
-        setRolesConfig={setRolesConfig}
-      />
-    );
+    return <FormRow rowLens={componentLens as Lens<Row>} />;
   }
 }
 
-function FormRow({
-  row,
-  rolesConfig,
-  setRolesConfig,
-}: {
-  row: Row;
-  setRolesConfig: Dispatch<SetStateAction<RolesConfig | undefined>>;
-  rolesConfig: RolesConfig;
-}) {
+function FormRow({ rowLens }: { rowLens: Lens<Row> }) {
+  const componentsLens = rowLens.focus("components");
+
+  const { fields: componentFields, append: appendComponent } = useFieldArray({
+    ...componentsLens.interop(),
+    rules: {
+      required: true,
+    },
+  });
+
+  const components = useWatch({
+    name: componentsLens.interop().name,
+    control: componentsLens.interop().control,
+  });
+
   function handleCreateButton() {
-    const newButton: Button = {
+    appendComponent({
       type: "button",
-      uuid: nextUUID(),
       roleName: "",
       style: "PRIMARY",
-    };
-
-    row.components = [...row.components, newButton];
-
-    setRolesConfig({ ...rolesConfig });
+    });
   }
 
   function handleCreateSelectMenu() {}
@@ -283,13 +280,15 @@ function FormRow({
   return (
     <div>
       <div>Row</div>
-      {row.components.map((component) => {
+      {components.length == 0 && (
+        <FormMessage>You must create at least one component</FormMessage>
+      )}
+      {componentFields.map((component, componentIndex) => {
         return (
           <FormComponent
-            rolesConfig={rolesConfig}
-            setRolesConfig={setRolesConfig}
+            componentLens={componentsLens.focus(`${componentIndex}`)}
             component={component}
-            key={component.uuid}
+            key={component.id}
           />
         );
       })}
