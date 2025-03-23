@@ -35,7 +35,7 @@ export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
                 {...field}
                 type="single"
                 onValueChange={(value) => {
-                  // @ts-expect-error u dum
+                  // @ts-expect-error Literally assigning itself with its own value type
                   form.setValue(field.name, value);
                 }}
               >
