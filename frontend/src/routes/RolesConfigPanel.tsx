@@ -247,7 +247,7 @@ function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
     <div>
       <div>Row</div>
       {components.length == 0 && (
-        <FormMessage>You must create at least one component</FormMessage>
+        <FormMessage>A row must have at least one component</FormMessage>
       )}
       {componentFields.map((component, componentIndex) => {
         return (
