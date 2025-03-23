@@ -87,7 +87,7 @@ function SelectMenuChoiceEditor({
         }}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Role name</FormLabel>
+            <FormLabel>Role name*</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
@@ -107,7 +107,7 @@ function SelectMenuChoiceEditor({
         }}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Label (100 characters max)</FormLabel>
+            <FormLabel>Label* (100 characters max)</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>

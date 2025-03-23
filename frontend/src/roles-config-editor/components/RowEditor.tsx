@@ -1,5 +1,5 @@
 import { Lens } from "@hookform/lenses";
-import { Row } from "@/dto/RolesConfigDTO.ts";
+import { Component, Row } from "@/dto/RolesConfigDTO.ts";
 import { useFieldArray, useWatch } from "react-hook-form";
 import { FormMessage } from "@/components/ui/form.tsx";
 import {
@@ -47,9 +47,6 @@ export function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
   return (
     <div>
       <div>Row</div>
-      {components.length == 0 && (
-        <FormMessage>A row must have at least one component</FormMessage>
-      )}
       {componentFields.map((component, componentIndex) => {
         return (
           <ComponentEditor
@@ -61,7 +58,11 @@ export function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
       })}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button type="button" variant="secondary">
+          <Button
+            type="button"
+            variant="secondary"
+            disabled={!canInsertMore(components)}
+          >
             New component...
           </Button>
         </DropdownMenuTrigger>
@@ -69,11 +70,24 @@ export function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
           <DropdownMenuItem onSelect={handleCreateButton}>
             Button
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={handleCreateSelectMenu}>
+          <DropdownMenuItem
+            onSelect={handleCreateSelectMenu}
+            disabled={components.length > 0}
+          >
             Select menu
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      {components.length < 1 && (
+        <FormMessage>A row must have at least one component</FormMessage>
+      )}
     </div>
   );
+}
+
+function canInsertMore(components: Component[]): boolean {
+  if (components.length >= 1 && components[0].type === "string_select_menu")
+    return false;
+
+  return components.length < 5;
 }
