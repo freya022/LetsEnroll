@@ -10,6 +10,7 @@ import {
 import { Switch } from "@/components/ui/switch.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
+import { Label } from "@/components/ui/label.tsx";
 
 export function EmojiEditor<T extends EmojiContainer<Emoji>>({
   emojiContainerLens,
@@ -22,24 +23,27 @@ export function EmojiEditor<T extends EmojiContainer<Emoji>>({
   });
 
   return (
-    <div className="flex">
-      <TypeToggle emojiContainerLens={emojiContainerLens} />
-      {emojiWatch?.type === "custom" ? (
-        <CustomEmojiEditor
-          emojiContainerLens={
-            // @ts-expect-error Type asserted above
-            emojiContainerLens as Lens<EmojiContainer<CustomEmoji>>
-          }
-        />
-      ) : (
-        <UnicodeEmojiEditor
-          emojiContainerLens={
-            // @ts-expect-error Type asserted above
-            emojiContainerLens as Lens<EmojiContainer<UnicodeEmoji>>
-          }
-        />
-      )}
-    </div>
+    <>
+      <Label>Emoji</Label>
+      <div className="flex">
+        <TypeToggle emojiContainerLens={emojiContainerLens} />
+        {emojiWatch?.type === "custom" ? (
+          <CustomEmojiEditor
+            emojiContainerLens={
+              // @ts-expect-error Type asserted above
+              emojiContainerLens as Lens<EmojiContainer<CustomEmoji>>
+            }
+          />
+        ) : (
+          <UnicodeEmojiEditor
+            emojiContainerLens={
+              // @ts-expect-error Type asserted above
+              emojiContainerLens as Lens<EmojiContainer<UnicodeEmoji>>
+            }
+          />
+        )}
+      </div>
+    </>
   );
 }
 
