@@ -34,12 +34,13 @@ export type Button = {
 
 export type SelectMenuChoice = {
   roleName: string;
-  name: string;
+  label: string;
   description: string | null;
   emoji: Emoji | null;
 };
 export type SelectMenu = {
   type: "string_select_menu";
+  placeholder: string | null;
   choices: SelectMenuChoice[];
 };
 
