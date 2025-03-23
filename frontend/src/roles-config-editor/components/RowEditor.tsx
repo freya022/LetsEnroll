@@ -36,7 +36,13 @@ export function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
     });
   }
 
-  function handleCreateSelectMenu() {}
+  function handleCreateSelectMenu() {
+    appendComponent({
+      type: "string_select_menu",
+      placeholder: null,
+      choices: [],
+    });
+  }
 
   return (
     <div>
