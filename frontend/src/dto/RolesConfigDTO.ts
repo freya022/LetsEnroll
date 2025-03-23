@@ -1,7 +1,9 @@
 export type UnicodeEmoji = {
+  type: "unicode";
   unicode: string;
 };
 export type CustomEmoji = {
+  type: "custom";
   name: string;
   discordId: string;
   animated: boolean;
@@ -15,7 +17,13 @@ export type Row = {
   components: Component[];
 };
 
-export type ButtonStyle = "PRIMARY" | "SECONDARY" | "SUCCESS" | "DANGER";
+export const ButtonStyles = [
+  "PRIMARY",
+  "SECONDARY",
+  "SUCCESS",
+  "DANGER",
+] as const;
+export type ButtonStyle = (typeof ButtonStyles)[number];
 export type Button = {
   type: "button";
   roleName: string;

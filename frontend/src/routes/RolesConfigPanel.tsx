@@ -6,7 +6,12 @@ import {
 import axios from "axios";
 import { Button as ButtonComponent } from "@/components/ui/button.tsx";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
+import {
+  useFieldArray,
+  useForm,
+  useFormContext,
+  useWatch,
+} from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -25,11 +30,20 @@ import {
 } from "@/components/ui/dropdown-menu.tsx";
 import { Lens, useLens } from "@hookform/lenses";
 import {
+  Button,
+  ButtonStyles,
   Component,
+  CustomEmoji,
+  Emoji,
   RoleMessage,
   RolesConfig,
   Row,
+  UnicodeEmoji,
 } from "@/dto/RolesConfigDTO.ts";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
+import { capitalize } from "@/utils.ts";
+import { Switch } from "@/components/ui/switch.tsx";
+import { Checkbox } from "@/components/ui/checkbox.tsx";
 
 type Params = {
   guildId: string;
@@ -208,7 +222,7 @@ function ComponentEditor({
   component: Component;
 }) {
   if (component.type === "button") {
-    return <div>button</div>;
+    return <ButtonEditor buttonLens={componentLens as Lens<Button>} />;
   } else if (component.type === "string_select_menu") {
     return <div>select menu</div>;
   } else if (component.type === "row") {
@@ -274,6 +288,202 @@ function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
+  );
+}
+
+function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
+  const form = useFormContext<RolesConfig>();
+
+  return (
+    <div>
+      <FormField
+        {...buttonLens.focus("style").interop()}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Style</FormLabel>
+            <FormControl>
+              <ToggleGroup
+                variant="outline"
+                {...field}
+                type="single"
+                onValueChange={(value) => {
+                  // @ts-expect-error u dum
+                  form.setValue(field.name, value);
+                }}
+              >
+                {ButtonStyles.map((style) => (
+                  <ToggleGroupItem
+                    value={style}
+                    aria-label={`Toggle ${style.toLowerCase()}`}
+                    key={style}
+                  >
+                    {capitalize(style.toLowerCase())}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+            </FormControl>
+            <FormDescription>The style of the button</FormDescription>
+          </FormItem>
+        )}
+      />
+      <FormField
+        {...buttonLens.focus("roleName").interop()}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Role name</FormLabel>
+            <FormControl>
+              <Input {...field} />
+            </FormControl>
+            <FormDescription>The role toggled by this button</FormDescription>
+          </FormItem>
+        )}
+      />
+      <FormField
+        {...buttonLens.focus("label").interop()}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Label</FormLabel>
+            <FormControl>
+              <Input {...field} value={field.value ?? ""} />
+            </FormControl>
+            <FormDescription>The button's label</FormDescription>
+          </FormItem>
+        )}
+      />
+      <EmojiEditor emojiContainerLens={buttonLens} />
+    </div>
+  );
+}
+
+function EmojiEditor<T extends EmojiContainer<Emoji>>({
+  emojiContainerLens,
+}: {
+  emojiContainerLens: Lens<T>;
+}) {
+  const emojiWatch = useWatch({
+    name: emojiContainerLens.focus("emoji").interop().name,
+    control: emojiContainerLens.focus("emoji").interop().control,
+  });
+
+  return (
+    <div className="flex">
+      <TypeToggle emojiContainerLens={emojiContainerLens} />
+      {emojiWatch?.type === "custom" ? (
+        <CustomEmojiEditor
+          emojiContainerLens={
+            // @ts-expect-error Type asserted above
+            emojiContainerLens as Lens<EmojiContainer<CustomEmoji>>
+          }
+        />
+      ) : (
+        <UnicodeEmojiEditor
+          emojiContainerLens={
+            // @ts-expect-error Type asserted above
+            emojiContainerLens as Lens<EmojiContainer<UnicodeEmoji>>
+          }
+        />
+      )}
+    </div>
+  );
+}
+
+function TypeToggle<T extends EmojiContainer<Emoji>>({
+  emojiContainerLens,
+}: {
+  emojiContainerLens: Lens<T>;
+}) {
+  // TODO another option is to use a toggle group: none | unicode | custom
+  return (
+    <FormField
+      {...emojiContainerLens.focus("emoji.type").interop()}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Custom?</FormLabel>
+          <FormControl>
+            <Switch
+              checked={field.value === "custom"}
+              onCheckedChange={(e) =>
+                e ? field.onChange("custom") : field.onChange("unicode")
+              }
+            />
+          </FormControl>
+        </FormItem>
+      )}
+    />
+  );
+}
+
+type EmojiContainer<T extends Emoji> = { emoji: T | null };
+
+function UnicodeEmojiEditor<T extends EmojiContainer<UnicodeEmoji>>({
+  emojiContainerLens,
+}: {
+  emojiContainerLens: Lens<T>;
+}) {
+  const emojiWatch = useWatch({
+    name: emojiContainerLens.focus("emoji").interop().name,
+    control: emojiContainerLens.focus("emoji").interop().control,
+  });
+
+  return (
+    <FormField
+      {...emojiContainerLens.focus("emoji.unicode").interop()}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Unicode</FormLabel>
+          <FormControl>
+            <Input {...field} value={emojiWatch?.unicode ?? ""} />
+          </FormControl>
+        </FormItem>
+      )}
+    />
+  );
+}
+
+function CustomEmojiEditor<T extends EmojiContainer<CustomEmoji>>({
+  emojiContainerLens,
+}: {
+  emojiContainerLens: Lens<T>;
+}) {
+  return (
+    <>
+      <FormField
+        {...emojiContainerLens.focus("emoji.name").interop()}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Name</FormLabel>
+            <FormControl>
+              <Input {...field} value={field.value ?? ""} />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <FormField
+        {...emojiContainerLens.focus("emoji.discordId").interop()}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Discord ID</FormLabel>
+            <FormControl>
+              <Input pattern="\d*" {...field} value={field.value ?? ""} />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <FormField
+        {...emojiContainerLens.focus("emoji.animated").interop()}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Animated?</FormLabel>
+            <FormControl>
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+    </>
   );
 }
 

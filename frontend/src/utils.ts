@@ -54,3 +54,7 @@ export function hasPermission(set: string, ...requested: bigint[]): boolean {
     (permission) => (BigInt(set) & permission) === permission,
   );
 }
+
+export function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
