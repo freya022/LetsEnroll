@@ -20,15 +20,15 @@ export type Button = {
   type: "button";
   roleName: string;
   style: ButtonStyle;
-  label?: string;
-  emoji?: Emoji;
+  label: string | null;
+  emoji: Emoji | null;
 };
 
 export type SelectMenuChoice = {
   roleName: string;
   name: string;
-  description?: string;
-  emoji?: Emoji;
+  description: string | null;
+  emoji: Emoji | null;
 };
 export type SelectMenu = {
   type: "string_select_menu";

@@ -236,6 +236,8 @@ function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
       type: "button",
       roleName: "",
       style: "PRIMARY",
+      label: null,
+      emoji: null,
     });
   }
 
