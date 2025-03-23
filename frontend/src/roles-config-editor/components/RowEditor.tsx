@@ -51,7 +51,6 @@ export function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
         return (
           <ComponentEditor
             componentLens={componentsLens.focus(`${componentIndex}`)}
-            component={component}
             key={component.id}
           />
         );

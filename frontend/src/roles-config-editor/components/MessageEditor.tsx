@@ -1,5 +1,5 @@
 import { Lens } from "@hookform/lenses";
-import { RoleMessage } from "@/dto/RolesConfigDTO.ts";
+import { Component, RoleMessage } from "@/dto/RolesConfigDTO.ts";
 import { useFieldArray, useWatch } from "react-hook-form";
 import {
   FormControl,
@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input.tsx";
 import { ComponentEditor } from "@/roles-config-editor/components/ComponentEditor.tsx";
 import { Button as ButtonComponent } from "@/components/ui/button.tsx";
+import { ConfigCollapsible } from "@/roles-config-editor/components/ConfigCollapsible.tsx";
 
 export function MessageEditor({
   messageLens,
@@ -41,8 +42,20 @@ export function MessageEditor({
     });
   }
 
+  const componentCount = getComponentCount(components);
+  const roleCount = getRoleCount(components);
+
   return (
-    <div>
+    <ConfigCollapsible
+      header={
+        componentCount == 0 ? (
+          <FormMessage>Not configured yet</FormMessage>
+        ) : (
+          `Message with ${componentCount} components, ${roleCount} roles`
+        )
+      }
+      listName="choice config"
+    >
       <FormLabel>Message #{msgIndex}</FormLabel>
       <FormField
         {...messageLens.focus("content").interop()}
@@ -60,7 +73,6 @@ export function MessageEditor({
       {componentFields.map((component, componentIndex) => (
         <ComponentEditor
           componentLens={componentsLens.focus(`${componentIndex}`)}
-          component={component}
           key={component.id}
         />
       ))}
@@ -70,6 +82,42 @@ export function MessageEditor({
       <ButtonComponent variant="secondary" type="button" onClick={handleAddRow}>
         Add row
       </ButtonComponent>
-    </div>
+    </ConfigCollapsible>
   );
+}
+
+function getComponentCount(component: Component | Component[]): number {
+  if (component instanceof Array) {
+    return component.reduce(
+      (count, nestedComponent) => count + getComponentCount(nestedComponent),
+      0,
+    );
+  }
+
+  switch (component.type) {
+    case "row":
+      return getComponentCount(component.components);
+    case "button":
+      return 1;
+    case "string_select_menu":
+      return 1;
+  }
+}
+
+function getRoleCount(component: Component | Component[]): number {
+  if (component instanceof Array) {
+    return component.reduce(
+      (count, nestedComponent) => count + getRoleCount(nestedComponent),
+      0,
+    );
+  }
+
+  switch (component.type) {
+    case "row":
+      return getRoleCount(component.components);
+    case "button":
+      return 1;
+    case "string_select_menu":
+      return component.choices.length;
+  }
 }

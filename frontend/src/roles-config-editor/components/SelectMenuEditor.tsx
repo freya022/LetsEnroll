@@ -9,9 +9,10 @@ import {
   FormMessage,
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button.tsx";
 import { EmojiEditor } from "@/roles-config-editor/components/EmojiEditor.tsx";
+import { ConfigCollapsible } from "@/roles-config-editor/components/ConfigCollapsible.tsx";
 
 export function SelectMenuEditor({
   selectMenuLens,
@@ -78,8 +79,22 @@ function SelectMenuChoiceEditor({
 }: {
   choiceLens: Lens<SelectMenuChoice>;
 }) {
+  const choice = useWatch({
+    name: choiceLens.interop().name,
+    control: choiceLens.interop().control,
+  });
+
   return (
-    <div>
+    <ConfigCollapsible
+      header={
+        choice.roleName.trim().length == 0 ? (
+          <FormMessage>Not configured yet</FormMessage>
+        ) : (
+          `Choice for '${choice.roleName}'`
+        )
+      }
+      listName="choice config"
+    >
       <FormField
         {...choiceLens.focus("roleName").interop()}
         rules={{
@@ -136,6 +151,6 @@ function SelectMenuChoiceEditor({
         )}
       />
       <EmojiEditor emojiContainerLens={choiceLens} />
-    </div>
+    </ConfigCollapsible>
   );
 }
