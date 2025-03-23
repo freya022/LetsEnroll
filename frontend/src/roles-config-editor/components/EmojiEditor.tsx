@@ -1,16 +1,22 @@
-import { CustomEmoji, Emoji, UnicodeEmoji } from "@/dto/RolesConfigDTO.ts";
+import {
+  CustomEmoji,
+  Emoji,
+  RolesConfig,
+  UnicodeEmoji,
+} from "@/dto/RolesConfigDTO.ts";
 import { Lens } from "@hookform/lenses";
-import { useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
 } from "@/components/ui/form.tsx";
-import { Switch } from "@/components/ui/switch.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
+import { ReactElement } from "react";
 
 export function EmojiEditor<T extends EmojiContainer<Emoji>>({
   emojiContainerLens,
@@ -22,26 +28,35 @@ export function EmojiEditor<T extends EmojiContainer<Emoji>>({
     control: emojiContainerLens.focus("emoji").interop().control,
   });
 
+  let editor: ReactElement | undefined;
+  if (!emojiWatch) {
+    editor = undefined;
+  } else if (emojiWatch.type === "custom") {
+    editor = (
+      <CustomEmojiEditor
+        emojiContainerLens={
+          // @ts-expect-error Type asserted above
+          emojiContainerLens as Lens<EmojiContainer<CustomEmoji>>
+        }
+      />
+    );
+  } else {
+    editor = (
+      <UnicodeEmojiEditor
+        emojiContainerLens={
+          // @ts-expect-error Type asserted above
+          emojiContainerLens as Lens<EmojiContainer<UnicodeEmoji>>
+        }
+      />
+    );
+  }
+
   return (
     <>
       <Label>Emoji</Label>
       <div className="flex">
         <TypeToggle emojiContainerLens={emojiContainerLens} />
-        {emojiWatch?.type === "custom" ? (
-          <CustomEmojiEditor
-            emojiContainerLens={
-              // @ts-expect-error Type asserted above
-              emojiContainerLens as Lens<EmojiContainer<CustomEmoji>>
-            }
-          />
-        ) : (
-          <UnicodeEmojiEditor
-            emojiContainerLens={
-              // @ts-expect-error Type asserted above
-              emojiContainerLens as Lens<EmojiContainer<UnicodeEmoji>>
-            }
-          />
-        )}
+        {editor}
       </div>
     </>
   );
@@ -54,24 +69,46 @@ function TypeToggle<T extends EmojiContainer<Emoji>>({
 }: {
   emojiContainerLens: Lens<T>;
 }) {
-  // TODO another option is to use a toggle group: none | unicode | custom
+  const form = useFormContext<RolesConfig>();
+  const emoji = useWatch({
+    name: emojiContainerLens.focus("emoji").interop().name,
+    control: emojiContainerLens.focus("emoji").interop().control,
+  });
+
   return (
-    <FormField
-      {...emojiContainerLens.focus("emoji.type").interop()}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Custom?</FormLabel>
-          <FormControl>
-            <Switch
-              checked={field.value === "custom"}
-              onCheckedChange={(e) =>
-                e ? field.onChange("custom") : field.onChange("unicode")
-              }
-            />
-          </FormControl>
-        </FormItem>
-      )}
-    />
+    <ToggleGroup
+      type="single"
+      variant="outline"
+      value={emoji ? emoji.type : "none"}
+      onValueChange={(value) => {
+        let newEmoji: Emoji | null;
+        if (value === "unicode") {
+          newEmoji = {
+            type: "unicode",
+            unicode: "",
+          };
+        } else if (value === "custom") {
+          newEmoji = {
+            type: "custom",
+            name: "",
+            discordId: "",
+            animated: false,
+          };
+        } else {
+          newEmoji = null;
+        }
+
+        form.setValue(
+          // @ts-expect-error It can only be an Emoji
+          emojiContainerLens.focus("emoji").interop().name,
+          newEmoji,
+        );
+      }}
+    >
+      <ToggleGroupItem value="none">None</ToggleGroupItem>
+      <ToggleGroupItem value="unicode">Unicode</ToggleGroupItem>
+      <ToggleGroupItem value="custom">Custom</ToggleGroupItem>
+    </ToggleGroup>
   );
 }
 
