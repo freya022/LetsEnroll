@@ -73,8 +73,6 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
     },
   });
 
-  const watchMessages = form.watch("messages");
-
   function handleCreateMessage() {
     appendMessage({
       content: "Sample text",
@@ -90,7 +88,7 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
     <div className="h-full w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          {watchMessages.length == 0 && (
+          {msgFields.length == 0 && (
             <FormMessage>You must create at least one message</FormMessage>
           )}
           {msgFields.map((msg, msgIndex) => {
