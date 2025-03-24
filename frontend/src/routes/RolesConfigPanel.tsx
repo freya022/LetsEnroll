@@ -88,9 +88,6 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
     <div className="h-full w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          {msgFields.length == 0 && (
-            <FormMessage>You must create at least one message</FormMessage>
-          )}
           {msgFields.map((msg, msgIndex) => {
             return (
               <MessageEditor
@@ -109,6 +106,9 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
               Add message
             </Button>
           </div>
+          {msgFields.length == 0 && (
+            <FormMessage>You must create at least one message</FormMessage>
+          )}
           <div>
             <Button type="submit">Save</Button>
           </div>

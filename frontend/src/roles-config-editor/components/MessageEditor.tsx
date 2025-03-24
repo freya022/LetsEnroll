@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { ComponentEditor } from "@/roles-config-editor/components/ComponentEditor.tsx";
-import { Button as ButtonComponent } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import { ConfigCollapsible } from "@/roles-config-editor/components/ConfigCollapsible.tsx";
 
 export function MessageEditor({
@@ -76,12 +76,12 @@ export function MessageEditor({
           key={component.id}
         />
       ))}
+      <Button variant="secondary" type="button" onClick={handleAddRow}>
+        Add row
+      </Button>
       {components.length == 0 && (
         <FormMessage>A message must have at least one component</FormMessage>
       )}
-      <ButtonComponent variant="secondary" type="button" onClick={handleAddRow}>
-        Add row
-      </ButtonComponent>
     </ConfigCollapsible>
   );
 }
