@@ -9,10 +9,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form.tsx";
-import { Input } from "@/components/ui/input.tsx";
 import { ComponentEditor } from "@/roles-config-editor/components/ComponentEditor.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { ConfigCollapsible } from "@/roles-config-editor/components/ConfigCollapsible.tsx";
+import { Textarea } from "@/components/ui/textarea.tsx";
 
 export function MessageEditor({
   messageLens,
@@ -73,9 +73,12 @@ export function MessageEditor({
           <FormItem>
             <FormLabel>Content* (2048 characters max)</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Textarea {...field} />
             </FormControl>
-            <FormDescription>The main content of the message.</FormDescription>
+            <FormDescription>
+              The main content of the message, can contain markdown, mentions
+              and emojis
+            </FormDescription>
             <FormMessage />
           </FormItem>
         )}
