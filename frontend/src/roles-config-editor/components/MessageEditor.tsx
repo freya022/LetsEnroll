@@ -49,14 +49,15 @@ export function MessageEditor({
     <ConfigCollapsible
       header={
         componentCount == 0 ? (
-          <FormMessage>Message - Not configured yet</FormMessage>
+          <FormMessage>
+            Message #{msgIndex + 1} - Not configured yet
+          </FormMessage>
         ) : (
-          `Message with ${componentCount} components, ${roleCount} roles`
+          `Message #${msgIndex + 1} with ${componentCount} components, ${roleCount} roles`
         )
       }
       listName="choice config"
     >
-      <FormLabel>Message #{msgIndex}</FormLabel>
       <FormField
         {...messageLens.focus("content").interop()}
         rules={{
