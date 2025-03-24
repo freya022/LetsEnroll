@@ -49,7 +49,7 @@ export function MessageEditor({
     <ConfigCollapsible
       header={
         componentCount == 0 ? (
-          <FormMessage>Not configured yet</FormMessage>
+          <FormMessage>Message - Not configured yet</FormMessage>
         ) : (
           `Message with ${componentCount} components, ${roleCount} roles`
         )
@@ -59,9 +59,19 @@ export function MessageEditor({
       <FormLabel>Message #{msgIndex}</FormLabel>
       <FormField
         {...messageLens.focus("content").interop()}
+        rules={{
+          required: {
+            value: true,
+            message: "You must set the message content",
+          },
+          maxLength: {
+            value: 100,
+            message: "The content must not be longer than 2048 characters",
+          },
+        }}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Content</FormLabel>
+            <FormLabel>Content* (2048 characters max)</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
@@ -76,7 +86,12 @@ export function MessageEditor({
           key={component.id}
         />
       ))}
-      <Button variant="secondary" type="button" onClick={handleAddRow}>
+      <Button
+        variant="secondary"
+        type="button"
+        onClick={handleAddRow}
+        disabled={components.length >= 5}
+      >
         Add row
       </Button>
       {components.length == 0 && (

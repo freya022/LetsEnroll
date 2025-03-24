@@ -29,7 +29,7 @@ export function ComponentEditor({
       <ConfigCollapsible
         header={
           button.roleName.trim().length === 0 ? (
-            <FormMessage>Not configured yet</FormMessage>
+            <FormMessage>Button - Not configured yet</FormMessage>
           ) : (
             `Toggle for '${button.roleName}'`
           )

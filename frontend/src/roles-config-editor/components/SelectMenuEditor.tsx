@@ -40,7 +40,10 @@ export function SelectMenuEditor({
       <FormField
         {...selectMenuLens.focus("placeholder").interop()}
         rules={{
-          maxLength: 100,
+          maxLength: {
+            value: 100,
+            message: "Placeholder must be less than 100 characters",
+          },
         }}
         render={({ field }) => (
           <FormItem>
@@ -61,14 +64,16 @@ export function SelectMenuEditor({
           key={choice.id}
         />
       ))}
-      <Button type="button" variant="secondary" onClick={handleCreateChoice}>
+      <Button
+        type="button"
+        variant="secondary"
+        onClick={handleCreateChoice}
+        disabled={choiceFields.length >= 25}
+      >
         Create choice
       </Button>
       {choiceFields.length < 2 && (
         <FormMessage>A select menu must have at least two choices</FormMessage>
-      )}
-      {choiceFields.length > 25 && (
-        <FormMessage>A select menu must have at most 25 choices</FormMessage>
       )}
     </div>
   );
@@ -88,7 +93,7 @@ function SelectMenuChoiceEditor({
     <ConfigCollapsible
       header={
         choice.roleName.trim().length == 0 ? (
-          <FormMessage>Not configured yet</FormMessage>
+          <FormMessage>Choice - Not configured yet</FormMessage>
         ) : (
           `Choice for '${choice.roleName}'`
         )
@@ -99,14 +104,21 @@ function SelectMenuChoiceEditor({
         {...choiceLens.focus("roleName").interop()}
         rules={{
           required: { value: true, message: "You must specify a role name" },
+          maxLength: {
+            value: 100,
+            message: "The role name must not be longer than 100 characters",
+          },
         }}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Role name*</FormLabel>
+            <FormLabel>Role name* (100 characters max)</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
-            <FormDescription>The role toggled by this choice</FormDescription>
+            <FormDescription>
+              The role toggled by this choice, it will be created if it does not
+              exist
+            </FormDescription>
             <FormMessage />
           </FormItem>
         )}

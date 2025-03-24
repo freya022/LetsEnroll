@@ -127,7 +127,7 @@ function UnicodeEmojiEditor<T extends EmojiContainer<UnicodeEmoji>>({
       {...emojiContainerLens.focus("emoji.unicode").interop()}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Unicode</FormLabel>
+          <FormLabel>Unicode*</FormLabel>
           <FormControl>
             <Input {...field} value={emojiWatch?.unicode ?? ""} />
           </FormControl>
@@ -148,7 +148,7 @@ function CustomEmojiEditor<T extends EmojiContainer<CustomEmoji>>({
         {...emojiContainerLens.focus("emoji.name").interop()}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Name</FormLabel>
+            <FormLabel>Name*</FormLabel>
             <FormControl>
               <Input {...field} value={field.value ?? ""} />
             </FormControl>
@@ -159,7 +159,7 @@ function CustomEmojiEditor<T extends EmojiContainer<CustomEmoji>>({
         {...emojiContainerLens.focus("emoji.discordId").interop()}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Discord ID</FormLabel>
+            <FormLabel>Discord ID*</FormLabel>
             <FormControl>
               <Input pattern="\d*" {...field} value={field.value ?? ""} />
             </FormControl>

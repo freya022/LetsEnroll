@@ -17,6 +17,10 @@ import { EmojiEditor } from "@/roles-config-editor/components/EmojiEditor.tsx";
 export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
   const form = useFormContext<RolesConfig>();
 
+  const label = useWatch({
+    name: buttonLens.focus("label").interop().name,
+    control: buttonLens.focus("label").interop().control,
+  });
   const emoji = useWatch({
     name: buttonLens.focus("emoji").interop().name,
     control: buttonLens.focus("emoji").interop().control,
@@ -28,7 +32,7 @@ export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
         {...buttonLens.focus("style").interop()}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Style</FormLabel>
+            <FormLabel>Style*</FormLabel>
             <FormControl>
               <ToggleGroup
                 variant="outline"
@@ -58,14 +62,21 @@ export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
         {...buttonLens.focus("roleName").interop()}
         rules={{
           required: { value: true, message: "You must specify a role name" },
+          maxLength: {
+            value: 100,
+            message: "The role name must not be longer than 100 characters",
+          },
         }}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Role name*</FormLabel>
+            <FormLabel>Role name* (100 characters max)</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
-            <FormDescription>The role toggled by this button</FormDescription>
+            <FormDescription>
+              The role toggled by this button, it will be created if it does not
+              exist
+            </FormDescription>
             <FormMessage />
           </FormItem>
         )}
@@ -73,13 +84,6 @@ export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
       <FormField
         {...buttonLens.focus("label").interop()}
         rules={{
-          validate: (value) => {
-            // TODO emoji is defined but empty..., reset to null when EmojiEditor gets changed to "none"
-            if (!value && !emoji)
-              return "There must be either a label or an emoji";
-
-            return undefined;
-          },
           maxLength: {
             value: 80,
             message: "Label must be less than 80 characters",
@@ -87,7 +91,7 @@ export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
         }}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Label</FormLabel>
+            <FormLabel>Label (80 characters max)</FormLabel>
             <FormControl>
               <Input {...field} value={field.value ?? ""} />
             </FormControl>
@@ -97,6 +101,11 @@ export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
         )}
       />
       <EmojiEditor emojiContainerLens={buttonLens} />
+      {!label && !emoji && (
+        <h3 className={`text-destructive font-semibold`}>
+          At least a label or an emoji must be set
+        </h3>
+      )}
     </div>
   );
 }
