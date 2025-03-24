@@ -75,7 +75,7 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
 
   function handleCreateMessage() {
     appendMessage({
-      content: "Sample text",
+      content: "",
       components: [],
     });
   }
