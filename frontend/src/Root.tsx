@@ -39,15 +39,15 @@ export default function Root() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex items-center border-b px-4 py-2">
-        <div className="grow">
-          <Link to={`/`} className="flex max-w-min items-center gap-x-1">
+      <header className="flex items-center justify-between border-b px-4 py-2">
+        <div>
+          <Link to={`/`} className="flex items-center gap-x-1">
             <img
               alt="Commandinator Logo"
               src="/logo-round.svg"
               className="size-8 rounded-full"
             />
-            <span className="grow">Commandinator</span>
+            <span>Commandinator</span>
           </Link>
         </div>
         <div className="flex items-center gap-x-2">
@@ -55,7 +55,7 @@ export default function Root() {
           {user ? <User user={user} /> : <LogIn />}
         </div>
       </header>
-      <main className="h-auto grow p-2">
+      <main className="grow p-2">
         <Outlet />
       </main>
     </div>

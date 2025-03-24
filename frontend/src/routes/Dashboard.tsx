@@ -38,8 +38,8 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-full">
-      <div className="flex h-full flex-col p-1">
-        <ul className="border-border flex w-sm grow flex-col rounded-lg border-2">
+      <div className="w-sm p-1">
+        <ul className="flex h-full flex-col rounded-lg border-2">
           {managedGuilds.map((guild) => (
             <li key={guild.id}>
               <Link to={`./${guild.id}`}>
@@ -49,7 +49,9 @@ export default function Dashboard() {
           ))}
         </ul>
       </div>
-      <Outlet />
+      <div className="grow">
+        <Outlet />
+      </div>
     </div>
   );
 }
@@ -63,7 +65,7 @@ function Guild({ guild }: { guild: GuildDTO }) {
       <img
         src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp?animated=true`}
         alt={`${guild.name} icon`}
-        className="border-border size-16 rounded-full border-1"
+        className="size-16 rounded-full border-1"
       />
       <span className="grow">{guild.name}</span>
       {loading ? (
