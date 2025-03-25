@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
-import { Label } from "@/components/ui/label.tsx";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import { ReactElement } from "react";
 
@@ -52,13 +51,10 @@ export function EmojiEditor<T extends EmojiContainer<Emoji>>({
   }
 
   return (
-    <>
-      <Label>Emoji</Label>
-      <div className="flex">
-        <TypeToggle emojiContainerLens={emojiContainerLens} />
-        {editor}
-      </div>
-    </>
+    <div className="grid grid-cols-[repeat(4,_1fr)] gap-x-2">
+      <TypeToggle emojiContainerLens={emojiContainerLens} />
+      {editor}
+    </div>
   );
 }
 
@@ -77,6 +73,7 @@ function TypeToggle<T extends EmojiContainer<Emoji>>({
 
   return (
     <ToggleGroup
+      className="col-start-1 row-start-2"
       type="single"
       variant="outline"
       value={emoji ? emoji.type : "none"}
@@ -105,7 +102,7 @@ function TypeToggle<T extends EmojiContainer<Emoji>>({
         );
       }}
     >
-      <ToggleGroupItem value="none">None</ToggleGroupItem>
+      <ToggleGroupItem value="none">No emoji</ToggleGroupItem>
       <ToggleGroupItem value="unicode">Unicode</ToggleGroupItem>
       <ToggleGroupItem value="custom">Custom</ToggleGroupItem>
     </ToggleGroup>
@@ -126,12 +123,12 @@ function UnicodeEmojiEditor<T extends EmojiContainer<UnicodeEmoji>>({
     <FormField
       {...emojiContainerLens.focus("emoji.unicode").interop()}
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>Unicode*</FormLabel>
-          <FormControl>
+        <>
+          <FormLabel className="col-start-2">Unicode*</FormLabel>
+          <FormControl className="col-start-2">
             <Input {...field} value={emojiWatch?.unicode ?? ""} />
           </FormControl>
-        </FormItem>
+        </>
       )}
     />
   );
@@ -147,36 +144,38 @@ function CustomEmojiEditor<T extends EmojiContainer<CustomEmoji>>({
       <FormField
         {...emojiContainerLens.focus("emoji.name").interop()}
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Name*</FormLabel>
-            <FormControl>
+          <>
+            <FormLabel className="col-start-2 row-start-1">Name*</FormLabel>
+            <FormControl className="col-start-2 row-start-2">
               <Input {...field} value={field.value ?? ""} />
             </FormControl>
-          </FormItem>
+          </>
         )}
       />
       <FormField
         {...emojiContainerLens.focus("emoji.discordId").interop()}
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Discord ID*</FormLabel>
-            <FormControl>
+          <>
+            <FormLabel className="col-start-3 row-start-1">
+              Discord ID*
+            </FormLabel>
+            <FormControl className="col-start-3 row-start-2">
               <Input pattern="\d*" {...field} value={field.value ?? ""} />
             </FormControl>
-          </FormItem>
+          </>
         )}
       />
       <FormField
         {...emojiContainerLens.focus("emoji.animated").interop()}
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Animated?</FormLabel>
+          <FormItem className="col-start-4 row-start-2 flex items-center">
             <FormControl>
               <Checkbox
                 checked={field.value}
                 onCheckedChange={field.onChange}
               />
             </FormControl>
+            <FormLabel className="col-start-4 row-start-1">Animated?</FormLabel>
           </FormItem>
         )}
       />

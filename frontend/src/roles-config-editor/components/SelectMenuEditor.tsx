@@ -36,7 +36,7 @@ export function SelectMenuEditor({
   }
 
   return (
-    <div>
+    <>
       <FormField
         {...selectMenuLens.focus("placeholder").interop()}
         rules={{
@@ -75,7 +75,7 @@ export function SelectMenuEditor({
       {choiceFields.length < 2 && (
         <FormMessage>A select menu must have at least two choices</FormMessage>
       )}
-    </div>
+    </>
   );
 }
 

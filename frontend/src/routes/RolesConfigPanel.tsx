@@ -42,8 +42,8 @@ export default function RolesConfigPanel() {
   const [rolesConfig, setRolesConfig] = useState(props.rolesConfig);
 
   return (
-    <div className="h-full p-1">
-      <div className="h-full rounded-lg border-2">
+    <div className="h-full">
+      <div className="h-full rounded-lg">
         <div
           className={`h-full transition-opacity delay-100 duration-200 ease-in-out ${state === "loading" ? "opacity-25" : ""}`}
         >
@@ -87,7 +87,10 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
   return (
     <div className="h-full w-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-y-4"
+        >
           {msgFields.map((msg, msgIndex) => {
             return (
               <MessageEditor
@@ -97,15 +100,13 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
               />
             );
           })}
-          <div>
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={handleCreateMessage}
-            >
-              Add message
-            </Button>
-          </div>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={handleCreateMessage}
+          >
+            Add message
+          </Button>
           {msgFields.length == 0 && (
             <FormMessage>You must create at least one message</FormMessage>
           )}

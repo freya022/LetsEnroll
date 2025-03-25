@@ -27,13 +27,13 @@ export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
   });
 
   return (
-    <div>
+    <>
       <FormField
         {...buttonLens.focus("style").interop()}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Style*</FormLabel>
-            <FormControl>
+            <FormLabel>Style</FormLabel>
+            <FormControl className="w-full">
               <ToggleGroup
                 variant="outline"
                 {...field}
@@ -106,6 +106,6 @@ export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
           At least a label or an emoji must be set
         </h3>
       )}
-    </div>
+    </>
   );
 }

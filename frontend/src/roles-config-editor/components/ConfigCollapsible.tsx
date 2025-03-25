@@ -38,7 +38,9 @@ export function ConfigCollapsible({
       </CollapsibleTrigger>
       <CollapsibleContent>
         <Separator />
-        {children}
+        <div className="flex flex-col items-stretch gap-y-2 px-3 py-2">
+          {children}
+        </div>
       </CollapsibleContent>
     </Collapsible>
   );
