@@ -56,7 +56,21 @@ export function ComponentEditor({
       </ConfigCollapsible>
     );
   } else if (component.type === "row") {
-    return <RowEditor rowLens={componentLens as Lens<Row>} />;
+    const row = component as Row;
+    return (
+      <ConfigCollapsible
+        header={
+          row.components.length === 0 ? (
+            <FormMessage>Row - Not configured yet</FormMessage>
+          ) : (
+            `Row of ${row.components.length} components`
+          )
+        }
+        listName="row config"
+      >
+        <RowEditor rowLens={componentLens as Lens<Row>} />
+      </ConfigCollapsible>
+    );
   }
 }
 

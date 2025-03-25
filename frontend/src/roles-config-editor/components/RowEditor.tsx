@@ -45,8 +45,7 @@ export function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
   }
 
   return (
-    <div>
-      <div>Row</div>
+    <>
       {componentFields.map((component, componentIndex) => {
         return (
           <ComponentEditor
@@ -80,7 +79,7 @@ export function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
       {components.length < 1 && (
         <FormMessage>A row must have at least one component</FormMessage>
       )}
-    </div>
+    </>
   );
 }
 
