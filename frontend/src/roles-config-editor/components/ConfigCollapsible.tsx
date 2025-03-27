@@ -6,19 +6,25 @@ import {
 import { Button } from "@/components/ui/button.tsx";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Separator } from "@/components/ui/separator.tsx";
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import { cn } from "@/lib/utils.ts";
+import { PathString } from "react-hook-form";
+import { formCollapsibleCallbacksContext } from "@/roles-config-editor/contexts.ts";
 
 export function ConfigCollapsible({
+  objectPath,
   header,
   listName,
   children,
 }: {
+  objectPath: PathString;
   header: ReactNode;
   listName: string;
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+
+  useFormCollapsibleValidationCallback(objectPath, setOpen);
 
   return (
     <Collapsible
@@ -51,4 +57,56 @@ export function ConfigCollapsible({
       </CollapsibleContent>
     </Collapsible>
   );
+}
+
+/**
+ * Configures a callback in {@link formCollapsibleCallbacksContext}
+ * which calls `setOpen(true)` if there is a validation error in it or one of its children,
+ * or `setOpen(false)` otherwise.
+ */
+function useFormCollapsibleValidationCallback(
+  objectPath: string,
+  setOpen: (open: boolean) => void,
+) {
+  const formCollapsibleCallbacks = useContext(formCollapsibleCallbacksContext);
+
+  useEffect(() => {
+    formCollapsibleCallbacks.set(objectPath, (errors) =>
+      setOpen(hasError(objectPath, "messages", errors.messages)),
+    );
+
+    return () => {
+      formCollapsibleCallbacks.delete(objectPath);
+    };
+  }, [formCollapsibleCallbacks, objectPath, setOpen]);
+}
+
+function hasError(
+  objectPath: PathString,
+  currPath: PathString,
+  errors: unknown,
+): boolean {
+  if (errors instanceof Array) {
+    // @ts-expect-error dw bro
+    if (errors["root"] !== undefined) {
+      return currPath.startsWith(objectPath);
+    }
+
+    return errors.some((nestedError, index) => {
+      const nestedPath = currPath + "." + index;
+      return hasError(objectPath, nestedPath, nestedError);
+    });
+  } else if (errors instanceof Object) {
+    return Object.entries(errors).some(([key, value]) => {
+      const nestedPath = currPath + "." + key;
+
+      if (value["type"] !== undefined) {
+        return nestedPath.startsWith(objectPath);
+      }
+
+      return hasError(objectPath, nestedPath, value);
+    });
+  } else {
+    return false;
+  }
 }

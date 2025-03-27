@@ -27,6 +27,7 @@ export function ComponentEditor({
     const button = component as Button;
     return (
       <ConfigCollapsible
+        objectPath={componentLens.interop().name}
         header={
           button.roleName.trim().length === 0 ? (
             <FormMessage>Button - Not configured yet</FormMessage>
@@ -43,6 +44,7 @@ export function ComponentEditor({
     const selectMenu = component as SelectMenu;
     return (
       <ConfigCollapsible
+        objectPath={componentLens.interop().name}
         header={
           !hasRoleNamesSet(selectMenu.choices) ? (
             <FormMessage>Select menu - Not configured yet</FormMessage>
@@ -59,6 +61,7 @@ export function ComponentEditor({
     const row = component as Row;
     return (
       <ConfigCollapsible
+        objectPath={componentLens.interop().name}
         header={
           row.components.length === 0 ? (
             <FormMessage>Row - Not configured yet</FormMessage>

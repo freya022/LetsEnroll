@@ -91,6 +91,7 @@ function SelectMenuChoiceEditor({
 
   return (
     <ConfigCollapsible
+      objectPath={choiceLens.interop().name}
       header={
         choice.roleName.trim().length == 0 ? (
           <FormMessage>Choice - Not configured yet</FormMessage>

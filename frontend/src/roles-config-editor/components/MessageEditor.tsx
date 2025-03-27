@@ -47,6 +47,7 @@ export function MessageEditor({
 
   return (
     <ConfigCollapsible
+      objectPath={messageLens.interop().name}
       header={
         componentCount == 0 ? (
           <FormMessage>

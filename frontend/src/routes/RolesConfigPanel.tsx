@@ -5,12 +5,18 @@ import {
 } from "react-router";
 import axios from "axios";
 import { Button } from "@/components/ui/button.tsx";
-import { Dispatch, SetStateAction, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
+import {
+  SubmitErrorHandler,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { Form, FormMessage } from "@/components/ui/form.tsx";
 import { useLens } from "@hookform/lenses";
 import { RolesConfig } from "@/dto/RolesConfigDTO.ts";
 import { MessageEditor } from "@/roles-config-editor/components/MessageEditor.tsx";
+import { formCollapsibleCallbacksContext } from "@/roles-config-editor/contexts.ts";
 
 type Params = {
   guildId: string;
@@ -80,15 +86,21 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
     });
   }
 
-  function onSubmit(values: RolesConfig) {
+  const formCollapsibleCallbacks = useContext(formCollapsibleCallbacksContext);
+
+  const onSubmit: SubmitHandler<RolesConfig> = (values: RolesConfig) => {
     console.log(values);
-  }
+  };
+
+  const onInvalid: SubmitErrorHandler<RolesConfig> = (errors) => {
+    formCollapsibleCallbacks.forEach((value) => value(errors));
+  };
 
   return (
     <div className="h-full w-full">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit, onInvalid)}
           className="flex flex-col gap-y-4"
         >
           {msgFields.map((msg, msgIndex) => {
