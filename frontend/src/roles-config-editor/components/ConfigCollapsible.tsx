@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Separator } from "@/components/ui/separator.tsx";
 import { ReactNode, useState } from "react";
+import { cn } from "@/lib/utils.ts";
 
 export function ConfigCollapsible({
   header,
@@ -36,7 +37,13 @@ export function ConfigCollapsible({
           <span className="sr-only">Toggle {listName.toLowerCase()}</span>
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent>
+      <CollapsibleContent
+        className={cn({
+          "data-[state=closed]:hidden": "hidden", // Hide content when closed
+          "data-[state=open]:block": "block", // Show content when open
+        })}
+        forceMount // Ensure always mounted (not removed when closed)
+      >
         <Separator />
         <div className="flex flex-col items-stretch gap-y-2 px-3 py-2">
           {children}
