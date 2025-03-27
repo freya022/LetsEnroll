@@ -122,6 +122,9 @@ function UnicodeEmojiEditor<T extends EmojiContainer<UnicodeEmoji>>({
   return (
     <FormField
       {...emojiContainerLens.focus("emoji.unicode").interop()}
+      rules={{
+        required: true,
+      }}
       render={({ field }) => (
         <>
           <FormLabel className="col-start-2">Unicode*</FormLabel>
@@ -143,6 +146,9 @@ function CustomEmojiEditor<T extends EmojiContainer<CustomEmoji>>({
     <>
       <FormField
         {...emojiContainerLens.focus("emoji.name").interop()}
+        rules={{
+          required: true,
+        }}
         render={({ field }) => (
           <>
             <FormLabel className="col-start-2 row-start-1">Name*</FormLabel>
@@ -154,6 +160,9 @@ function CustomEmojiEditor<T extends EmojiContainer<CustomEmoji>>({
       />
       <FormField
         {...emojiContainerLens.focus("emoji.discordId").interop()}
+        rules={{
+          required: true,
+        }}
         render={({ field }) => (
           <>
             <FormLabel className="col-start-3 row-start-1">

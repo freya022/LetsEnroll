@@ -84,6 +84,7 @@ export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
       <FormField
         {...buttonLens.focus("label").interop()}
         rules={{
+          validate: () => !(!label && !emoji),
           maxLength: {
             value: 80,
             message: "Label must be less than 80 characters",
