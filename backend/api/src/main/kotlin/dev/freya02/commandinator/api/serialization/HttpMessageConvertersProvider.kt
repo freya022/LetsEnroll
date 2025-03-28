@@ -18,12 +18,20 @@ class HttpMessageConvertersProvider {
         val customConverter = KotlinSerializationJsonHttpMessageConverter(json)
 
         return object : HttpMessageConverters() {
-            override fun postProcessConverters(converters: List<HttpMessageConverter<*>>): List<HttpMessageConverter<*>> {
-                return converters.filterNot { it is KotlinSerializationJsonHttpMessageConverter } + customConverter
+            override fun postProcessConverters(converters: MutableList<HttpMessageConverter<*>>): List<HttpMessageConverter<*>> {
+                return replaceConverterWithCustomJsonInstance(converters)
             }
 
-            override fun postProcessPartConverters(converters: List<HttpMessageConverter<*>>): List<HttpMessageConverter<*>> {
-                return converters.filterNot { it is KotlinSerializationJsonHttpMessageConverter } + customConverter
+            override fun postProcessPartConverters(converters: MutableList<HttpMessageConverter<*>>): List<HttpMessageConverter<*>> {
+                return replaceConverterWithCustomJsonInstance(converters)
+            }
+
+            private fun replaceConverterWithCustomJsonInstance(converters: MutableList<HttpMessageConverter<*>>): MutableList<HttpMessageConverter<*>> {
+                val baseConverter = converters.filterIsInstance<KotlinSerializationJsonHttpMessageConverter>().single()
+                val baseConverterIndex = converters.indexOf(baseConverter)
+
+                converters[baseConverterIndex] = customConverter
+                return converters
             }
         }
     }
