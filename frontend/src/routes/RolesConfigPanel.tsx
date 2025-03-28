@@ -89,7 +89,7 @@ async function action({
   const data = await request.json();
 
   try {
-    await axios.post(`/api/guilds/${guildId}/roles`, data);
+    await axios.put(`/api/guilds/${guildId}/roles`, data);
   } catch (e) {
     return { error: e as AxiosError };
   }

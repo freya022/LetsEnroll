@@ -2,7 +2,6 @@ package dev.freya02.commandinator.api.service
 
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.exceptions.NoSuchRolesConfigException
-import dev.freya02.commandinator.api.exceptions.RolesConfigAlreadyExistsException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
 import dev.freya02.commandinator.api.mapper.RolesConfigMapper
 import dev.freya02.commandinator.api.mapper.mapper
@@ -16,17 +15,16 @@ class RolesConfigService(
     private val rolesConfigRepository: RolesConfigRepository,
 ) {
 
-    fun createConfig(guildId: Long, config: RolesConfigDTO) {
-        if (rolesConfigRepository.existsByGuildId(guildId))
-            throw RolesConfigAlreadyExistsException("A configuration for guild $guildId already exists.")
+    fun upsertConfig(guildId: Long, config: RolesConfigDTO) {
         if (config.messages.isEmpty())
             throw RolesConfigEmptyException("The configuration contains no messages.")
 
-        rolesConfigRepository.save(mapper.toRolesConfig(config, guildId))
-    }
-
-    fun updateConfig(guildId: Long, dto: RolesConfigDTO) {
-        TODO()
+        val entity = rolesConfigRepository.findByGuildId(guildId)
+        if (entity != null) {
+            rolesConfigRepository.save(mapper.updateRolesConfig(config, entity))
+        } else {
+            rolesConfigRepository.save(mapper.toRolesConfig(config, guildId))
+        }
     }
 
     fun retrieveConfig(guildId: Long): RolesConfigDTO {

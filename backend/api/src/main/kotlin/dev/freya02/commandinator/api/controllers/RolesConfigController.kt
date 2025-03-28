@@ -4,7 +4,6 @@ import dev.freya02.commandinator.api.bot.BotClient
 import dev.freya02.commandinator.api.bot.isInGuild
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.exceptions.NoSuchRolesConfigException
-import dev.freya02.commandinator.api.exceptions.RolesConfigAlreadyExistsException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
 import dev.freya02.commandinator.api.exceptions.exceptionResponse
 import dev.freya02.commandinator.api.service.RolesConfigService
@@ -21,12 +20,12 @@ class RolesConfigController(
     private val botClient: BotClient
 ) {
 
-    @PostMapping("/api/guilds/{guildId}/roles")
-    fun createRoleConfig(@PathVariable guildId: Long, @RequestBody config: RolesConfigDTO, @DashboardUser user: OAuth2User) {
+    @PutMapping("/api/guilds/{guildId}/roles")
+    fun upsertRoleConfig(@PathVariable guildId: Long, @RequestBody config: RolesConfigDTO, @DashboardUser user: OAuth2User) {
         if (!botClient.isInGuild(guildId, user.get<String>("id")!!.toLong()))
             throw ResponseStatusException(HttpStatus.FORBIDDEN)
 
-        rolesConfigService.createConfig(guildId, config)
+        rolesConfigService.upsertConfig(guildId, config)
     }
 
     @GetMapping("/api/guilds/{guildId}/roles")
@@ -153,10 +152,6 @@ class RolesConfigController(
             )
         )
     }
-
-    @ExceptionHandler
-    fun handleException(exception: RolesConfigAlreadyExistsException) =
-        exceptionResponse(HttpStatus.CONFLICT, "A config already exists.")
 
     @ExceptionHandler
     fun handleException(exception: RolesConfigEmptyException) =

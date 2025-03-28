@@ -16,7 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.put
 
 @WebMvcTest(controllers = [RolesConfigController::class])
 class RolesConfigControllerTests @Autowired constructor(
@@ -34,7 +34,7 @@ class RolesConfigControllerTests @Autowired constructor(
         mockkStatic(BotClient::isInGuild) // Top-level extensions are static
         every { botClient.isInGuild(any(), any()) } returns false
 
-        mockMvc.post("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
+        mockMvc.put("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
             withLoggedInInvalidUser()
 
             contentType = MediaType.APPLICATION_JSON
@@ -52,10 +52,10 @@ class RolesConfigControllerTests @Autowired constructor(
     @Test
     fun `Insert roles config with polymorphic components and emojis`() {
         mockkStatic(BotClient::isInGuild) // Top-level extensions are static
-        every { rolesConfigService.createConfig(any(), any()) } just runs
+        every { rolesConfigService.upsertConfig(any(), any()) } just runs
         every { botClient.isInGuild(EXAMPLE_GUILD_ID, EXAMPLE_USER_ID) } returns true
 
-        mockMvc.post("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
+        mockMvc.put("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
             withLoggedInUser()
 
             contentType = MediaType.APPLICATION_JSON
