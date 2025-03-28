@@ -8,7 +8,7 @@ import {
 } from "react-router";
 import axios, { AxiosError } from "axios";
 import { Button } from "@/components/ui/button.tsx";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   SubmitErrorHandler,
   SubmitHandler,
@@ -69,12 +69,14 @@ export default function RolesConfigPanel() {
 // so the form resets when switching guilds
 // https://react.dev/learn/preserving-and-resetting-state#resetting-a-form-with-a-key
 function RolesConfigForm() {
-  const props = useLoaderData<Props>();
-  const [rolesConfig, setRolesConfig] = useState(props.rolesConfig);
+  const { rolesConfig } = useLoaderData<Props>();
+  const [create, setCreate] = useState(false);
   return rolesConfig ? (
     <RolesConfigEditor rolesConfig={rolesConfig} />
+  ) : create ? (
+    <RolesConfigEditor rolesConfig={{ messages: [] }} />
   ) : (
-    <CreateConfigPrompt setRolesConfig={setRolesConfig} />
+    <CreateConfigPrompt setCreate={setCreate} />
   );
 }
 
@@ -198,34 +200,19 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
 }
 
 function CreateConfigPrompt({
-  setRolesConfig,
+  setCreate,
 }: {
-  setRolesConfig: Dispatch<SetStateAction<RolesConfig | undefined>>;
+  setCreate: (create: boolean) => void;
 }) {
+  function handleCreateConfig() {
+    setCreate(true);
+  }
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-3">
       <h1 className="text-xl font-semibold">No config exists for this guild</h1>
       <p className="text-lg">Would you like to create one?</p>
-      <CreateConfigButton setRolesConfig={setRolesConfig} />
+      <Button onClick={handleCreateConfig}>Create config</Button>
     </div>
   );
-}
-
-function CreateConfigButton({
-  setRolesConfig,
-}: {
-  setRolesConfig: Dispatch<SetStateAction<RolesConfig | undefined>>;
-}) {
-  function handleButton() {
-    setRolesConfig({
-      messages: [
-        {
-          content: "",
-          components: [],
-        },
-      ],
-    });
-  }
-
-  return <Button onClick={handleButton}>Create config</Button>;
 }
