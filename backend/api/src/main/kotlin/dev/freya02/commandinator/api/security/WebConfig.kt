@@ -10,5 +10,6 @@ class WebConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
             .allowedHeaders("X-XSRF-TOKEN")
+            .allowedMethods("GET", "HEAD", "POST", "PUT")
     }
 }
