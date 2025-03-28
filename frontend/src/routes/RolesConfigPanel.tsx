@@ -1,10 +1,12 @@
 import {
+  ActionFunctionArgs,
   Params as RouteParams,
   useBlocker,
+  useFetcher,
   useLoaderData,
   useNavigation,
 } from "react-router";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Button } from "@/components/ui/button.tsx";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import {
@@ -18,6 +20,7 @@ import { useLens } from "@hookform/lenses";
 import { RolesConfig } from "@/dto/RolesConfigDTO.ts";
 import { MessageEditor } from "@/roles-config-editor/components/MessageEditor.tsx";
 import { formCollapsibleCallbacksContext } from "@/roles-config-editor/contexts.ts";
+import { getErrorMessage } from "@/utils.ts";
 
 type Params = {
   guildId: string;
@@ -75,9 +78,32 @@ function RolesConfigForm() {
   );
 }
 
+type ActionReturnArgs = {
+  error?: AxiosError;
+};
+
+async function action({
+  request,
+  params: { guildId },
+}: ActionFunctionArgs): Promise<ActionReturnArgs> {
+  const data = await request.json();
+
+  try {
+    await axios.post(`/api/guilds/${guildId}/roles`, data);
+  } catch (e) {
+    return { error: e as AxiosError };
+  }
+
+  return {};
+}
+
+RolesConfigPanel.action = action;
+
 function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
+  const fetcher = useFetcher<ActionReturnArgs>();
   const form = useForm<RolesConfig>({
     defaultValues: rolesConfig,
+    // Would disable the form inputs when submitting but this causes an infinite loop :)
   });
 
   const lens = useLens({ control: form.control });
@@ -109,8 +135,11 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
 
   const formCollapsibleCallbacks = useContext(formCollapsibleCallbacksContext);
 
-  const onSubmit: SubmitHandler<RolesConfig> = (values: RolesConfig) => {
-    console.log(values);
+  const onSubmit: SubmitHandler<RolesConfig> = async (values: RolesConfig) => {
+    await fetcher.submit(values, {
+      method: "post",
+      encType: "application/json",
+    });
   };
 
   const onInvalid: SubmitErrorHandler<RolesConfig> = (errors) => {
@@ -144,7 +173,23 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
             <FormMessage>You must create at least one message</FormMessage>
           )}
           <div>
-            <Button type="submit">Save</Button>
+            {fetcher.state !== "idle" ? (
+              <Button disabled>Saving...</Button>
+            ) : (
+              <>
+                <Button type="submit">Save</Button>
+
+                {fetcher.data?.error && (
+                  <p className="text-destructive">
+                    An error occurred: {getErrorMessage(fetcher.data.error)}
+                  </p>
+                )}
+
+                {fetcher.data && fetcher.data.error === undefined && (
+                  <p className="text-green-500">Saved!</p>
+                )}
+              </>
+            )}
           </div>
         </form>
       </Form>
@@ -171,38 +216,16 @@ function CreateConfigButton({
 }: {
   setRolesConfig: Dispatch<SetStateAction<RolesConfig | undefined>>;
 }) {
-  //TODO this should actually just change the state of the parent with an empty RolesConfig
-  // as it should be pushed when explicitly saving
-  // const mutation = useMutation({
-  //   mutationFn: (newConfig: RolesConfig) => {
-  //     return axios.post("/api/guilds/722891685755093072/roles", newConfig);
-  //   },
-  // });
-
   function handleButton() {
     setRolesConfig({
       messages: [
         {
-          content: "a",
+          content: "",
           components: [],
         },
       ],
     });
-
-    // mutation.mutate({
-    //   messages: [],
-    // });
   }
 
-  return (
-    <>
-      {/*{mutation.isPending && "Creating config..."}*/}
-
-      {/*{mutation.isError && `Error: ${getErrorMessage(mutation.error)}`}*/}
-
-      {/*{mutation.isSuccess && "Created successfully!"}*/}
-
-      <Button onClick={handleButton}>Create config</Button>
-    </>
-  );
+  return <Button onClick={handleButton}>Create config</Button>;
 }

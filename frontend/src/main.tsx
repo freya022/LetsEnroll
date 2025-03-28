@@ -35,6 +35,7 @@ const router = createBrowserRouter([
           {
             path: ":guildId",
             loader: RolesConfigPanel.loader,
+            action: RolesConfigPanel.action,
             errorElement: <ErrorPage />,
             element: <RolesConfigPanel />,
           },
