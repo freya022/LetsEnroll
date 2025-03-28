@@ -23,6 +23,7 @@ type Params = {
 };
 
 type Props = {
+  guildId: string;
   rolesConfig?: RolesConfig;
 };
 
@@ -30,6 +31,7 @@ async function loader({ params }: { params: RouteParams }): Promise<Props> {
   const { guildId } = params as Params;
 
   return {
+    guildId,
     rolesConfig: await axios
       .get(`/api/guilds/${guildId}/roles`)
       .catch((error) => {
@@ -45,7 +47,6 @@ RolesConfigPanel.loader = loader;
 export default function RolesConfigPanel() {
   const props = useLoaderData<Props>();
   const { state } = useNavigation();
-  const [rolesConfig, setRolesConfig] = useState(props.rolesConfig);
 
   return (
     <div className="h-full">
@@ -53,14 +54,23 @@ export default function RolesConfigPanel() {
         <div
           className={`h-full transition-opacity delay-100 duration-200 ease-in-out ${state === "loading" ? "opacity-25" : ""}`}
         >
-          {rolesConfig ? (
-            <RolesConfigEditor rolesConfig={rolesConfig} />
-          ) : (
-            <CreateConfigPrompt setRolesConfig={setRolesConfig} />
-          )}
+          <RolesConfigForm key={props.guildId} />
         </div>
       </div>
     </div>
+  );
+}
+
+// This needs to be in its own function so it can be keyed,
+// so the form resets when switching guilds
+// https://react.dev/learn/preserving-and-resetting-state#resetting-a-form-with-a-key
+function RolesConfigForm() {
+  const props = useLoaderData<Props>();
+  const [rolesConfig, setRolesConfig] = useState(props.rolesConfig);
+  return rolesConfig ? (
+    <RolesConfigEditor rolesConfig={rolesConfig} />
+  ) : (
+    <CreateConfigPrompt setRolesConfig={setRolesConfig} />
   );
 }
 
