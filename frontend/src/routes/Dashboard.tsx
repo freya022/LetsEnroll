@@ -1,6 +1,6 @@
 import axios from "axios";
 import { hasPermission } from "@/utils.ts";
-import { Link, Outlet, useLoaderData, useNavigation } from "react-router";
+import { NavLink, Outlet, useLoaderData } from "react-router";
 import { ChevronRight } from "lucide-react";
 import Spinner from "@/assets/spinner.svg?react";
 
@@ -42,9 +42,11 @@ export default function Dashboard() {
         <ul className="flex h-full flex-col rounded-lg border-2">
           {managedGuilds.map((guild) => (
             <li key={guild.id}>
-              <Link to={`./${guild.id}`}>
-                <Guild guild={guild} />
-              </Link>
+              <NavLink to={`./${guild.id}`}>
+                {({ isPending }) => (
+                  <Guild guild={guild} isPending={isPending} />
+                )}
+              </NavLink>
             </li>
           ))}
         </ul>
@@ -56,10 +58,7 @@ export default function Dashboard() {
   );
 }
 
-function Guild({ guild }: { guild: GuildDTO }) {
-  const { location } = useNavigation();
-  const loading = location?.pathname.endsWith(guild.id) ?? false;
-
+function Guild({ guild, isPending }: { guild: GuildDTO; isPending: boolean }) {
   return (
     <div className="hover:bg-accent flex cursor-pointer items-center gap-2 p-2">
       <img
@@ -68,7 +67,7 @@ function Guild({ guild }: { guild: GuildDTO }) {
         className="size-16 rounded-full border-1"
       />
       <span className="grow">{guild.name}</span>
-      {loading ? (
+      {isPending ? (
         <Spinner className="dark:stroke-foreground stroke-foreground size-6 animate-spin" />
       ) : (
         <ChevronRight className="size-6" />
