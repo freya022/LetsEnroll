@@ -108,6 +108,12 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
     // Would disable the form inputs when submitting but this causes an infinite loop :)
   });
 
+  // Reset the form if the rolesConfig changes,
+  // this happens when the page is reloaded after submission
+  useEffect(() => {
+    form.reset(rolesConfig);
+  }, [form, rolesConfig]);
+
   const lens = useLens({ control: form.control });
 
   const { fields: msgFields, append: appendMessage } = useFieldArray({
