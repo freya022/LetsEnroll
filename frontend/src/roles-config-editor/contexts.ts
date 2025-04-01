@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { RolesConfig } from "@/dto/RolesConfigDTO.ts";
 import { FieldErrors } from "react-hook-form";
 
@@ -7,5 +7,9 @@ export type FormCollapsibleCallback = (
 ) => void;
 export type FormCollapsibleCallbacks = Map<string, FormCollapsibleCallback>;
 
-export const formCollapsibleCallbacksContext =
+const formCollapsibleCallbacksContext =
   createContext<FormCollapsibleCallbacks>(new Map());
+
+export function useFormCollapsibleCallbacks() {
+  return useContext(formCollapsibleCallbacksContext);
+}

@@ -8,7 +8,7 @@ import {
 } from "react-router";
 import axios, { AxiosError } from "axios";
 import { Button } from "@/components/ui/button.tsx";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   SubmitErrorHandler,
   SubmitHandler,
@@ -19,7 +19,7 @@ import { Form, FormMessage } from "@/components/ui/form.tsx";
 import { useLens } from "@hookform/lenses";
 import { RolesConfig } from "@/dto/RolesConfigDTO.ts";
 import { MessageEditor } from "@/roles-config-editor/components/MessageEditor.tsx";
-import { formCollapsibleCallbacksContext } from "@/roles-config-editor/contexts.ts";
+import { useFormCollapsibleCallbacks } from "@/roles-config-editor/contexts.ts";
 import { getErrorMessage } from "@/utils.ts";
 
 type Params = {
@@ -141,7 +141,7 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
     return !confirm("Do you want to discard your changes?");
   });
 
-  const formCollapsibleCallbacks = useContext(formCollapsibleCallbacksContext);
+  const formCollapsibleCallbacks = useFormCollapsibleCallbacks();
 
   const onSubmit: SubmitHandler<RolesConfig> = async (values: RolesConfig) => {
     await fetcher.submit(values, {

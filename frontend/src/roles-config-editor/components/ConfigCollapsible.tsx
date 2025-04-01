@@ -6,10 +6,10 @@ import {
 import { Button } from "@/components/ui/button.tsx";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Separator } from "@/components/ui/separator.tsx";
-import { ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { cn } from "@/lib/utils.ts";
 import { PathString } from "react-hook-form";
-import { formCollapsibleCallbacksContext } from "@/roles-config-editor/contexts.ts";
+import { useFormCollapsibleCallbacks } from "@/roles-config-editor/contexts.ts";
 
 export function ConfigCollapsible({
   objectPath,
@@ -60,7 +60,7 @@ export function ConfigCollapsible({
 }
 
 /**
- * Configures a callback in {@link formCollapsibleCallbacksContext}
+ * Configures a callback in {@link useFormCollapsibleCallbacks}
  * which calls `setOpen(true)` if there is a validation error in it or one of its children,
  * or `setOpen(false)` otherwise.
  */
@@ -68,7 +68,7 @@ function useFormCollapsibleValidationCallback(
   objectPath: string,
   setOpen: (open: boolean) => void,
 ) {
-  const formCollapsibleCallbacks = useContext(formCollapsibleCallbacksContext);
+  const formCollapsibleCallbacks = useFormCollapsibleCallbacks();
 
   useEffect(() => {
     formCollapsibleCallbacks.set(objectPath, (errors) =>
