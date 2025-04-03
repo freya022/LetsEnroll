@@ -1,4 +1,6 @@
 import { Component } from "@/dto/RolesConfigDTO.ts";
+import { useParams, useRouteLoaderData } from "react-router";
+import { GuildDTO } from "@/dto/GuildDTO.ts";
 
 export function getComponentCount(component: Component | Component[]): number {
   if (component instanceof Array) {
@@ -34,4 +36,12 @@ export function getRoleCount(component: Component | Component[]): number {
     case "string_select_menu":
       return component.choices.length;
   }
+}
+
+export function useSelectedGuild() {
+  const { guildId } = useParams<{ guildId: string }>();
+  const { managedGuilds } = useRouteLoaderData<{ managedGuilds: GuildDTO[] }>(
+    "dashboard",
+  )!;
+  return managedGuilds.find((g) => g.id === guildId!)!;
 }

@@ -4,13 +4,10 @@ import {
   Params as RouteParams,
   useLoaderData,
   useNavigation,
-  useParams,
-  useRouteLoaderData,
 } from "react-router";
 import axios from "axios";
 import { Button } from "@/components/ui/button.tsx";
-import { getRoleCount } from "@/roles-config-editor/utils.ts";
-import { GuildDTO } from "@/dto/GuildDTO.ts";
+import { getRoleCount, useSelectedGuild } from "@/roles-config-editor/utils.ts";
 import { Separator } from "@/components/ui/separator.tsx";
 
 type Params = {
@@ -59,11 +56,7 @@ export default function RolesConfigPanel() {
 }
 
 function EditOrPublishPanel({ rolesConfig }: { rolesConfig: RolesConfig }) {
-  const { guildId } = useParams<Params>();
-  const { managedGuilds } = useRouteLoaderData<{ managedGuilds: GuildDTO[] }>(
-    "dashboard",
-  )!;
-  const guild = managedGuilds.find((g) => g.id === guildId)!;
+  const guild = useSelectedGuild();
 
   const messageCount = rolesConfig.messages.length;
   const roleCount = rolesConfig.messages.reduce(
