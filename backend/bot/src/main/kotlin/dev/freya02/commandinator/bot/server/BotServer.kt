@@ -1,5 +1,6 @@
 package dev.freya02.commandinator.bot.server
 
+import dev.freya02.commandinator.api.dto.ChannelDTO
 import dev.freya02.commandinator.api.dto.GuildDTO
 import dev.freya02.commandinator.api.dto.MemberDTO
 import dev.freya02.commandinator.bot.config.Config
@@ -21,6 +22,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
 
 @Resource("/guilds")
 private class Guilds {
@@ -34,6 +36,9 @@ private class Guilds {
             @Resource("{userId}")
             class Id(val members: Members, val userId: Long)
         }
+
+        @Resource("channels")
+        class Channels(val guild: Id)
     }
 }
 
@@ -57,6 +62,7 @@ class BotServer {
                 routing {
                     getGuildMember(jda)
                     getBotGuilds(jda)
+                    getGuildChannels(jda)
                 }
             }
         }.start(wait = false)
@@ -86,7 +92,20 @@ class BotServer {
         call.respond(jda.guilds.map { it.toDTO() })
     }
 
+    private fun Route.getGuildChannels(jda: JDA) = get<Guilds.Id.Channels> { channelsResource ->
+        val guildId = channelsResource.guild.guildId
+        val guild = jda.getGuildById(guildId) ?:
+            return@get call.respond(HttpStatusCode.NotFound)
+
+        call.respond(guild.channels.filterIsInstance<TextChannel>().map { it.toDTO() })
+    }
+
     private fun Guild.toDTO(): GuildDTO = GuildDTO(
         idLong,
+    )
+
+    private fun TextChannel.toDTO(): ChannelDTO = ChannelDTO(
+        idLong,
+        name
     )
 }

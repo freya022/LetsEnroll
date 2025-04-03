@@ -22,6 +22,9 @@ interface BotClient {
 
     @GetExchange("/guilds")
     fun getBotGuilds(): List<GuildDTO>
+
+    @GetExchange("/guilds/{guildId}/channels")
+    fun getGuildChannels(@PathVariable guildId: Long): String
 }
 
 fun BotClient.isInGuild(guildId: Long, userId: Long): Boolean {

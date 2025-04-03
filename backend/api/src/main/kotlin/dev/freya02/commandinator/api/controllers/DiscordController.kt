@@ -6,6 +6,7 @@ import dev.freya02.commandinator.api.discord.DiscordClient
 import dev.freya02.commandinator.api.utils.getDiscordAuthorizationHeader
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -26,5 +27,10 @@ class DiscordController(
             .let { objectMapper.writeValueAsString(it) }
 
         return sharedGuilds
+    }
+
+    @GetMapping("/api/guilds/{guildId}/channels")
+    fun getGuildChannels(@PathVariable guildId: Long): String {
+        return botClient.getGuildChannels(guildId)
     }
 }
