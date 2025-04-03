@@ -1,5 +1,5 @@
 import { Lens } from "@hookform/lenses";
-import { Component, RoleMessage } from "@/dto/RolesConfigDTO.ts";
+import { RoleMessage } from "@/dto/RolesConfigDTO.ts";
 import { useFieldArray, useWatch } from "react-hook-form";
 import {
   FormControl,
@@ -13,6 +13,10 @@ import { ComponentEditor } from "@/roles-config-editor/components/ComponentEdito
 import { Button } from "@/components/ui/button.tsx";
 import { ConfigCollapsible } from "@/roles-config-editor/components/ConfigCollapsible.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
+import {
+  getComponentCount,
+  getRoleCount,
+} from "@/roles-config-editor/utils.ts";
 
 export function MessageEditor({
   messageLens,
@@ -104,40 +108,4 @@ export function MessageEditor({
       )}
     </ConfigCollapsible>
   );
-}
-
-function getComponentCount(component: Component | Component[]): number {
-  if (component instanceof Array) {
-    return component.reduce(
-      (count, nestedComponent) => count + getComponentCount(nestedComponent),
-      0,
-    );
-  }
-
-  switch (component.type) {
-    case "row":
-      return getComponentCount(component.components);
-    case "button":
-      return 1;
-    case "string_select_menu":
-      return 1;
-  }
-}
-
-function getRoleCount(component: Component | Component[]): number {
-  if (component instanceof Array) {
-    return component.reduce(
-      (count, nestedComponent) => count + getRoleCount(nestedComponent),
-      0,
-    );
-  }
-
-  switch (component.type) {
-    case "row":
-      return getRoleCount(component.components);
-    case "button":
-      return 1;
-    case "string_select_menu":
-      return component.choices.length;
-  }
 }
