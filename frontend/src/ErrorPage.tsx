@@ -1,4 +1,5 @@
 import { isRouteErrorResponse, useRouteError } from "react-router";
+import { AxiosError } from "axios";
 
 export default function ErrorPage() {
   const error = useRouteError();
@@ -8,6 +9,9 @@ export default function ErrorPage() {
   if (isRouteErrorResponse(error)) {
     // error is type `ErrorResponse`
     errorMessage = error.data?.message || error.statusText;
+  } else if (error instanceof AxiosError && error.status === 401) {
+    location.href = "/oauth2/authorization/discord";
+    errorMessage = "Not authorized, redirecting to login page...";
   } else if (error instanceof Error) {
     errorMessage = error.message;
   } else if (typeof error === "string") {
