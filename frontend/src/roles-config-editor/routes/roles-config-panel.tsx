@@ -11,6 +11,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button.tsx";
 import { getRoleCount } from "@/roles-config-editor/utils.ts";
 import { GuildDTO } from "@/dto/GuildDTO.ts";
+import { Separator } from "@/components/ui/separator.tsx";
 
 type Params = {
   guildId: string;
@@ -44,7 +45,7 @@ export default function RolesConfigPanel() {
     <div className="h-full">
       <div className="h-full rounded-lg">
         <div
-          className={`h-full transition-opacity delay-100 duration-200 ease-in-out ${state === "loading" ? "opacity-25" : ""}`}
+          className={`flex h-full justify-center transition-opacity delay-100 duration-200 ease-in-out ${state === "loading" ? "opacity-25" : ""}`}
         >
           {rolesConfig ? (
             <EditOrPublishPanel rolesConfig={rolesConfig} />
@@ -72,15 +73,16 @@ function EditOrPublishPanel({ rolesConfig }: { rolesConfig: RolesConfig }) {
   );
 
   return (
-    <div className="flex h-full flex-col items-center">
-      <h3 className="text-xl font-semibold">
+    <div className="flex h-full w-max flex-col items-center justify-center gap-y-4">
+      <h3 className="text-2xl font-semibold">
         Roles configuration for '{guild.name}'
       </h3>
-      <div className="flex grow flex-col items-center justify-center gap-y-4">
-        <p className="text-lg font-semibold text-gray-400">
+      <Separator />
+      <div className="flex flex-col items-center justify-center gap-y-4">
+        <p className="text-xl font-semibold text-gray-400">
           {messageCount} messages, {roleCount} roles
         </p>
-        <div className="grid w-xs grid-cols-2 justify-stretch gap-x-6">
+        <div className="grid w-sm grid-cols-2 justify-stretch gap-x-6">
           <Button asChild>
             <NavLink to="./edit">Edit...</NavLink>
           </Button>
@@ -96,9 +98,11 @@ function EditOrPublishPanel({ rolesConfig }: { rolesConfig: RolesConfig }) {
 function CreateConfigPanel() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-      <h1 className="text-xl font-semibold">No config exists for this guild</h1>
-      <p className="text-lg">Would you like to create one?</p>
-      <Button asChild>
+      <h1 className="text-2xl font-semibold">
+        No config exists for this guild
+      </h1>
+      <p className="text-xl">Would you like to create one?</p>
+      <Button className="px-8" asChild>
         <NavLink to="./edit">Create config</NavLink>
       </Button>
     </div>
