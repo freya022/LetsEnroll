@@ -3,16 +3,10 @@ import { hasPermission } from "@/utils.ts";
 import { NavLink, Outlet, useLoaderData } from "react-router";
 import { ChevronRight } from "lucide-react";
 import Spinner from "@/assets/spinner.svg?react";
+import { GuildDTO } from "@/dto/GuildDTO.ts";
 
 const MANAGE_SERVER = BigInt(1) << BigInt(5);
 const MANAGE_ROLES = BigInt(1) << BigInt(28);
-
-interface GuildDTO {
-  id: string;
-  name: string;
-  icon: string;
-  permissions: string;
-}
 
 interface Props {
   managedGuilds: GuildDTO[];
