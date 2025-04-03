@@ -8,7 +8,9 @@ import Dashboard from "@/routes/Dashboard.tsx";
 import { ThemeProvider } from "@/components/theme-provider.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import RolesConfigPanel from "@/routes/RolesConfigPanel.tsx";
+import RolesConfigPanel from "@/roles-config-editor/routes/roles-config-panel.tsx";
+import RolesConfigEditor from "@/roles-config-editor/routes/roles-config-editor.tsx";
+import RolesConfigPublisher from "@/roles-config-editor/routes/roles-config-publisher.tsx";
 
 declare module "@tanstack/react-query" {
   interface Register {
@@ -31,13 +33,29 @@ const router = createBrowserRouter([
         path: "/dashboard",
         loader: Dashboard.loader,
         element: <Dashboard />,
+        id: "dashboard",
         children: [
           {
-            path: ":guildId",
-            loader: RolesConfigPanel.loader,
-            action: RolesConfigPanel.action,
-            errorElement: <ErrorPage />,
-            element: <RolesConfigPanel />,
+            path: ":guildId/roles",
+            children: [
+              {
+                index: true,
+                loader: RolesConfigPanel.loader,
+                errorElement: <ErrorPage />,
+                element: <RolesConfigPanel />,
+              },
+              {
+                path: "edit",
+                loader: RolesConfigEditor.loader,
+                action: RolesConfigEditor.action,
+                element: <RolesConfigEditor />,
+              },
+              {
+                path: "publish",
+                loader: RolesConfigPublisher.loader,
+                element: <RolesConfigPublisher />,
+              },
+            ],
           },
         ],
       },

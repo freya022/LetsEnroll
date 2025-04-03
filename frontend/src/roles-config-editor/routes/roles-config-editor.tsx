@@ -1,84 +1,51 @@
+import { RolesConfig } from "@/dto/RolesConfigDTO.ts";
 import {
   ActionFunctionArgs,
   Params as RouteParams,
   useBlocker,
   useFetcher,
   useLoaderData,
-  useNavigation,
 } from "react-router";
-import axios, { AxiosError } from "axios";
-import { Button } from "@/components/ui/button.tsx";
-import { useEffect, useState } from "react";
 import {
   SubmitErrorHandler,
   SubmitHandler,
   useFieldArray,
   useForm,
 } from "react-hook-form";
-import { Form, FormMessage } from "@/components/ui/form.tsx";
+import { useEffect } from "react";
 import { useLens } from "@hookform/lenses";
-import { RolesConfig } from "@/dto/RolesConfigDTO.ts";
-import { MessageEditor } from "@/roles-config-editor/components/MessageEditor.tsx";
 import { useFormCollapsibleCallbacks } from "@/roles-config-editor/contexts.ts";
+import { Form, FormMessage } from "@/components/ui/form.tsx";
+import { MessageEditor } from "@/roles-config-editor/components/MessageEditor.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import { getErrorMessage } from "@/utils.ts";
+import axios, { AxiosError } from "axios";
 
 type Params = {
   guildId: string;
 };
 
 type Props = {
-  guildId: string;
-  rolesConfig?: RolesConfig;
+  rolesConfig: RolesConfig;
 };
 
 async function loader({ params }: { params: RouteParams }): Promise<Props> {
   const { guildId } = params as Params;
 
+  const existingRolesConfig = await axios
+    .get(`/api/guilds/${guildId}/roles`)
+    .catch((error) => {
+      if (error.status === 404) return null;
+      throw error;
+    })
+    .then((res) => res?.data as RolesConfig);
+
   return {
-    guildId,
-    rolesConfig: await axios
-      .get(`/api/guilds/${guildId}/roles`)
-      .catch((error) => {
-        if (error.status === 404) return null;
-        throw error;
-      })
-      .then((res) => res?.data as RolesConfig),
+    rolesConfig: existingRolesConfig ?? { messages: [] },
   };
 }
 
-RolesConfigPanel.loader = loader;
-
-export default function RolesConfigPanel() {
-  const props = useLoaderData<Props>();
-  const { state } = useNavigation();
-
-  return (
-    <div className="h-full">
-      <div className="h-full rounded-lg">
-        <div
-          className={`h-full transition-opacity delay-100 duration-200 ease-in-out ${state === "loading" ? "opacity-25" : ""}`}
-        >
-          <RolesConfigForm key={props.guildId} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// This needs to be in its own function so it can be keyed,
-// so the form resets when switching guilds
-// https://react.dev/learn/preserving-and-resetting-state#resetting-a-form-with-a-key
-function RolesConfigForm() {
-  const { rolesConfig } = useLoaderData<Props>();
-  const [create, setCreate] = useState(false);
-  return rolesConfig ? (
-    <RolesConfigEditor rolesConfig={rolesConfig} />
-  ) : create ? (
-    <RolesConfigEditor rolesConfig={{ messages: [] }} />
-  ) : (
-    <CreateConfigPrompt setCreate={setCreate} />
-  );
-}
+RolesConfigEditor.loader = loader;
 
 type ActionReturnArgs = {
   error?: AxiosError;
@@ -99,9 +66,11 @@ async function action({
   return {};
 }
 
-RolesConfigPanel.action = action;
+RolesConfigEditor.action = action;
 
-function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
+export default function RolesConfigEditor() {
+  const { rolesConfig } = useLoaderData<Props>();
+
   const fetcher = useFetcher<ActionReturnArgs>();
   const form = useForm<RolesConfig>({
     defaultValues: rolesConfig,
@@ -201,24 +170,6 @@ function RolesConfigEditor({ rolesConfig }: { rolesConfig: RolesConfig }) {
           </div>
         </form>
       </Form>
-    </div>
-  );
-}
-
-function CreateConfigPrompt({
-  setCreate,
-}: {
-  setCreate: (create: boolean) => void;
-}) {
-  function handleCreateConfig() {
-    setCreate(true);
-  }
-
-  return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-      <h1 className="text-xl font-semibold">No config exists for this guild</h1>
-      <p className="text-lg">Would you like to create one?</p>
-      <Button onClick={handleCreateConfig}>Create config</Button>
     </div>
   );
 }

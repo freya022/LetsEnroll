@@ -36,7 +36,7 @@ export default function Dashboard() {
         <ul className="flex h-full flex-col rounded-lg border-2">
           {managedGuilds.map((guild) => (
             <li key={guild.id}>
-              <NavLink to={`./${guild.id}`}>
+              <NavLink to={`./${guild.id}/roles`}>
                 {({ isPending }) => (
                   <Guild guild={guild} isPending={isPending} />
                 )}
