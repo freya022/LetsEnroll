@@ -12,10 +12,10 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import net.dv8tion.jda.api.JDA
 
+private val logger = KotlinLogging.logger { }
+
 @BService
 object GuildMemberModule : KtorModule {
-
-    private val logger = KotlinLogging.logger { }
 
     override fun Application.defineModule(jda: JDA) {
         routing {
@@ -26,16 +26,14 @@ object GuildMemberModule : KtorModule {
     private fun Route.getGuildMember(jda: JDA) = get<Guilds.Id.Members.Id> { memberResource ->
         val guildId = memberResource.members.guild.guildId
         val userId = memberResource.userId
-        val guild = jda.getGuildById(guildId)
-        if (guild == null) {
+        val guild = jda.getGuildById(guildId) ?: run {
             logger.debug { "No guild found for $guildId" }
-            return@get call.respond(HttpStatusCode.NotFound)
+            return@get call.respondText("Guild not found", status = HttpStatusCode.NotFound)
         }
 
-        val member = guild.retrieveMemberByIdOrNull(userId)
-        if (member == null) {
+        val member = guild.retrieveMemberByIdOrNull(userId) ?: run {
             logger.debug { "No member found for $userId in guild $guildId" }
-            return@get call.respond(HttpStatusCode.NotFound)
+            return@get call.respondText("Member not found", status = HttpStatusCode.NotFound)
         }
 
         call.respond(MemberDTO(member.permissions.mapTo(hashSetOf()) { it.name }))
