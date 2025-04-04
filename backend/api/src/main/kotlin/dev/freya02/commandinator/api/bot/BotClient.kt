@@ -2,16 +2,19 @@ package dev.freya02.commandinator.api.bot
 
 import dev.freya02.commandinator.api.dto.GuildDTO
 import dev.freya02.commandinator.api.dto.MemberDTO
+import dev.freya02.commandinator.api.dto.PublishSelectorsDTO
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.support.RestClientAdapter
 import org.springframework.web.service.annotation.GetExchange
 import org.springframework.web.service.annotation.HttpExchange
+import org.springframework.web.service.annotation.PostExchange
 import org.springframework.web.service.invoker.HttpServiceProxyFactory
 import org.springframework.web.service.invoker.createClient
 
@@ -25,6 +28,9 @@ interface BotClient {
 
     @GetExchange("/guilds/{guildId}/channels")
     fun getGuildChannels(@PathVariable guildId: Long): String
+
+    @PostExchange("/guilds/{guildId}/roles/publish")
+    fun publishRoleSelectors(@PathVariable guildId: Long, @RequestBody data: PublishSelectorsDTO)
 }
 
 fun BotClient.isInGuild(guildId: Long, userId: Long): Boolean {

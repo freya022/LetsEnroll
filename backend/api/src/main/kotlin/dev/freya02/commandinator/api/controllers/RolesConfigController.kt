@@ -2,6 +2,7 @@ package dev.freya02.commandinator.api.controllers
 
 import dev.freya02.commandinator.api.bot.BotClient
 import dev.freya02.commandinator.api.bot.isInGuild
+import dev.freya02.commandinator.api.dto.PublishRoleSelectorsDTO
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.exceptions.NoSuchRolesConfigException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
@@ -151,6 +152,14 @@ class RolesConfigController(
                 )
             )
         )
+    }
+
+    @PostMapping("/api/guilds/{guildId}/roles/publish")
+    fun publishRoleSelectors(@PathVariable("guildId") guildId: Long, @RequestBody data: PublishRoleSelectorsDTO, @DashboardUser user: OAuth2User) {
+        if (!botClient.isInGuild(guildId, user.get<String>("id")!!.toLong()))
+            throw ResponseStatusException(HttpStatus.FORBIDDEN)
+
+        rolesConfigService.publishSelectors(guildId, data.channelId)
     }
 
     @ExceptionHandler

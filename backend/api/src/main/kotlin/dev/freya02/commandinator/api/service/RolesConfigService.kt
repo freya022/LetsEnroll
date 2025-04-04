@@ -1,5 +1,7 @@
 package dev.freya02.commandinator.api.service
 
+import dev.freya02.commandinator.api.bot.BotClient
+import dev.freya02.commandinator.api.dto.PublishSelectorsDTO
 import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.exceptions.NoSuchRolesConfigException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
@@ -13,6 +15,7 @@ private val mapper: RolesConfigMapper = mapper()
 @Service
 class RolesConfigService(
     private val rolesConfigRepository: RolesConfigRepository,
+    private val botClient: BotClient,
 ) {
 
     fun upsertConfig(guildId: Long, config: RolesConfigDTO) {
@@ -32,5 +35,10 @@ class RolesConfigService(
             ?: throw NoSuchRolesConfigException("No roles config found for guild $guildId")
 
         return mapper.toRolesConfigDTO(rolesConfig)
+    }
+
+    fun publishSelectors(guildId: Long, channelId: Long) {
+        val config = retrieveConfig(guildId)
+        botClient.publishRoleSelectors(guildId, PublishSelectorsDTO(channelId, config))
     }
 }

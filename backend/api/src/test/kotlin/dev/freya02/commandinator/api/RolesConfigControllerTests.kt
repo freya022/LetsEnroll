@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
 
 @WebMvcTest(controllers = [RolesConfigController::class])
@@ -113,6 +114,18 @@ class RolesConfigControllerTests @Autowired constructor(
             withLoggedInInvalidUser()
         }.andExpect {
             status { isNotFound() }
+        }
+    }
+
+    @Test
+    fun `Must be in guild to publish selectors`() {
+        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
+        every { botClient.isInGuild(any(), any()) } returns false
+
+        mockMvc.post("/api/guilds/$EXAMPLE_GUILD_ID/roles/publish") {
+            withLoggedInInvalidUser()
+        }.andExpect {
+            status { isForbidden() }
         }
     }
 }
