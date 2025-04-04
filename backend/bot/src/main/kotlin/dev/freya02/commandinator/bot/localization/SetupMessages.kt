@@ -7,11 +7,11 @@ interface SetupMessages : IMessageSource {
     //TODO make those accept a (discord)locale as they're mostly used with the guild locale
     // maybe the annotation itself can contain a user/guild locale switch
     @LocalizedContent("setup.added_role")
-    fun getBcUpdatesAddedResponse(roleId: String): String
+    fun getRoleAddedResponse(roleId: String): String
 
     @LocalizedContent("setup.removed_role")
-    fun getBcUpdatesRemovedResponse(roleId: String): String
+    fun getRoleRemovedResponse(roleId: String): String
 
     @LocalizedContent("setup.applied_roles")
-    fun getAppliedRolesMessageContent(roleId: String): String
+    fun getAppliedRolesResponse(roleId: String): String
 }

@@ -39,13 +39,13 @@ class RoleSelectorsHandler(
         val role = guild.getOrCreateRole(roleName)
         if (role in member.roles) {
             guild.removeRoleFromMember(member, role).await()
-            event.reply(messages.getBcUpdatesRemovedResponse(role.id))
+            event.reply(messages.getRoleRemovedResponse(role.id))
                 .setEphemeral(true)
                 .setAllowedMentions(emptyList())
                 .await()
         } else {
             guild.addRoleToMember(member, role).await()
-            event.reply(messages.getBcUpdatesAddedResponse(role.id))
+            event.reply(messages.getRoleAddedResponse(role.id))
                 .setEphemeral(true)
                 .setAllowedMentions(emptyList())
                 .await()
@@ -80,7 +80,7 @@ class RoleSelectorsHandler(
 
         // Add the role
         guild.addRoleToMember(member, role).await()
-        event.reply(messages.getAppliedRolesMessageContent(role.id))
+        event.reply(messages.getAppliedRolesResponse(role.id))
             .setEphemeral(true)
             .setAllowedMentions(emptyList())
             .await()
