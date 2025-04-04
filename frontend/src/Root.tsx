@@ -39,7 +39,7 @@ export default function Root() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex items-center justify-between border-b px-4 py-2">
+      <header className="flex items-center justify-between border-b bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
         <div>
           <Link to={`/`} className="flex items-center gap-x-1">
             <img
@@ -55,7 +55,7 @@ export default function Root() {
           {user ? <User user={user} /> : <LogIn />}
         </div>
       </header>
-      <main className="grow p-2">
+      <main className="grow p-4">
         <Outlet />
       </main>
     </div>

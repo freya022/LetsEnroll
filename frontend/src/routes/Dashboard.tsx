@@ -31,9 +31,9 @@ export default function Dashboard() {
   const { managedGuilds } = useLoaderData<Props>();
 
   return (
-    <div className="flex h-full gap-x-2 p-1">
+    <div className="flex h-full gap-x-4 p-1">
       <div className="w-sm">
-        <ul className="flex h-full flex-col rounded-lg border-2">
+        <ul className="flex h-full flex-col rounded-lg border-2 bg-neutral-200 dark:bg-neutral-900">
           {managedGuilds.map((guild) => (
             <li key={guild.id}>
               <NavLink to={`./${guild.id}/roles`}>

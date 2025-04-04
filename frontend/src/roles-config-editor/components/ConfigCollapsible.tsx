@@ -32,7 +32,10 @@ export function ConfigCollapsible({
       onOpenChange={setOpen}
       className="flex flex-col rounded-lg border-2"
     >
-      <CollapsibleTrigger className="flex w-full justify-between" asChild>
+      <CollapsibleTrigger
+        className="flex w-full justify-between bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-800"
+        asChild
+      >
         <Button
           type="button"
           variant="ghost"
@@ -51,7 +54,7 @@ export function ConfigCollapsible({
         forceMount // Ensure always mounted (not removed when closed)
       >
         <Separator />
-        <div className="flex flex-col items-stretch gap-y-2 px-3 py-2">
+        <div className="flex flex-col items-stretch gap-y-4 rounded-b-lg p-3">
           {children}
         </div>
       </CollapsibleContent>
