@@ -53,6 +53,7 @@ const router = createBrowserRouter([
               {
                 path: "publish",
                 loader: RolesConfigPublisher.loader,
+                action: RolesConfigPublisher.action,
                 element: <RolesConfigPublisher />,
               },
             ],
