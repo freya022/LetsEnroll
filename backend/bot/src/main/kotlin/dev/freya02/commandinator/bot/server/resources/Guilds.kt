@@ -17,5 +17,12 @@ class Guilds {
 
         @Resource("channels")
         class Channels(val guild: Id)
+
+        @Resource("roles")
+        class Roles(val guild: Id) {
+
+            @Resource("publish")
+            class Publish(val roles: Roles)
+        }
     }
 }
