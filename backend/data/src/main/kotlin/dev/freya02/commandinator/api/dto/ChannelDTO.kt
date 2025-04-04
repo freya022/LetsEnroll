@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ChannelDTO(
-    val id: Long,
+    val id: Snowflake,
     val name: String,
 )

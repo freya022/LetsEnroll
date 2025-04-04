@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GuildDTO(
-    val id: Long,
+    val id: Snowflake,
 )

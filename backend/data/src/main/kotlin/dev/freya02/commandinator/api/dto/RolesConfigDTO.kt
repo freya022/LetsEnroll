@@ -21,7 +21,7 @@ data class RolesConfigDTO(
         data class UnicodeEmoji(val unicode: String) : Emoji
         @Serializable
         @SerialName("custom")
-        data class CustomEmoji(val animated: Boolean, val name: String, val discordId: Long) : Emoji
+        data class CustomEmoji(val animated: Boolean, val name: String, val discordId: Snowflake) : Emoji
 
         @Serializable
         sealed interface Component
