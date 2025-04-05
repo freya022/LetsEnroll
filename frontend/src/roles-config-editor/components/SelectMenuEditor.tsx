@@ -13,11 +13,14 @@ import { useFieldArray, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button.tsx";
 import { EmojiEditor } from "@/roles-config-editor/components/EmojiEditor.tsx";
 import { ConfigCollapsible } from "@/roles-config-editor/components/ConfigCollapsible.tsx";
+import DeleteButton from "@/roles-config-editor/components/DeleteButton.tsx";
 
 export function SelectMenuEditor({
   selectMenuLens,
+  onSelectMenuDelete,
 }: {
   selectMenuLens: Lens<SelectMenu>;
+  onSelectMenuDelete: () => void;
 }) {
   const choicesLens = selectMenuLens.focus("choices");
 
@@ -75,6 +78,7 @@ export function SelectMenuEditor({
       {choiceFields.length < 2 && (
         <FormMessage>A select menu must have at least two choices</FormMessage>
       )}
+      <DeleteButton name={"Select Menu"} onDelete={onSelectMenuDelete} />
     </>
   );
 }

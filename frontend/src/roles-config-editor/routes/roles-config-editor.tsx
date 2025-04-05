@@ -85,7 +85,11 @@ export default function RolesConfigEditor() {
 
   const lens = useLens({ control: form.control });
 
-  const { fields: msgFields, append: appendMessage } = useFieldArray({
+  const {
+    fields: msgFields,
+    append: appendMessage,
+    remove: removeMessage,
+  } = useFieldArray({
     control: form.control,
     name: "messages",
     rules: {
@@ -136,6 +140,7 @@ export default function RolesConfigEditor() {
                 messageLens={lens.focus("messages").focus(`${msgIndex}`)}
                 msgIndex={msgIndex}
                 key={msg.id}
+                onMessageDelete={() => removeMessage(msgIndex)}
               />
             );
           })}

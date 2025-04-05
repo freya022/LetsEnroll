@@ -15,8 +15,10 @@ import { FormMessage } from "@/components/ui/form.tsx";
 
 export function ComponentEditor({
   componentLens,
+  onComponentDelete,
 }: {
   componentLens: Lens<Component>;
+  onComponentDelete: () => void;
 }) {
   const component = useWatch({
     name: componentLens.interop().name,
@@ -37,7 +39,10 @@ export function ComponentEditor({
         }
         listName="button config"
       >
-        <ButtonEditor buttonLens={componentLens as Lens<Button>} />
+        <ButtonEditor
+          buttonLens={componentLens as Lens<Button>}
+          onButtonDelete={onComponentDelete}
+        />
       </ConfigCollapsible>
     );
   } else if (component.type === "string_select_menu") {
@@ -54,7 +59,10 @@ export function ComponentEditor({
         }
         listName="select menu config"
       >
-        <SelectMenuEditor selectMenuLens={componentLens as Lens<SelectMenu>} />
+        <SelectMenuEditor
+          selectMenuLens={componentLens as Lens<SelectMenu>}
+          onSelectMenuDelete={onComponentDelete}
+        />
       </ConfigCollapsible>
     );
   } else if (component.type === "row") {
@@ -71,7 +79,10 @@ export function ComponentEditor({
         }
         listName="row config"
       >
-        <RowEditor rowLens={componentLens as Lens<Row>} />
+        <RowEditor
+          rowLens={componentLens as Lens<Row>}
+          onRowDelete={onComponentDelete}
+        />
       </ConfigCollapsible>
     );
   }

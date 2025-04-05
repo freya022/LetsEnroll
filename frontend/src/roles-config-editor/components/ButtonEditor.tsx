@@ -13,8 +13,15 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import { capitalize } from "@/utils.ts";
 import { Input } from "@/components/ui/input.tsx";
 import { EmojiEditor } from "@/roles-config-editor/components/EmojiEditor.tsx";
+import DeleteButton from "@/roles-config-editor/components/DeleteButton.tsx";
 
-export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
+export function ButtonEditor({
+  buttonLens,
+  onButtonDelete,
+}: {
+  buttonLens: Lens<Button>;
+  onButtonDelete: () => void;
+}) {
   const form = useFormContext<RolesConfig>();
 
   const label = useWatch({
@@ -107,6 +114,7 @@ export function ButtonEditor({ buttonLens }: { buttonLens: Lens<Button> }) {
           At least a label or an emoji must be set
         </h3>
       )}
+      <DeleteButton name={"Button"} onDelete={onButtonDelete} />
     </>
   );
 }

@@ -10,11 +10,22 @@ import {
 } from "@/components/ui/dropdown-menu.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { ComponentEditor } from "@/roles-config-editor/components/ComponentEditor.tsx";
+import DeleteButton from "@/roles-config-editor/components/DeleteButton.tsx";
 
-export function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
+export function RowEditor({
+  rowLens,
+  onRowDelete,
+}: {
+  rowLens: Lens<Row>;
+  onRowDelete: () => void;
+}) {
   const componentsLens = rowLens.focus("components");
 
-  const { fields: componentFields, append: appendComponent } = useFieldArray({
+  const {
+    fields: componentFields,
+    append: appendComponent,
+    remove: removeComponent,
+  } = useFieldArray({
     ...componentsLens.interop(),
     rules: {
       required: true,
@@ -51,6 +62,7 @@ export function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
           <ComponentEditor
             componentLens={componentsLens.focus(`${componentIndex}`)}
             key={component.id}
+            onComponentDelete={() => removeComponent(componentIndex)}
           />
         );
       })}
@@ -79,6 +91,7 @@ export function RowEditor({ rowLens }: { rowLens: Lens<Row> }) {
       {components.length < 1 && (
         <FormMessage>A row must have at least one component</FormMessage>
       )}
+      <DeleteButton name={"Row"} onDelete={onRowDelete} />
     </>
   );
 }

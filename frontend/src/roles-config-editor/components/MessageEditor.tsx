@@ -17,17 +17,24 @@ import {
   getComponentCount,
   getRoleCount,
 } from "@/roles-config-editor/utils.ts";
+import DeleteButton from "@/roles-config-editor/components/DeleteButton.tsx";
 
 export function MessageEditor({
   messageLens,
   msgIndex,
+  onMessageDelete,
 }: {
   messageLens: Lens<RoleMessage>;
   msgIndex: number;
+  onMessageDelete: () => void;
 }) {
   const componentsLens = messageLens.focus("components");
 
-  const { fields: componentFields, append: appendComponent } = useFieldArray({
+  const {
+    fields: componentFields,
+    append: appendComponent,
+    remove: removeComponent,
+  } = useFieldArray({
     ...componentsLens.interop(),
     rules: {
       required: true,
@@ -93,6 +100,7 @@ export function MessageEditor({
         <ComponentEditor
           componentLens={componentsLens.focus(`${componentIndex}`)}
           key={component.id}
+          onComponentDelete={() => removeComponent(componentIndex)}
         />
       ))}
       <Button
@@ -106,6 +114,7 @@ export function MessageEditor({
       {components.length == 0 && (
         <FormMessage>A message must have at least one component</FormMessage>
       )}
+      <DeleteButton name={"Message"} onDelete={onMessageDelete} />
     </ConfigCollapsible>
   );
 }
