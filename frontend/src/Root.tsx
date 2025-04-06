@@ -1,5 +1,5 @@
 import "@/App.css";
-import { Link, Outlet, useLoaderData } from "react-router";
+import { NavLink, Outlet, To, useLoaderData } from "react-router";
 import { UserDTO } from "@/dto/UserDTO.ts";
 import { ModeToggle } from "@/components/mode-toggle.tsx";
 import {
@@ -18,6 +18,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { fetcher } from "@/utils.ts";
+import { Separator } from "@/components/ui/separator.tsx";
+import { ReactNode } from "react";
 
 interface Props {
   user?: UserDTO;
@@ -40,15 +42,15 @@ export default function Root() {
   return (
     <div className="flex h-full flex-col">
       <header className="flex items-center justify-between border-b bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
-        <div>
-          <Link to={`/`} className="flex items-center gap-x-1">
-            <img
-              alt="Commandinator Logo"
-              src="/logo-round.svg"
-              className="size-8 rounded-full"
-            />
-            <span>Commandinator</span>
-          </Link>
+        <div className="flex h-full items-center">
+          <img
+            alt="Commandinator Logo"
+            src="/logo-round.svg"
+            className="size-8 rounded-full"
+          />
+          <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:w-[1.5px]" />
+          <NavBarLink to={`/`}>Home</NavBarLink>
+          {user && <NavBarLink to={`/dashboard`}>Dashboard</NavBarLink>}
         </div>
         <div className="flex items-center gap-x-2">
           <ModeToggle />
@@ -59,6 +61,24 @@ export default function Root() {
         <Outlet />
       </main>
     </div>
+  );
+}
+
+function NavBarLink({ to, children }: { to: To; children: ReactNode }) {
+  return (
+    <NavLink
+      to={to}
+      className={({ isPending, isActive }) =>
+        [
+          "transition-opacity delay-50 duration-200 ease-in-out",
+          "hover:bg-accent px-2 py-1",
+          // is(Not)Active prevents the animation when loading a child route
+          (isPending && !isActive) ? "opacity-25" : "",
+        ].join(" ")
+      }
+    >
+      {children}
+    </NavLink>
   );
 }
 
