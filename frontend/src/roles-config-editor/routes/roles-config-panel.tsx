@@ -83,6 +83,10 @@ function EditOrPublishPanel({ rolesConfig }: { rolesConfig: RolesConfig }) {
             <NavLink to="./publish">Publish...</NavLink>
           </Button>
         </div>
+        <p className="text-sm text-neutral-600 italic dark:text-neutral-400">
+          Tip: To remove existing role selectors, delete the message(s) from
+          your server.
+        </p>
       </div>
     </div>
   );
