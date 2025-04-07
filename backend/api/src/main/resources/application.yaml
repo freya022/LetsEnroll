@@ -4,6 +4,7 @@ server:
   error:
     include-stacktrace: never
     include-message: never
+  forward-headers-strategy: framework
 
 spring:
   application:
