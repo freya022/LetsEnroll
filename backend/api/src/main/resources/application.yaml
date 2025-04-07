@@ -41,6 +41,9 @@ spring:
             userInfoUri: https://discordapp.com/api/users/@me
             user-name-attribute: username
   datasource:
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     hikari:
       schema: api
 
