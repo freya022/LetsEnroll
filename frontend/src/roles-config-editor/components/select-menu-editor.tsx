@@ -11,9 +11,9 @@ import {
 import { Input } from "@/components/ui/input.tsx";
 import { useFieldArray, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button.tsx";
-import { EmojiEditor } from "@/roles-config-editor/components/EmojiEditor.tsx";
-import { ConfigCollapsible } from "@/roles-config-editor/components/ConfigCollapsible.tsx";
-import DeleteButton from "@/roles-config-editor/components/DeleteButton.tsx";
+import { EmojiEditor } from "@/roles-config-editor/components/emoji-editor.tsx";
+import { ConfigCollapsible } from "@/roles-config-editor/components/config-collapsible.tsx";
+import DeleteButton from "@/roles-config-editor/components/delete-button.tsx";
 
 export function SelectMenuEditor({
   selectMenuLens,

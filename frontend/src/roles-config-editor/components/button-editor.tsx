@@ -12,8 +12,8 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import { capitalize } from "@/utils.ts";
 import { Input } from "@/components/ui/input.tsx";
-import { EmojiEditor } from "@/roles-config-editor/components/EmojiEditor.tsx";
-import DeleteButton from "@/roles-config-editor/components/DeleteButton.tsx";
+import { EmojiEditor } from "@/roles-config-editor/components/emoji-editor.tsx";
+import DeleteButton from "@/roles-config-editor/components/delete-button.tsx";
 
 export function ButtonEditor({
   buttonLens,

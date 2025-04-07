@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { useLens } from "@hookform/lenses";
 import { useFormCollapsibleCallbacks } from "@/roles-config-editor/contexts.ts";
 import { Form, FormMessage } from "@/components/ui/form.tsx";
-import { MessageEditor } from "@/roles-config-editor/components/MessageEditor.tsx";
+import { MessageEditor } from "@/roles-config-editor/components/message-editor.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { getErrorMessage } from "@/utils.ts";
 import axios, { AxiosError } from "axios";

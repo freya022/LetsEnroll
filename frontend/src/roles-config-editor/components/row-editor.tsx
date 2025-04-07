@@ -9,8 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { ComponentEditor } from "@/roles-config-editor/components/ComponentEditor.tsx";
-import DeleteButton from "@/roles-config-editor/components/DeleteButton.tsx";
+import { ComponentEditor } from "@/roles-config-editor/components/component-editor.tsx";
+import DeleteButton from "@/roles-config-editor/components/delete-button.tsx";
 
 export function RowEditor({
   rowLens,

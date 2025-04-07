@@ -9,15 +9,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form.tsx";
-import { ComponentEditor } from "@/roles-config-editor/components/ComponentEditor.tsx";
+import { ComponentEditor } from "@/roles-config-editor/components/component-editor.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { ConfigCollapsible } from "@/roles-config-editor/components/ConfigCollapsible.tsx";
+import { ConfigCollapsible } from "@/roles-config-editor/components/config-collapsible.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import {
   getComponentCount,
   getRoleCount,
 } from "@/roles-config-editor/utils.ts";
-import DeleteButton from "@/roles-config-editor/components/DeleteButton.tsx";
+import DeleteButton from "@/roles-config-editor/components/delete-button.tsx";
 
 export function MessageEditor({
   messageLens,

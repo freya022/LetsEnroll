@@ -6,10 +6,10 @@ import {
   SelectMenu,
   SelectMenuChoice,
 } from "@/dto/RolesConfigDTO.ts";
-import { RowEditor } from "@/roles-config-editor/components/RowEditor.tsx";
-import { ButtonEditor } from "@/roles-config-editor/components/ButtonEditor.tsx";
-import { SelectMenuEditor } from "@/roles-config-editor/components/SelectMenuEditor.tsx";
-import { ConfigCollapsible } from "@/roles-config-editor/components/ConfigCollapsible.tsx";
+import { RowEditor } from "@/roles-config-editor/components/row-editor.tsx";
+import { ButtonEditor } from "@/roles-config-editor/components/button-editor.tsx";
+import { SelectMenuEditor } from "@/roles-config-editor/components/select-menu-editor.tsx";
+import { ConfigCollapsible } from "@/roles-config-editor/components/config-collapsible.tsx";
 import { useWatch } from "react-hook-form";
 import { FormMessage } from "@/components/ui/form.tsx";
 
