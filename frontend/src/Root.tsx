@@ -8,7 +8,6 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import DiscordLogo from "@/assets/discord-mark-blue.svg";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +19,8 @@ import {
 import { fetcher } from "@/utils.ts";
 import { Separator } from "@/components/ui/separator.tsx";
 import { ReactNode } from "react";
+import DiscordLogoBlue from "@/assets/discord-mark-blue.svg";
+import DiscordLogoWhite from "@/assets/Discord-Symbol-White.svg?react";
 
 interface Props {
   user?: UserDTO;
@@ -48,10 +49,27 @@ export default function Root() {
             src="/logo-round.svg"
             className="size-8 rounded-full"
           />
-          <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:w-[1.5px]" />
+          <Separator
+            orientation="vertical"
+            className="mx-2 data-[orientation=vertical]:w-[1.5px]"
+          />
           <NavBarLink to={`/`}>Home</NavBarLink>
           {user && <NavBarLink to={`/dashboard`}>Dashboard</NavBarLink>}
         </div>
+        {/* Use brand colors */}
+        <Button
+          variant="outline"
+          className="bg-[hsl(235,86%,65%)] text-[hsl(0,0%,100%)] hover:bg-[hsl(235,86%,60%)] hover:text-[hsl(0,0%,100%)]"
+          asChild
+        >
+          <a
+            href="https://discord.com/oauth2/authorize?client_id=1327727455716245564&permissions=268435456&integration_type=0&scope=bot"
+            target="_blank"
+          >
+            <DiscordLogoWhite aria-label="Discord logo" className="size-6" />
+            Invite me
+          </a>
+        </Button>
         <div className="flex items-center gap-x-2">
           <ModeToggle />
           {user ? <User user={user} /> : <LogIn />}
@@ -73,7 +91,7 @@ function NavBarLink({ to, children }: { to: To; children: ReactNode }) {
           "transition-opacity delay-50 duration-200 ease-in-out",
           "hover:bg-accent px-2 py-1",
           // is(Not)Active prevents the animation when loading a child route
-          (isPending && !isActive) ? "opacity-25" : "",
+          isPending && !isActive ? "opacity-25" : "",
         ].join(" ")
       }
     >
@@ -125,7 +143,7 @@ function LogIn() {
   return (
     <Button asChild>
       <a href="/oauth2/authorization/discord">
-        <img alt="Discord logo" src={DiscordLogo} className="size-6" />
+        <img alt="Discord logo" src={DiscordLogoBlue} className="size-6" />
         Log in
       </a>
     </Button>
