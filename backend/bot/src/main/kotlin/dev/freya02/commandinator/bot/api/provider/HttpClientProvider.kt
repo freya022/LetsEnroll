@@ -1,5 +1,6 @@
 package dev.freya02.commandinator.bot.api.provider
 
+import dev.freya02.commandinator.bot.annotations.Disabled
 import dev.freya02.commandinator.bot.config.Config
 import io.github.freya022.botcommands.api.core.service.annotations.BConfiguration
 import io.github.freya022.botcommands.api.core.service.annotations.BService
@@ -11,6 +12,7 @@ import io.ktor.serialization.kotlinx.json.*
 @BConfiguration
 object HttpClientProvider {
 
+    @Disabled("Not used anymore, but could be in the future")
     @BService
     fun apiClient(apiConfig: Config.Api): HttpClient {
         return HttpClient(OkHttp) {

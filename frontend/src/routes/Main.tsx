@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/tooltip.tsx";
 import { cn } from "@/lib/utils.ts";
 
-export function Main() {
+export default function Main() {
   return (
     <div className="flex flex-col items-center gap-y-14">
       <div className="flex flex-col gap-y-2">

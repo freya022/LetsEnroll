@@ -20,6 +20,8 @@ data class Config(
     val database: Database,
     @get:BService
     val api: Api,
+    @get:BService
+    val server: Server,
 ) {
 
     data class Database(
@@ -34,6 +36,10 @@ data class Config(
         val host: String,
         val port: Int,
         val jwt: String,
+    )
+
+    data class Server(
+        val port: Int,
     )
 
     companion object {
@@ -58,6 +64,9 @@ data class Config(
                     env["API_HOST"],
                     env["API_PORT"].toInt(),
                     generateJwt(env["API_PRIVATE_KEY_FILE"]),
+                ),
+                Server(
+                    env["BOT_SERVER_PORT"].toInt()
                 )
             )
         }

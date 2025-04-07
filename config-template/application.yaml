@@ -5,6 +5,6 @@ spring:
     password:
 
 api:
-  discord-client-id: 1234
-  discord-client-secret: abcd
-  front-url: http://localhost:5173
+  discord-client-id: 1234           # Optional if you don't run the website
+  discord-client-secret: abcd       # Optional if you don't run the website
+  front-url: http://localhost:5173  # Optional if you don't run the website

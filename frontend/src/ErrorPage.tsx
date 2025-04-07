@@ -1,4 +1,5 @@
 import { isRouteErrorResponse, useRouteError } from "react-router";
+import { AxiosError } from "axios";
 
 export default function ErrorPage() {
   const error = useRouteError();
@@ -8,17 +9,20 @@ export default function ErrorPage() {
   if (isRouteErrorResponse(error)) {
     // error is type `ErrorResponse`
     errorMessage = error.data?.message || error.statusText;
+  } else if (error instanceof AxiosError && error.status === 401) {
+    location.href = "/oauth2/authorization/discord";
+    errorMessage = "Not authorized, redirecting to login page...";
   } else if (error instanceof Error) {
     errorMessage = error.message;
   } else if (typeof error === "string") {
     errorMessage = error;
   } else {
-    console.error(error);
     errorMessage = "Unknown error";
   }
+  console.error(error);
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-y-5">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-y-5">
       <h1 className="text-4xl font-semibold">Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
       <p className="dark:text-gray-500">

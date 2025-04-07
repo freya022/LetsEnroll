@@ -1,16 +1,27 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import { loader as rootLoader, Root } from "@/Root.tsx";
+import Root from "@/Root.tsx";
 import ErrorPage from "@/ErrorPage.tsx";
-import { Main } from "@/routes/Main.tsx";
-import { Dashboard } from "@/routes/Dashboard.tsx";
+import Main from "@/routes/Main.tsx";
+import Dashboard from "@/routes/Dashboard.tsx";
 import { ThemeProvider } from "@/components/theme-provider.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import RolesConfigPanel from "@/roles-config-editor/routes/roles-config-panel.tsx";
+import RolesConfigEditor from "@/roles-config-editor/routes/roles-config-editor.tsx";
+import RolesConfigPublisher from "@/roles-config-editor/routes/roles-config-publisher.tsx";
+
+declare module "@tanstack/react-query" {
+  interface Register {
+    defaultError: AxiosError;
+  }
+}
 
 const router = createBrowserRouter([
   {
     path: "/",
-    loader: rootLoader,
+    loader: Root.loader,
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
@@ -20,16 +31,47 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
+        loader: Dashboard.loader,
         element: <Dashboard />,
+        id: "dashboard",
+        children: [
+          {
+            path: ":guildId/roles",
+            children: [
+              {
+                index: true,
+                loader: RolesConfigPanel.loader,
+                errorElement: <ErrorPage />,
+                element: <RolesConfigPanel />,
+              },
+              {
+                path: "edit",
+                loader: RolesConfigEditor.loader,
+                action: RolesConfigEditor.action,
+                element: <RolesConfigEditor />,
+              },
+              {
+                path: "publish",
+                loader: RolesConfigPublisher.loader,
+                action: RolesConfigPublisher.action,
+                element: <RolesConfigPublisher />,
+              },
+            ],
+          },
+        ],
       },
     ],
   },
 ]);
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
   </StrictMode>,
 );

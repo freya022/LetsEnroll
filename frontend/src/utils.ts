@@ -1,3 +1,5 @@
+import { AxiosError } from "axios";
+
 export async function checkAuthOrRedirect(response: Response) {
   if (response.status === 401) {
     location.href = "/oauth2/authorization/discord";
@@ -33,4 +35,26 @@ function getCsrfFromCookies() {
     return "";
   }
   return xsrfCookies[0].split("=")[1];
+}
+
+type BackendError = {
+  error: string;
+};
+export function getErrorMessage(error: AxiosError): string {
+  const response = error.response;
+  if (response) {
+    return (response.data as BackendError).error;
+  }
+
+  return error.message;
+}
+
+export function hasPermission(set: string, ...requested: bigint[]): boolean {
+  return requested.every(
+    (permission) => (BigInt(set) & permission) === permission,
+  );
+}
+
+export function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }

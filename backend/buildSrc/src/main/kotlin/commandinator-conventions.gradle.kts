@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("jvm")
-    id("com.google.cloud.tools.jib")
 }
 
 group = "dev.freya02"
@@ -27,8 +26,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
 
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.0")
-    implementation("ch.qos.logback:logback-classic:1.5.16")
-    implementation("dev.reformator.stacktracedecoroutinator:stacktrace-decoroutinator-jvm:2.4.8")
 }
 
 kotlin {

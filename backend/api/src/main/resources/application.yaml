@@ -4,13 +4,24 @@ server:
   error:
     include-stacktrace: never
     include-message: never
+  forward-headers-strategy: framework
 
 spring:
   application:
     name: api
 
   config:
-    import: file:./config/.env[.properties]
+    import:
+      # PWD is module root
+      - optional:file:../../config/.env[.properties]
+      # PWD is backend root
+      - optional:file:../config/.env[.properties]
+      # PWD is project root
+      - optional:file:./config/.env[.properties]
+
+  session:
+    jdbc:
+      initialize-schema: always
 
   security:
     oauth2:
@@ -22,13 +33,16 @@ spring:
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_post
             redirect-uri: "{baseUrl}/login/oauth2/code/discord"
-            scope: identify
+            scope: identify,guilds
         provider:
           discord:
             authorization-uri: https://discord.com/oauth2/authorize?prompt=none
             token-uri: https://discord.com/api/oauth2/token
             userInfoUri: https://discordapp.com/api/users/@me
             user-name-attribute: username
+  datasource:
+    hikari:
+      schema: api
 
 api:
   jwt:
@@ -36,3 +50,7 @@ api:
     # On Linux: Open terminal in the 'config' directory
     # openssl rand -out private.key -base64 64
     secret-key-file: ${API_PRIVATE_KEY_FILE}
+  bot:
+    server:
+      host: ${BOT_SERVER_HOST}
+      port: ${BOT_SERVER_PORT}

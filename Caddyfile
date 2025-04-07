@@ -1,0 +1,25 @@
+enroller.freya02.dev {
+	handle /api/* {
+	    reverse_proxy commandinator-api:16423
+	}
+
+	handle /oauth2/* {
+	    reverse_proxy commandinator-api:16423
+	}
+
+	handle /login/* {
+	    reverse_proxy commandinator-api:16423
+	}
+
+	handle /logout {
+	    reverse_proxy commandinator-api:16423
+	}
+
+	handle {
+	    # Redirect everything to /, fixes SPAs as the router handles by itself
+  		try_files {path} /
+  		# Serve frontend as static files
+		root * /srv/enroller
+		file_server
+	}
+}

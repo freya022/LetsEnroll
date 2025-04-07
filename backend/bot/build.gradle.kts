@@ -1,5 +1,6 @@
 plugins {
     id("commandinator-conventions")
+    id("commandinator-app-conventions")
     alias(libs.plugins.kotlinx.serialization)
 
     alias(libs.plugins.jmh)
@@ -25,8 +26,15 @@ dependencies {
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.okhttp)
-    implementation(libs.ktor.client.content.negociation)
+    implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
+
+    implementation(libs.ktor.server.core)
+    implementation(libs.ktor.server.netty)
+    implementation(libs.ktor.server.resources)
+    implementation(libs.ktor.server.content.negotiation)
+
+    implementation(projects.data)
 
     // Mockk needs bytebuddy to be upgraded to support Java 24
     jmh(libs.mockk)
