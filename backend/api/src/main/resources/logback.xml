@@ -11,7 +11,8 @@
     <logger name="org.apache.tomcat" level="info"/>
 
     <!-- All the remaining loggers -->
-    <root level="trace">
+    <root level="info">
+<!--    <root level="trace">-->
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
