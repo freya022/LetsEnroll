@@ -14,8 +14,14 @@ dependencies {
     implementation(libs.jackson.dataformat.yaml)
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.botcommands)
-    implementation(libs.jda)
+    implementation(libs.botcommands) {
+        exclude(module = "opus-java")
+        exclude(module = "tink")
+    }
+    implementation(libs.jda) {
+        exclude(module = "opus-java")
+        exclude(module = "tink")
+    }
 
     implementation(libs.postgresql)
     implementation(libs.hikaricp)
