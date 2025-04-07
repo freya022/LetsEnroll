@@ -165,7 +165,7 @@ function ChannelSelector({
               {channels.map((channel) => (
                 <CommandItem
                   key={channel.id}
-                  value={channel.id}
+                  value={channel.name} // This is used by the search bar
                   onSelect={() => {
                     setSelectedChannel(channel);
                     setOpen(false);
