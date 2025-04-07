@@ -9,13 +9,17 @@ export default function DeleteButton({
   name: ReactNode;
   onDelete: () => void;
 }) {
-  // TODO Add confirmation dialog
   return (
     <Button
       type="button"
-      className="w-min cursor-pointer"
+      className="w-min cursor-pointer bg-destructive/70"
       variant="destructive"
-      onClick={onDelete}
+      onClick={() => {
+        // TODO in-app alert dialog https://ui.shadcn.com/docs/components/alert-dialog
+        const canDelete = confirm(`Are you sure you want to delete this ${name}?`);
+        if (canDelete)
+          onDelete();
+      }}
     >
       <Trash2 className="size-4" />
       Delete {name}
