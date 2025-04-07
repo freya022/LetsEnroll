@@ -16,7 +16,9 @@ enroller.freya02.dev {
 	}
 
 	handle {
+	    # Redirect everything to /, fixes SPAs as the router handles by itself
   		try_files {path} /
+  		# Serve frontend as static files
 		root * /srv/enroller
 		file_server
 	}
