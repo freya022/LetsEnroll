@@ -51,7 +51,7 @@ export function EmojiEditor<T extends EmojiContainer<Emoji>>({
   }
 
   return (
-    <div className="grid grid-cols-[repeat(4,_1fr)] gap-x-2">
+    <div className="grid grid-cols-[min-content_repeat(3,_1fr)] gap-x-2 gap-y-1">
       <TypeToggle emojiContainerLens={emojiContainerLens} />
       {editor}
     </div>
