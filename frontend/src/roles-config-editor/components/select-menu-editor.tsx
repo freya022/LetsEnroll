@@ -24,7 +24,11 @@ export function SelectMenuEditor({
 }) {
   const choicesLens = selectMenuLens.focus("choices");
 
-  const { fields: choiceFields, append: appendChoice } = useFieldArray({
+  const {
+    fields: choiceFields,
+    append: appendChoice,
+    remove: removeChoice,
+  } = useFieldArray({
     ...choicesLens.interop(),
     rules: { required: true },
   });
@@ -64,6 +68,7 @@ export function SelectMenuEditor({
       {choiceFields.map((choice, choiceIndex) => (
         <SelectMenuChoiceEditor
           choiceLens={choicesLens.focus(`${choiceIndex}`)}
+          onChoiceDelete={() => removeChoice(choiceIndex)}
           key={choice.id}
         />
       ))}
@@ -85,8 +90,10 @@ export function SelectMenuEditor({
 
 function SelectMenuChoiceEditor({
   choiceLens,
+  onChoiceDelete,
 }: {
   choiceLens: Lens<SelectMenuChoice>;
+  onChoiceDelete: () => void;
 }) {
   const choice = useWatch({
     name: choiceLens.interop().name,
@@ -168,6 +175,7 @@ function SelectMenuChoiceEditor({
         )}
       />
       <EmojiEditor emojiContainerLens={choiceLens} />
+      <DeleteButton name={"Choice"} onDelete={onChoiceDelete} />
     </ConfigCollapsible>
   );
 }
