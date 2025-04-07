@@ -6,35 +6,44 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip.tsx";
 import { cn } from "@/lib/utils.ts";
+import Monocle from "@/assets/monocle.svg?react";
+import Raised from "@/assets/raised.svg?react";
+import Thinking from "@/assets/thinking.svg?react";
 
 export default function Main() {
   return (
-    <div className="flex flex-col items-center gap-y-14">
+    <div className="flex flex-col items-center gap-y-6">
       <div className="flex flex-col gap-y-2">
         <h1 className="text-center text-3xl font-semibold">Welcome!</h1>
         <p className="text-xl">
-          Commandinator is a simple bot to set up self-assigned roles on your
-          server!
+          Commandinator is a simple Discord bot to set up self-assigned roles on
+          your server!
         </p>
       </div>
-      <div className="flex max-w-7xl flex-col gap-4 lg:flex-row">
-        <Article heading="Features!" className="flex-1">
+      <div className="grid max-w-4xl flex-col gap-4">
+        <Article
+          emoji={<Monocle />}
+          heading="Features!"
+          className="col-span-1 col-start-1 row-start-1 flex-1 md:col-span-2 md:col-start-1 md:row-start-1"
+        >
           <p>
-            This website enables you to configure the controls sent by the bot,
-            such as:
+            Here you can fully customize the controls sent by the bot, such as:
           </p>
           <ul className={`list-image-[url('./assets/checkmark.svg')] pl-5`}>
             <li className="pl-1">Buttons for single-role toggles</li>
-            <li className="pl-1">
-              Select menus with any selectable role choices
+            <li className="list-image-[url('./assets/construction.svg')] pl-1">
+              Select menus with multiple selectable choices
             </li>
             <li className="pl-1">
               Select menus with a single selectable from a list
             </li>
           </ul>
-          <p>You can, of course, customize every aspect of these components.</p>
         </Article>
-        <Article heading="But why?" className="flex-1">
+        <Article
+          emoji={<Raised />}
+          heading="But why?"
+          className="col-start-1 row-start-2 flex-1 md:col-start-1 md:row-start-2"
+        >
           <p>
             "<i>Another bot</i>" you say? Well yes, I needed one in my{" "}
             <BCLink content="lib" />
@@ -44,15 +53,19 @@ export default function Main() {
               label="require to know where I live"
               tooltip="read: request every permission"
             />{" "}
-            was quite <i>suboptimal</i>, so... here I am.
+            was quite <i>suboptimal</i>.
           </p>
           <p>
-            And that's how this bot was born, supporting my single guild, with
-            of course, <OverengineeredFeatureLabel />, wouldn't really be my
-            work if it wasn't overengineered in some way, huh?
+            So... here it is, supporting my single guild, with of course,{" "}
+            <OverengineeredFeatureLabel />, wouldn't really be my work if it
+            wasn't overengineered in some way, huh?
           </p>
         </Article>
-        <Article heading="What about the website?" className="flex-1">
+        <Article
+          emoji={<Thinking />}
+          heading="What about the website?"
+          className="col-start-1 row-start-3 flex-1 md:col-start-2 md:row-start-2"
+        >
           <p>
             Not so long after finishing the bot, I remembered the bot managing
             the notification roles in JDA no longer existed, so I just thought
@@ -61,8 +74,8 @@ export default function Main() {
           </p>
           <p>
             <i>
-              It's actually an excuse to seriously attempt web development
-              outside of university, but shh.
+              ...or maybe I just needed to do a full stack project for the
+              experience.
             </i>
           </p>
         </Article>
@@ -72,20 +85,24 @@ export default function Main() {
 }
 
 function Article({
+  emoji,
   heading,
   children,
   className,
   ...props
-}: ComponentProps<"article"> & { heading: string }) {
+}: ComponentProps<"article"> & { emoji: ReactNode; heading: ReactNode }) {
   return (
     <article
       {...props}
       className={cn(
         className,
-        "flex flex-col gap-y-2 rounded-lg border-2 border-blue-900 p-2",
+        "flex flex-col gap-y-2 rounded-lg border-2 border-blue-900 p-3",
       )}
     >
-      <h2 className="text-center text-2xl font-semibold">{heading}</h2>
+      <h2 className="flex items-center justify-center gap-x-2 text-center text-2xl font-semibold">
+        <div className="size-7">{emoji}</div>
+        {heading}
+      </h2>
       {children}
     </article>
   );
