@@ -45,3 +45,17 @@ allOpen {
 	annotation("jakarta.persistence.MappedSuperclass")
 	annotation("jakarta.persistence.Embeddable")
 }
+
+jib {
+	from {
+		image = "eclipse-temurin:23-jre"
+	}
+
+	to {
+		image = "commandinator-api"
+	}
+
+	container {
+		mainClass = "dev.freya02.commandinator.api.ApiApplicationKt"
+	}
+}

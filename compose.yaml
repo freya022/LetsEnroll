@@ -2,14 +2,21 @@ services:
   db:
     image: postgres:17
     restart: unless-stopped
+    container_name: commandinator-db
     env_file: ./config/.env
+    networks:
+      - commandinator
     volumes:
       - type: volume
         source: db-data
         target: /var/lib/postgresql/data
-  bot:
-    image: commandinator-bot:latest
+  api:
+    image: commandinator-api:latest
     restart: unless-stopped
+    container_name: commandinator-api
+    networks:
+      - commandinator
+      - caddy
     volumes:
       - type: bind
         source: ./config
@@ -17,6 +24,24 @@ services:
       - type: bind
         source: ./logs
         target: /logs
+  bot:
+    image: commandinator-bot:latest
+    restart: unless-stopped
+    container_name: commandinator-bot
+    networks:
+      - commandinator
+    volumes:
+      - type: bind
+        source: ./config
+        target: /config
+      - type: bind
+        source: ./logs
+        target: /logs
+
+networks:
+  commandinator: {}
+  caddy:
+    external: true
 
 volumes:
   db-data:
