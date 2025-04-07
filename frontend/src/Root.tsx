@@ -42,7 +42,7 @@ export default function Root() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex items-center justify-between border-b bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
+      <header className="grid grid-cols-[1fr_min-content_1fr] items-center border-b bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
         <div className="flex h-full items-center">
           <img
             alt="Commandinator Logo"
@@ -70,7 +70,7 @@ export default function Root() {
             Invite me
           </a>
         </Button>
-        <div className="flex items-center gap-x-2">
+        <div className="flex items-center justify-end gap-x-2">
           <ModeToggle />
           {user ? <User user={user} /> : <LogIn />}
         </div>
