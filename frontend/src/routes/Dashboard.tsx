@@ -3,6 +3,7 @@ import { hasPermission } from "@/utils.ts";
 import { NavLink, Outlet, useLoaderData } from "react-router";
 import { ChevronRight } from "lucide-react";
 import Spinner from "@/assets/spinner.svg?react";
+import Confused from "@/assets/confused.svg?react";
 import { GuildDTO } from "@/dto/GuildDTO.ts";
 
 const MANAGE_SERVER = BigInt(1) << BigInt(5);
@@ -34,15 +35,31 @@ export default function Dashboard() {
     <div className="flex h-full gap-x-4 p-1">
       <div className="w-sm">
         <ul className="flex h-full flex-col rounded-lg border-2 bg-neutral-200 dark:bg-neutral-900">
-          {managedGuilds.map((guild) => (
-            <li key={guild.id}>
-              <NavLink to={`./${guild.id}/roles`}>
-                {({ isPending }) => (
-                  <Guild guild={guild} isPending={isPending} />
-                )}
-              </NavLink>
-            </li>
-          ))}
+          {managedGuilds.length > 0 ? (
+            managedGuilds.map((guild) => (
+              <li key={guild.id}>
+                <NavLink to={`./${guild.id}/roles`}>
+                  {({ isPending }) => (
+                    <Guild guild={guild} isPending={isPending} />
+                  )}
+                </NavLink>
+              </li>
+            ))
+          ) : (
+            <div className="flex h-full flex-col items-center justify-center gap-2">
+              <Confused aria-label="Confused Face" className="size-10" />
+              <span className="text-lg text-neutral-600 italic dark:text-neutral-400">
+                I am not in any of your guilds{" "}
+                <a
+                  href="https://discord.com/oauth2/authorize?client_id=1327727455716245564&permissions=268435456&integration_type=0&scope=bot"
+                  target="_blank"
+                  className="underline"
+                >
+                  yet
+                </a>
+              </span>
+            </div>
+          )}
         </ul>
       </div>
       <div className="grow">
