@@ -139,34 +139,46 @@ function ChannelSelector({
 
   // TODO responsive https://ui.shadcn.com/docs/components/combobox#responsive
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="w-3xs" asChild>
-        <Button role="combobox" variant="secondary" className="justify-between">
-          {selectedChannel ? selectedChannel.name : "Select channel..."}
-          <ChevronsUpDown className="opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-3xs">
-        <Command>
-          <CommandInput placeholder="Search channel..." />
-          <CommandList>
-            <CommandEmpty>No channel found.</CommandEmpty>
-            {channels.map((channel) => (
-              <CommandItem
-                key={channel.id}
-                value={channel.id}
-                onSelect={() => {
-                  setSelectedChannel(channel);
-                  setOpen(false);
-                }}
-              >
-                {channel.name}
-                {channel === selectedChannel && <Check className="ml-auto" />}
-              </CommandItem>
-            ))}
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+    <>
+      <label htmlFor="channel-selector">Channel </label>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger className="w-3xs" asChild>
+          <Button
+            role="combobox"
+            aria-expanded={open}
+            id="channel-selector"
+            variant="secondary"
+            className="justify-between"
+          >
+            {selectedChannel ? selectedChannel.name : "Select channel..."}
+            <ChevronsUpDown
+              aria-label="Channel selector chevrons"
+              className="opacity-50"
+            />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-3xs">
+          <Command>
+            <CommandInput placeholder="Search channel..." />
+            <CommandList>
+              <CommandEmpty>No channel found.</CommandEmpty>
+              {channels.map((channel) => (
+                <CommandItem
+                  key={channel.id}
+                  value={channel.id}
+                  onSelect={() => {
+                    setSelectedChannel(channel);
+                    setOpen(false);
+                  }}
+                >
+                  {channel.name}
+                  {channel === selectedChannel && <Check className="ml-auto" />}
+                </CommandItem>
+              ))}
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </>
   );
 }

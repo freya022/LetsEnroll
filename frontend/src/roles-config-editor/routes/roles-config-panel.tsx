@@ -72,7 +72,7 @@ function EditOrPublishPanel({ rolesConfig }: { rolesConfig: RolesConfig }) {
       </h3>
       <Separator />
       <div className="flex flex-col items-center justify-center gap-y-4">
-        <p className="text-xl font-semibold text-gray-400">
+        <p className="text-xl font-semibold text-gray-600 dark:text-gray-400">
           {messageCount} messages, {roleCount} roles
         </p>
         <div className="grid w-sm grid-cols-2 justify-stretch gap-x-6">

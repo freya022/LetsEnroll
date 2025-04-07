@@ -79,9 +79,12 @@ function Guild({ guild, isPending }: { guild: GuildDTO; isPending: boolean }) {
       />
       <span className="grow">{guild.name}</span>
       {isPending ? (
-        <Spinner className="dark:stroke-foreground stroke-foreground size-6 animate-spin" />
+        <Spinner
+          aria-label="Loading animation"
+          className="dark:stroke-foreground stroke-foreground size-6 animate-spin"
+        />
       ) : (
-        <ChevronRight className="size-6" />
+        <ChevronRight aria-label="Right chevron" className="size-6" />
       )}
     </div>
   );

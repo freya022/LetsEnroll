@@ -42,8 +42,14 @@ export function ConfigCollapsible({
           className={`cursor-pointer ${open ? "rounded-b-none" : ""}`}
         >
           <span>{header}</span>
-          {open ? <ChevronUp /> : <ChevronDown />}
-          <span className="sr-only">Toggle {listName.toLowerCase()}</span>
+          {open ? (
+            <ChevronUp aria-labelledby={`${objectPath}-toggle`} />
+          ) : (
+            <ChevronDown aria-labelledby={`${objectPath}-toggle`} />
+          )}
+          <span id={`${objectPath}-toggle`} className="sr-only">
+            {open ? "Close" : "Open"} {listName.toLowerCase()}
+          </span>
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent

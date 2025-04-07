@@ -168,7 +168,7 @@ export default function RolesConfigEditor() {
                 )}
 
                 {fetcher.data && fetcher.data.error === undefined && (
-                  <p className="text-green-500">Saved!</p>
+                  <p className="text-green-700 dark:text-green-500">Saved!</p>
                 )}
               </>
             )}
