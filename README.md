@@ -1,3 +1,5 @@
+<img align="right" src="frontend/public/logo.svg" height="90" alt="Let's Enroll logo">
+
 # Let's Enroll
 A simple Discord bot to set up self-assigned roles on your server!
 
