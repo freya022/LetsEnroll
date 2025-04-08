@@ -52,7 +52,7 @@ jib {
 	}
 
 	to {
-		image = "commandinator-api"
+		image = "letsenroll-api"
 	}
 
 	container {

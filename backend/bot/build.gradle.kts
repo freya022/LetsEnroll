@@ -93,7 +93,7 @@ jib {
     }
 
     to {
-        image = "commandinator-bot"
+        image = "letsenroll-bot"
     }
 
     container {
