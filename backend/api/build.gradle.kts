@@ -1,6 +1,6 @@
 plugins {
-	id("commandinator-conventions")
-	id("commandinator-app-conventions")
+	id("letsenroll-conventions")
+	id("letsenroll-app-conventions")
 
 	alias(libs.plugins.spring)
 	alias(libs.plugins.jpa)

@@ -1,6 +1,6 @@
 plugins {
-    id("commandinator-conventions")
-    id("commandinator-app-conventions")
+    id("letsenroll-conventions")
+    id("letsenroll-app-conventions")
     alias(libs.plugins.kotlinx.serialization)
 
     alias(libs.plugins.jmh)
