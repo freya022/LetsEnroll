@@ -1,10 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Root from "@/Root.tsx";
-import ErrorPage from "@/ErrorPage.tsx";
-import Main from "@/routes/Main.tsx";
-import Dashboard from "@/routes/Dashboard.tsx";
+import Root from "@/root.tsx";
+import ErrorPage from "@/error-page.tsx";
+import Main from "@/routes/main.tsx";
+import Dashboard from "@/routes/dashboard.tsx";
 import { ThemeProvider } from "@/components/theme-provider.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AxiosError } from "axios";
