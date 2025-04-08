@@ -137,7 +137,7 @@ function OverengineeredFeatureLabel() {
             Auto-generated implementations of interfaces with localized message
             getters,{" "}
             <a
-              href="https://github.com/freya022/Commandinator/blob/db4ae1bf1c486765e7264f300f5ac142b557ed31/bot/src/main/kotlin/dev/freya02/commandinator/bot/localization/messages/MessageSourceFactoryClassGraphProcessor.kt"
+              href="https://github.com/freya022/LetsEnroll/blob/7e06708c8e9f1e41765f42d4e2e15054ec3621d1/backend/bot/src/main/kotlin/dev/freya02/letsenroll/bot/localization/messages/MessageSourceFactoryClassGraphProcessor.kt"
               target="_blank"
               className="underline"
             >
@@ -149,7 +149,7 @@ function OverengineeredFeatureLabel() {
             <i>
               Or, for the{" "}
               <a
-                href="https://github.com/freya022/Commandinator/blob/db4ae1bf1c486765e7264f300f5ac142b557ed31/bot/src/jmh/kotlin/dev/freya02/commandinator/jmh/bot/localization/TestMessagesFactory.kt#L70-L194"
+                href="https://github.com/freya022/LetsEnroll/blob/7e06708c8e9f1e41765f42d4e2e15054ec3621d1/backend/bot/src/jmh/kotlin/dev/freya02/letsenroll/jmh/bot/localization/TestMessagesFactory.kt#L70-L194"
                 target="_blank"
                 className="underline"
               >
