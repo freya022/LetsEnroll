@@ -21,6 +21,7 @@ import { Separator } from "@/components/ui/separator.tsx";
 import { ReactNode } from "react";
 import DiscordLogoBlue from "@/assets/discord-mark-blue.svg";
 import DiscordLogoWhite from "@/assets/Discord-Symbol-White.svg?react";
+import Github from "@/assets/github.svg?react";
 
 interface Props {
   user?: UserDTO;
@@ -78,6 +79,16 @@ export default function Root() {
       <main className="grow p-4">
         <Outlet />
       </main>
+      <footer className="flex items-center justify-between border-t bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
+        <p className="text-secondary-foreground text-sm">
+          {user === undefined && "Log in to access the dashboard"}
+        </p>
+        <Button variant="ghost" size="icon" asChild>
+          <a href="https://github.com/freya022/LetsEnroll" target="_blank">
+            <Github className="fill-primary size-6" aria-label="Github" />
+          </a>
+        </Button>
+      </footer>
     </div>
   );
 }
