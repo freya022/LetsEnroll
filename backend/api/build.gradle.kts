@@ -56,6 +56,6 @@ jib {
 	}
 
 	container {
-		mainClass = "dev.freya02.commandinator.api.ApiApplicationKt"
+		mainClass = "dev.freya02.letsenroll.api.ApiApplicationKt"
 	}
 }
