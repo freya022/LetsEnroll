@@ -91,18 +91,18 @@ export default function RolesConfigPublisher() {
           Publish role selectors for '{guild.name}'
         </h3>
         <Separator />
-        <div>
+        <div className="grid grid-cols-[repeat(3,auto)] items-center gap-x-2 gap-y-1">
           <ChannelSelector
             selectedChannel={selectedChannel}
             setSelectedChannel={setSelectedChannel}
           />
           {fetcher.state !== "idle" ? (
-            <Button className="ml-2 w-28" disabled>
+            <Button className="w-28" disabled>
               Publishing...
             </Button>
           ) : (
             <Button
-              className="ml-2 w-28"
+              className="w-28"
               disabled={selectedChannel === undefined}
               onClick={handlePublish}
             >
@@ -111,15 +111,15 @@ export default function RolesConfigPublisher() {
           )}
 
           {fetcher.state !== "idle" ? (
-            <p className="min-h-6" />
+            <p className="row-start-2 min-h-6" />
           ) : fetcher.data?.error ? (
-            <p className="text-destructive">
+            <p className="text-destructive col-start-2 row-start-2">
               An error occurred: {getErrorMessage(fetcher.data.error)}
             </p>
           ) : fetcher.data && fetcher.data.error === undefined ? (
-            <p className="text-green-500">Published!</p>
+            <p className="col-start-2 row-start-2 text-green-500">Published!</p>
           ) : (
-            <p className="min-h-6" />
+            <p className="row-start-2 min-h-6" />
           )}
         </div>
       </div>
