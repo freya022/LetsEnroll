@@ -9,10 +9,10 @@ import io.github.freya022.botcommands.api.localization.readers.JacksonLocalizati
 import io.github.freya022.botcommands.api.localization.readers.LocalizationMapReader
 
 @BConfiguration
-object CommandinatorLocalizationMapReaderProvider {
+object BotLocalizationMapReaderProvider {
 
     @BService
-    fun commandinatorLocalizationMapReader(context: BContext): LocalizationMapReader {
+    fun botLocalizationMapReader(context: BContext): LocalizationMapReader {
         return JacksonLocalizationMapReader.createWithDefaultTemplate(
             context,
             ObjectMapper(YAMLFactory()),
