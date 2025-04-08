@@ -1,4 +1,4 @@
-rootProject.name = "Commandinator-backend"
+rootProject.name = "LetsEnroll-backend"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
