@@ -18,8 +18,13 @@ Module for the frontend API.
 2. Copy `config-template` as `config`
 3. Fill the values in `config/.env`
 4. Fill the values in `config/application.yaml`, values are required unless commented
-5. (Optional) Delete `logback.xml`
-6. (Optional) Create a run configuration, with the `dev` profile enabled.
+5. Generate the secret key for API-Bot communication:
+   1. Open a terminal in the `config` directory, with `openssl` available
+      - On Windows: use Git Bash
+      - On Linux: Open your usual terminal
+   2. Run `openssl rand -out private.key -base64 64`
+6. (Optional) Delete `logback.xml`
+7. (Optional) Create a run configuration, with the `dev` profile enabled.
    - On IntelliJ IDEA Ultimate, prefer making a `Spring Boot` run configuration and add `dev` to the active profiles
    - On other editors, you can add the following argument: `-Dspring.profiles.active=dev`
-7. Run the `ApplicationMain` class in your editor
+8. Run the `ApplicationMain` class in your editor

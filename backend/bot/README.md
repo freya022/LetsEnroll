@@ -22,5 +22,10 @@ Module for the main Discord bot.
 1. Start from the root directory (where `config-template` is)
 2. Copy `config-template` as `config`
 3. Fill the values in `config/.env`
-4. (Optional) Delete `logback.xml`
-5. Run the `Main` class in your editor
+4. Generate the secret key for API-Bot communication:
+   1. Open a terminal in the `config` directory, with `openssl` available
+      - On Windows: use Git Bash
+      - On Linux: Open your usual terminal
+   2. Run `openssl rand -out private.key -base64 64`
+5. (Optional) Delete `logback.xml`
+6. Run the `Main` class in your editor
