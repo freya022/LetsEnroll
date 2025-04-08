@@ -2,8 +2,8 @@ server:
   port: ${API_PORT}
   # https://www.baeldung.com/exception-handling-for-rest-with-spring#spring-boot
   error:
-    include-stacktrace: never
-    include-message: never
+    whitelabel:
+      enabled: false
   forward-headers-strategy: framework
 
 spring:
