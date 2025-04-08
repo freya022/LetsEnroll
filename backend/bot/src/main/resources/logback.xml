@@ -10,7 +10,7 @@
     <logger name="io.github.freya022.botcommands" level="debug"/>
 
     <!-- Bot -->
-    <logger name="dev.freya02.commandinator.bot" level="debug"/>
+    <logger name="dev.freya02.letsenroll.bot" level="debug"/>
 
     <!-- Other logs -->
     <root level="info">

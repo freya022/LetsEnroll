@@ -1,4 +1,4 @@
-# Commandinator - Frontend
+# Let's Enroll - Frontend
 
 ## Notable libraries
 

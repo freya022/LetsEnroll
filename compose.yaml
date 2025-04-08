@@ -2,20 +2,20 @@ services:
   db:
     image: postgres:17
     restart: unless-stopped
-    container_name: commandinator-db
+    container_name: letsenroll-db
     env_file: ./config/.env
     networks:
-      - commandinator
+      - letsenroll
     volumes:
       - type: volume
         source: db-data
         target: /var/lib/postgresql/data
   api:
-    image: commandinator-api:latest
+    image: letsenroll-api:latest
     restart: unless-stopped
-    container_name: commandinator-api
+    container_name: letsenroll-api
     networks:
-      - commandinator
+      - letsenroll
       - caddy
     volumes:
       - type: bind
@@ -25,11 +25,11 @@ services:
         source: ./logs
         target: /logs
   bot:
-    image: commandinator-bot:latest
+    image: letsenroll-bot:latest
     restart: unless-stopped
-    container_name: commandinator-bot
+    container_name: letsenroll-bot
     networks:
-      - commandinator
+      - letsenroll
     volumes:
       - type: bind
         source: ./config
@@ -39,7 +39,7 @@ services:
         target: /logs
 
 networks:
-  commandinator: {}
+  letsenroll: {}
   caddy:
     external: true
 

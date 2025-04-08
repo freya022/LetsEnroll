@@ -1,6 +1,6 @@
 plugins {
-	id("commandinator-conventions")
-	id("commandinator-app-conventions")
+	id("letsenroll-conventions")
+	id("letsenroll-app-conventions")
 
 	alias(libs.plugins.spring)
 	alias(libs.plugins.jpa)
@@ -52,10 +52,10 @@ jib {
 	}
 
 	to {
-		image = "commandinator-api"
+		image = "letsenroll-api"
 	}
 
 	container {
-		mainClass = "dev.freya02.commandinator.api.ApiApplicationKt"
+		mainClass = "dev.freya02.letsenroll.api.ApiApplicationKt"
 	}
 }

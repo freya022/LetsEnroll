@@ -6,7 +6,7 @@
         </encoder>
     </appender>
 
-    <logger name="dev.freya02.commandinator" level="trace"/>
+    <logger name="dev.freya02.letsenroll" level="trace"/>
 
     <logger name="org.apache.tomcat" level="info"/>
 

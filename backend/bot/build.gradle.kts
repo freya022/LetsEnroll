@@ -1,6 +1,6 @@
 plugins {
-    id("commandinator-conventions")
-    id("commandinator-app-conventions")
+    id("letsenroll-conventions")
+    id("letsenroll-app-conventions")
     alias(libs.plugins.kotlinx.serialization)
 
     alias(libs.plugins.jmh)
@@ -93,10 +93,10 @@ jib {
     }
 
     to {
-        image = "commandinator-bot"
+        image = "letsenroll-bot"
     }
 
     container {
-        mainClass = "dev.freya02.commandinator.bot.MainKt"
+        mainClass = "dev.freya02.letsenroll.bot.MainKt"
     }
 }

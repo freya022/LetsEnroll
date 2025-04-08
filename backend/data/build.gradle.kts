@@ -1,5 +1,5 @@
 plugins {
-    id("commandinator-conventions")
+    id("letsenroll-conventions")
     alias(libs.plugins.kotlinx.serialization)
 }
 
