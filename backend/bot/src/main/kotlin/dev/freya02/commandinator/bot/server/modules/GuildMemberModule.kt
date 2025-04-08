@@ -1,7 +1,7 @@
 package dev.freya02.commandinator.bot.server.modules
 
-import dev.freya02.commandinator.api.dto.MemberDTO
 import dev.freya02.commandinator.bot.server.resources.Guilds
+import dev.freya02.letsenroll.data.MemberDTO
 import io.github.freya022.botcommands.api.core.service.annotations.BService
 import io.github.freya022.botcommands.api.core.utils.retrieveMemberByIdOrNull
 import io.github.oshai.kotlinlogging.KotlinLogging

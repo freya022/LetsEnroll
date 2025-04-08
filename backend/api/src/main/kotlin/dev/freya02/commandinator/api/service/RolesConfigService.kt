@@ -1,13 +1,13 @@
 package dev.freya02.commandinator.api.service
 
 import dev.freya02.commandinator.api.bot.BotClient
-import dev.freya02.commandinator.api.dto.PublishSelectorsDTO
-import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.exceptions.NoSuchRolesConfigException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
 import dev.freya02.commandinator.api.mapper.RolesConfigMapper
 import dev.freya02.commandinator.api.mapper.mapper
 import dev.freya02.commandinator.api.repository.RolesConfigRepository
+import dev.freya02.letsenroll.data.PublishSelectorsDTO
+import dev.freya02.letsenroll.data.RolesConfigDTO
 import org.springframework.stereotype.Service
 
 private val mapper: RolesConfigMapper = mapper()

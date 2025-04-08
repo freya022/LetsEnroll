@@ -1,6 +1,6 @@
 package dev.freya02.commandinator.api.entity
 
-import dev.freya02.commandinator.api.dto.MapStructConstructor
+import dev.freya02.letsenroll.data.MapStructConstructor
 import jakarta.persistence.*
 
 // TODO test if this being abstract doesn't cause issues when you remove one of the subclass's @Entity

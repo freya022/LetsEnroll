@@ -1,11 +1,11 @@
 package dev.freya02.commandinator.bot.roles.selectors
 
-import dev.freya02.commandinator.api.dto.PublishSelectorsDTO
-import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.bot.roles.selectors.exceptions.ChannelNotFoundException
 import dev.freya02.commandinator.bot.roles.selectors.exceptions.GuildNotFoundException
 import dev.freya02.commandinator.bot.utils.getOrCreateRole
 import dev.freya02.commandinator.bot.utils.none
+import dev.freya02.letsenroll.data.PublishSelectorsDTO
+import dev.freya02.letsenroll.data.RolesConfigDTO
 import dev.minn.jda.ktx.coroutines.await
 import dev.minn.jda.ktx.generics.getChannel
 import dev.minn.jda.ktx.interactions.components.SelectOption

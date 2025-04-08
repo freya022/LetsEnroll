@@ -1,9 +1,9 @@
 package dev.freya02.commandinator.api
 
-import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.entity.*
 import dev.freya02.commandinator.api.mapper.RolesConfigMapper
 import dev.freya02.commandinator.api.mapper.mapper
+import dev.freya02.letsenroll.data.RolesConfigDTO
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.assertEquals

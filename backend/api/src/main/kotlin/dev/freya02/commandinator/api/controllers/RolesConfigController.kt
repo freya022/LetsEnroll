@@ -3,13 +3,13 @@ package dev.freya02.commandinator.api.controllers
 import dev.freya02.commandinator.api.bot.BotClient
 import dev.freya02.commandinator.api.bot.isInGuild
 import dev.freya02.commandinator.api.dto.PublishRoleSelectorsDTO
-import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.exceptions.NoSuchRolesConfigException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
 import dev.freya02.commandinator.api.exceptions.exceptionResponse
 import dev.freya02.commandinator.api.service.RolesConfigService
 import dev.freya02.commandinator.api.utils.DashboardUser
 import dev.freya02.commandinator.api.utils.get
+import dev.freya02.letsenroll.data.RolesConfigDTO
 import org.springframework.http.HttpStatus
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.web.bind.annotation.*

@@ -1,8 +1,8 @@
 package dev.freya02.commandinator.api.bot
 
-import dev.freya02.commandinator.api.dto.GuildDTO
-import dev.freya02.commandinator.api.dto.MemberDTO
-import dev.freya02.commandinator.api.dto.PublishSelectorsDTO
+import dev.freya02.letsenroll.data.GuildDTO
+import dev.freya02.letsenroll.data.MemberDTO
+import dev.freya02.letsenroll.data.PublishSelectorsDTO
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

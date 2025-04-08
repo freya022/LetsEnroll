@@ -1,7 +1,7 @@
 package dev.freya02.commandinator.bot.server.modules
 
-import dev.freya02.commandinator.api.dto.GuildDTO
 import dev.freya02.commandinator.bot.server.resources.Guilds
+import dev.freya02.letsenroll.data.GuildDTO
 import io.github.freya022.botcommands.api.core.service.annotations.BService
 import io.ktor.server.application.*
 import io.ktor.server.resources.*

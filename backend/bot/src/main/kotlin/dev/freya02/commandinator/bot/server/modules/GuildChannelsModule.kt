@@ -1,7 +1,7 @@
 package dev.freya02.commandinator.bot.server.modules
 
-import dev.freya02.commandinator.api.dto.ChannelDTO
 import dev.freya02.commandinator.bot.server.resources.Guilds
+import dev.freya02.letsenroll.data.ChannelDTO
 import io.github.freya022.botcommands.api.core.service.annotations.BService
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.*

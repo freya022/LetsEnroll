@@ -1,7 +1,7 @@
 package dev.freya02.commandinator.api.mapper
 
-import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.entity.*
+import dev.freya02.letsenroll.data.RolesConfigDTO
 import org.mapstruct.*
 
 @Mapper(

@@ -1,10 +1,10 @@
 package dev.freya02.commandinator.bot.server.modules
 
-import dev.freya02.commandinator.api.dto.PublishSelectorsDTO
 import dev.freya02.commandinator.bot.roles.selectors.RoleSelectorsPublisher
 import dev.freya02.commandinator.bot.roles.selectors.exceptions.ChannelNotFoundException
 import dev.freya02.commandinator.bot.roles.selectors.exceptions.GuildNotFoundException
 import dev.freya02.commandinator.bot.server.resources.Guilds
+import dev.freya02.letsenroll.data.PublishSelectorsDTO
 import io.github.freya022.botcommands.api.core.service.annotations.BService
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.*

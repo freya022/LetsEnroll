@@ -1,4 +1,4 @@
-package dev.freya02.commandinator.api.dto
+package dev.freya02.letsenroll.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

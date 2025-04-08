@@ -1,13 +1,12 @@
 package dev.freya02.commandinator.api
 
 import dev.freya02.commandinator.api.bot.BotClient
-import dev.freya02.commandinator.api.dto.PublishSelectorsDTO
-import dev.freya02.commandinator.api.dto.RolesConfigDTO
 import dev.freya02.commandinator.api.entity.RolesConfig
 import dev.freya02.commandinator.api.exceptions.NoSuchRolesConfigException
 import dev.freya02.commandinator.api.exceptions.RolesConfigEmptyException
 import dev.freya02.commandinator.api.repository.RolesConfigRepository
 import dev.freya02.commandinator.api.service.RolesConfigService
+import dev.freya02.letsenroll.data.RolesConfigDTO
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
