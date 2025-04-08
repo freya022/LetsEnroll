@@ -9,9 +9,7 @@ services:
     networks:
       - letsenroll
     volumes:
-      - type: volume
-        source: db-data
-        target: /var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
   api:
     image: letsenroll-api:latest
     restart: unless-stopped
@@ -20,12 +18,8 @@ services:
       - letsenroll
       - caddy
     volumes:
-      - type: bind
-        source: ./config
-        target: /config
-      - type: bind
-        source: ./logs
-        target: /logs
+      - ./config:/config
+      - ./logs/api:/logs
   bot:
     image: letsenroll-bot:latest
     restart: unless-stopped
@@ -33,12 +27,8 @@ services:
     networks:
       - letsenroll
     volumes:
-      - type: bind
-        source: ./config
-        target: /config
-      - type: bind
-        source: ./logs
-        target: /logs
+      - ./config:/config
+      - ./logs/bot:/logs
 
 networks:
   letsenroll: {}
