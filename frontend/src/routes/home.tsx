@@ -10,7 +10,7 @@ import Monocle from "@/assets/monocle.svg?react";
 import Raised from "@/assets/raised.svg?react";
 import Thinking from "@/assets/thinking.svg?react";
 
-export default function Main() {
+export default function Home() {
   return (
     <div className="flex flex-col items-center gap-y-6">
       <div className="flex flex-col gap-y-2">
