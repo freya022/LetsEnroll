@@ -1,4 +1,4 @@
-# Commandinator - Bot module
+# Let's Enroll - Bot module
 
 Module for the main Discord bot.
 

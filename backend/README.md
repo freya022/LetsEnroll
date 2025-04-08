@@ -1,4 +1,4 @@
-# Commandinator - Backend
+# Let's Enroll - Backend
 
 ## Modules
 - [Bot](bot) - The main Discord bot

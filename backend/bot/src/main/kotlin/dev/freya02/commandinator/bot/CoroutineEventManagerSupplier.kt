@@ -9,6 +9,6 @@ import io.github.freya022.botcommands.api.core.utils.namedDefaultScope
 class CoroutineEventManagerSupplier : ICoroutineEventManagerSupplier {
 
     override fun get(): CoroutineEventManager {
-        return namedDefaultScope("Commandinator Coroutine", 4).let(::CoroutineEventManager)
+        return namedDefaultScope("Let's Enroll Coroutine", 4).let(::CoroutineEventManager)
     }
 }

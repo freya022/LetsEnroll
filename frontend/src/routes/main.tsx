@@ -16,7 +16,7 @@ export default function Main() {
       <div className="flex flex-col gap-y-2">
         <h1 className="text-center text-3xl font-semibold">Welcome!</h1>
         <p className="text-xl">
-          Commandinator is a simple Discord bot to set up self-assigned roles on
+          Let's Enroll is a simple Discord bot to set up self-assigned roles on
           your server!
         </p>
       </div>

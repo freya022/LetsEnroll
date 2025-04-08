@@ -1,4 +1,4 @@
-# Commandinator
+# Let's Enroll
 A simple Discord bot to set up self-assigned roles on your server!
 
 ## Overview

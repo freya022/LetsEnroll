@@ -1,4 +1,4 @@
-# Commandinator - Data module
+# Let's Enroll - Data module
 
 Contains shared data objects.
 

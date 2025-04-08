@@ -1,4 +1,4 @@
-# Commandinator - API module
+# Let's Enroll - API module
 
 Module for the frontend API.
 

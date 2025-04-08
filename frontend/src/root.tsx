@@ -45,7 +45,7 @@ export default function Root() {
       <header className="grid grid-cols-[1fr_min-content_1fr] items-center border-b bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
         <div className="flex h-full items-center">
           <img
-            alt="Commandinator Logo"
+            alt="Let's Enroll Logo"
             src="/logo.svg"
             className="size-8 rounded-full"
           />
