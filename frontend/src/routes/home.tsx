@@ -22,7 +22,7 @@ export default function Home() {
       </div>
       <div className="grid max-w-4xl flex-col gap-4">
         <Article
-          emoji={<Monocle />}
+          emoji={<Monocle aria-label="Face with monocle emoji" />}
           heading="Features!"
           className="col-span-1 col-start-1 row-start-1 flex-1 md:col-span-2 md:col-start-1 md:row-start-1"
         >
@@ -40,7 +40,7 @@ export default function Home() {
           </ul>
         </Article>
         <Article
-          emoji={<Raised />}
+          emoji={<Raised aria-label="Raised eyebrow emoji" />}
           heading="But why?"
           className="col-start-1 row-start-2 flex-1 md:col-start-1 md:row-start-2"
         >
@@ -62,7 +62,7 @@ export default function Home() {
           </p>
         </Article>
         <Article
-          emoji={<Thinking />}
+          emoji={<Thinking aria-label="Thinking emoji" />}
           heading="What about the website?"
           className="col-start-1 row-start-3 flex-1 md:col-start-2 md:row-start-2"
         >
