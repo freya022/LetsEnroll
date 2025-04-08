@@ -46,7 +46,7 @@ export default function Root() {
         <div className="flex h-full items-center">
           <img
             alt="Commandinator Logo"
-            src="/logo-round.svg"
+            src="/logo.svg"
             className="size-8 rounded-full"
           />
           <Separator
