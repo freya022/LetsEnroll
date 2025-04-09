@@ -8,7 +8,7 @@ import dev.freya02.letsenroll.api.exceptions.RolesConfigEmptyException
 import dev.freya02.letsenroll.api.exceptions.exceptionResponse
 import dev.freya02.letsenroll.api.service.RolesConfigService
 import dev.freya02.letsenroll.api.utils.DashboardUser
-import dev.freya02.letsenroll.api.utils.get
+import dev.freya02.letsenroll.api.utils.discordId
 import dev.freya02.letsenroll.data.RolesConfigDTO
 import org.springframework.http.HttpStatus
 import org.springframework.security.oauth2.core.user.OAuth2User
@@ -23,7 +23,7 @@ class RolesConfigController(
 
     @PutMapping("/api/guilds/{guildId}/roles")
     fun upsertRoleConfig(@PathVariable guildId: Long, @RequestBody config: RolesConfigDTO, @DashboardUser user: OAuth2User) {
-        if (!botClient.isInGuild(guildId, user.get<String>("id")!!.toLong()))
+        if (!botClient.isInGuild(guildId, user.discordId))
             throw ResponseStatusException(HttpStatus.FORBIDDEN)
 
         rolesConfigService.upsertConfig(guildId, config)
@@ -31,7 +31,7 @@ class RolesConfigController(
 
     @GetMapping("/api/guilds/{guildId}/roles")
     fun getRoleConfig(@PathVariable guildId: Long, @DashboardUser user: OAuth2User): RolesConfigDTO? {
-        if (!botClient.isInGuild(guildId, user.get<String>("id")!!.toLong()))
+        if (!botClient.isInGuild(guildId, user.discordId))
             throw ResponseStatusException(HttpStatus.FORBIDDEN)
 
         return rolesConfigService.retrieveConfig(guildId)
@@ -39,7 +39,7 @@ class RolesConfigController(
 
     @PostMapping("/api/guilds/{guildId}/roles/publish")
     fun publishRoleSelectors(@PathVariable("guildId") guildId: Long, @RequestBody data: PublishRoleSelectorsDTO, @DashboardUser user: OAuth2User) {
-        if (!botClient.isInGuild(guildId, user.get<String>("id")!!.toLong()))
+        if (!botClient.isInGuild(guildId, user.discordId))
             throw ResponseStatusException(HttpStatus.FORBIDDEN)
 
         rolesConfigService.publishSelectors(guildId, data.channelId)

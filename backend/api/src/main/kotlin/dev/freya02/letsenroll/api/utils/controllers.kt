@@ -20,6 +20,9 @@ operator fun <T> OAuth2AuthenticatedPrincipal.get(name: String): T? = attributes
 @Suppress("UNCHECKED_CAST")
 operator fun <T> OAuth2User.get(name: String): T? = attributes[name] as T?
 
+@Suppress("UNCHECKED_CAST")
+val OAuth2User.discordId: Long get() = get<String>("id")!!.toLong()
+
 fun getDiscordAuthorizationHeader(authorizedClientRepository: OAuth2AuthorizedClientRepository): String {
     val token = SecurityContextHolder.getContext().authentication as OAuth2AuthenticationToken
     val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
