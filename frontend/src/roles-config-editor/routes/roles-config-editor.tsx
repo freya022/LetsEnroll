@@ -150,10 +150,14 @@ export default function RolesConfigEditor() {
           )}
           <div>
             {fetcher.state !== "idle" ? (
-              <Button disabled>Saving...</Button>
+              <Button className="w-24" disabled>
+                Saving...
+              </Button>
             ) : (
               <>
-                <Button type="submit">Save</Button>
+                <Button className="w-24" type="submit">
+                  Save
+                </Button>
 
                 {fetcher.data?.error && (
                   <p className="text-destructive">
