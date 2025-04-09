@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 data class ChannelDTO(
     val id: Snowflake,
     val name: String,
+    val canBotTalk: Boolean,
 )

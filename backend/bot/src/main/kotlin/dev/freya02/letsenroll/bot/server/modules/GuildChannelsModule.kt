@@ -35,6 +35,7 @@ object GuildChannelsModule : KtorModule {
 
     private fun TextChannel.toDTO(): ChannelDTO = ChannelDTO(
         idLong,
-        name
+        name,
+        canTalk(),
     )
 }

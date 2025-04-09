@@ -20,10 +20,15 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command.tsx";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Lock } from "lucide-react";
 import { Separator } from "@/components/ui/separator.tsx";
 import { useSelectedGuild } from "@/roles-config-editor/utils.ts";
 import { getErrorMessage } from "@/utils.ts";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip.tsx";
 
 type Params = {
   guildId: string;
@@ -163,17 +168,15 @@ function ChannelSelector({
             <CommandList>
               <CommandEmpty>No channel found.</CommandEmpty>
               {channels.map((channel) => (
-                <CommandItem
+                <ChannelItem
                   key={channel.id}
-                  value={channel.name} // This is used by the search bar
+                  channel={channel}
+                  selectedChannel={selectedChannel}
                   onSelect={() => {
                     setSelectedChannel(channel);
                     setOpen(false);
                   }}
-                >
-                  {channel.name}
-                  {channel === selectedChannel && <Check className="ml-auto" />}
-                </CommandItem>
+                />
               ))}
             </CommandList>
           </Command>
@@ -181,4 +184,44 @@ function ChannelSelector({
       </Popover>
     </>
   );
+}
+
+function ChannelItem({
+  channel,
+  selectedChannel,
+  onSelect,
+}: {
+  channel: ChannelDTO;
+  selectedChannel: ChannelDTO | undefined;
+  onSelect: () => void;
+}) {
+  if (channel.canBotTalk) {
+    return (
+      <CommandItem
+        value={channel.name} // This is used by the search bar
+        onSelect={onSelect}
+      >
+        {channel.name}
+        {channel === selectedChannel && <Check className="ml-auto" />}
+      </CommandItem>
+    );
+  } else {
+    return (
+      <Tooltip>
+        <TooltipTrigger>
+          <CommandItem
+            value={channel.name} // This is used by the search bar
+            onSelect={onSelect}
+            disabled={true}
+          >
+            {channel.name}
+            <Lock />
+          </CommandItem>
+        </TooltipTrigger>
+        <TooltipContent sideOffset={-8}>
+          <p>The bot cannot talk in this channel</p>
+        </TooltipContent>
+      </Tooltip>
+    );
+  }
 }
