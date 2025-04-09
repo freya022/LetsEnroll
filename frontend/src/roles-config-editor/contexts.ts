@@ -7,8 +7,9 @@ export type FormCollapsibleCallback = (
 ) => void;
 export type FormCollapsibleCallbacks = Map<string, FormCollapsibleCallback>;
 
-const formCollapsibleCallbacksContext =
-  createContext<FormCollapsibleCallbacks>(new Map());
+const formCollapsibleCallbacksContext = createContext<FormCollapsibleCallbacks>(
+  new Map(),
+);
 
 export function useFormCollapsibleCallbacks() {
   return useContext(formCollapsibleCallbacksContext);

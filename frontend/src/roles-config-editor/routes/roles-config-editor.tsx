@@ -12,7 +12,7 @@ import {
   SubmitErrorHandler,
   SubmitHandler,
   useFieldArray,
-  useForm
+  useForm,
 } from "react-hook-form";
 import { useEffect } from "react";
 import { useLens } from "@hookform/lenses";
@@ -177,7 +177,9 @@ export default function RolesConfigEditor() {
   );
 }
 
-function useUnsavedEditBlocker<T extends FieldValues>({ isDirty }: FormState<T>) {
+function useUnsavedEditBlocker<T extends FieldValues>({
+  isDirty,
+}: FormState<T>) {
   useBlocker(() => {
     if (!isDirty) return false;
 
