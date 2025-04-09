@@ -7,10 +7,12 @@ import {
   useLoaderData,
 } from "react-router";
 import {
+  FieldValues,
+  FormState,
   SubmitErrorHandler,
   SubmitHandler,
   useFieldArray,
-  useForm,
+  useForm
 } from "react-hook-form";
 import { useEffect } from "react";
 import { useLens } from "@hookform/lenses";
@@ -104,15 +106,7 @@ export default function RolesConfigEditor() {
     });
   }
 
-  // Don't ask me why this needs to be computed outside the callback for it to ever be updated.
-  // useCallback with a dependency on "form" does not help either.
-  const { isDirty } = form.formState;
-  useBlocker(() => {
-    if (!isDirty) return false;
-
-    // TODO in-app alert dialog https://ui.shadcn.com/docs/components/alert-dialog
-    return !confirm("Do you want to discard your changes?");
-  });
+  useUnsavedEditBlocker(form.formState)
 
   const formCollapsibleCallbacks = useFormCollapsibleCallbacks();
 
@@ -177,4 +171,23 @@ export default function RolesConfigEditor() {
       </Form>
     </div>
   );
+}
+
+function useUnsavedEditBlocker<T extends FieldValues>({ isDirty }: FormState<T>) {
+  useBlocker(() => {
+    if (!isDirty) return false;
+
+    // TODO in-app alert dialog https://ui.shadcn.com/docs/components/alert-dialog
+    return !confirm("Do you want to discard your changes?");
+  });
+
+  // Closing/reloading tab
+  // Not using useBeforeUnload because: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#usage_notes
+  useEffect(() => {
+    if (!isDirty) return;
+
+    const listener = (event: BeforeUnloadEvent) => event.preventDefault();
+    window.addEventListener("beforeunload", listener);
+    return () => window.removeEventListener("beforeunload", listener);
+  }, [isDirty]);
 }
