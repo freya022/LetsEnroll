@@ -208,7 +208,7 @@ function ChannelItem({
   } else {
     return (
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <CommandItem
             value={channel.name} // This is used by the search bar
             onSelect={onSelect}
