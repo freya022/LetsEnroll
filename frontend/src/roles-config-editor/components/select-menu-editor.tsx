@@ -9,11 +9,12 @@ import {
   FormMessage,
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import { useFieldArray, useWatch } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import { Button } from "@/components/ui/button.tsx";
 import { EmojiEditor } from "@/roles-config-editor/components/emoji-editor.tsx";
 import { ConfigCollapsible } from "@/roles-config-editor/components/config-collapsible.tsx";
 import DeleteButton from "@/roles-config-editor/components/delete-button.tsx";
+import { useLensWatch } from "@/roles-config-editor/utils.ts";
 
 export function SelectMenuEditor({
   selectMenuLens,
@@ -95,10 +96,7 @@ function SelectMenuChoiceEditor({
   choiceLens: Lens<SelectMenuChoice>;
   onChoiceDelete: () => void;
 }) {
-  const choice = useWatch({
-    name: choiceLens.interop().name,
-    control: choiceLens.interop().control,
-  });
+  const choice = useLensWatch(choiceLens);
 
   return (
     <ConfigCollapsible

@@ -10,8 +10,8 @@ import { RowEditor } from "@/roles-config-editor/components/row-editor.tsx";
 import { ButtonEditor } from "@/roles-config-editor/components/button-editor.tsx";
 import { SelectMenuEditor } from "@/roles-config-editor/components/select-menu-editor.tsx";
 import { ConfigCollapsible } from "@/roles-config-editor/components/config-collapsible.tsx";
-import { useWatch } from "react-hook-form";
 import { FormMessage } from "@/components/ui/form.tsx";
+import { useLensWatch } from "@/roles-config-editor/utils.ts";
 
 export function ComponentEditor({
   componentLens,
@@ -20,10 +20,7 @@ export function ComponentEditor({
   componentLens: Lens<Component>;
   onComponentDelete: () => void;
 }) {
-  const component = useWatch({
-    name: componentLens.interop().name,
-    control: componentLens.interop().control,
-  });
+  const component = useLensWatch(componentLens);
 
   if (component.type === "button") {
     const button = component as Button;

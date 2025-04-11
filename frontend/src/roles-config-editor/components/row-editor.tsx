@@ -1,6 +1,6 @@
 import { Lens } from "@hookform/lenses";
 import { Component, Row } from "@/dto/RolesConfigDTO.ts";
-import { useFieldArray, useWatch } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import { FormMessage } from "@/components/ui/form.tsx";
 import {
   DropdownMenu,
@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button.tsx";
 import { ComponentEditor } from "@/roles-config-editor/components/component-editor.tsx";
 import DeleteButton from "@/roles-config-editor/components/delete-button.tsx";
+import { useLensWatch } from "@/roles-config-editor/utils.ts";
 
 export function RowEditor({
   rowLens,
@@ -32,10 +33,7 @@ export function RowEditor({
     },
   });
 
-  const components = useWatch({
-    name: componentsLens.interop().name,
-    control: componentsLens.interop().control,
-  });
+  const components = useLensWatch(componentsLens);
 
   function handleCreateButton() {
     appendComponent({

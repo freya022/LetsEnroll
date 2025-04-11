@@ -5,7 +5,7 @@ import {
   UnicodeEmoji,
 } from "@/dto/RolesConfigDTO.ts";
 import { Lens } from "@hookform/lenses";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   FormControl,
   FormField,
@@ -16,16 +16,14 @@ import { Input } from "@/components/ui/input.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import { ReactElement } from "react";
+import { useLensWatch } from "@/roles-config-editor/utils.ts";
 
 export function EmojiEditor<T extends EmojiContainer<Emoji>>({
   emojiContainerLens,
 }: {
   emojiContainerLens: Lens<T>;
 }) {
-  const emojiWatch = useWatch({
-    name: emojiContainerLens.focus("emoji").interop().name,
-    control: emojiContainerLens.focus("emoji").interop().control,
-  });
+  const emojiWatch = useLensWatch(emojiContainerLens.focus("emoji"));
 
   let editor: ReactElement | undefined;
   if (!emojiWatch) {
@@ -67,10 +65,7 @@ function TypeToggle<T extends EmojiContainer<Emoji>>({
   emojiContainerLens: Lens<T>;
 }) {
   const form = useFormContext<RolesConfig>();
-  const emoji = useWatch({
-    name: emojiContainerLens.focus("emoji").interop().name,
-    control: emojiContainerLens.focus("emoji").interop().control,
-  });
+  const emoji = useLensWatch(emojiContainerLens.focus("emoji"));
 
   return (
     <ToggleGroup
@@ -115,10 +110,7 @@ function UnicodeEmojiEditor<T extends EmojiContainer<UnicodeEmoji>>({
 }: {
   emojiContainerLens: Lens<T>;
 }) {
-  const emojiWatch = useWatch({
-    name: emojiContainerLens.focus("emoji").interop().name,
-    control: emojiContainerLens.focus("emoji").interop().control,
-  });
+  const emojiWatch = useLensWatch(emojiContainerLens.focus("emoji"));
 
   return (
     <FormField

@@ -1,6 +1,6 @@
 import { Lens } from "@hookform/lenses";
 import { RoleMessage } from "@/dto/RolesConfigDTO.ts";
-import { useFieldArray, useWatch } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import {
   FormControl,
   FormDescription,
@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea.tsx";
 import {
   getComponentCount,
   getRoleCount,
+  useLensWatch,
 } from "@/roles-config-editor/utils.ts";
 import DeleteButton from "@/roles-config-editor/components/delete-button.tsx";
 
@@ -41,10 +42,7 @@ export function MessageEditor({
     },
   });
 
-  const components = useWatch({
-    name: componentsLens.interop().name,
-    control: componentsLens.interop().control,
-  });
+  const components = useLensWatch(componentsLens);
 
   function handleAddRow() {
     appendComponent({

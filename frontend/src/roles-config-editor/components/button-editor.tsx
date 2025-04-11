@@ -1,6 +1,6 @@
 import { Lens } from "@hookform/lenses";
 import { Button, ButtonStyles, RolesConfig } from "@/dto/RolesConfigDTO.ts";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   FormControl,
   FormDescription,
@@ -14,6 +14,7 @@ import { capitalize } from "@/utils.ts";
 import { Input } from "@/components/ui/input.tsx";
 import { EmojiEditor } from "@/roles-config-editor/components/emoji-editor.tsx";
 import DeleteButton from "@/roles-config-editor/components/delete-button.tsx";
+import { useLensWatch } from "@/roles-config-editor/utils.ts";
 
 export function ButtonEditor({
   buttonLens,
@@ -24,14 +25,8 @@ export function ButtonEditor({
 }) {
   const form = useFormContext<RolesConfig>();
 
-  const label = useWatch({
-    name: buttonLens.focus("label").interop().name,
-    control: buttonLens.focus("label").interop().control,
-  });
-  const emoji = useWatch({
-    name: buttonLens.focus("emoji").interop().name,
-    control: buttonLens.focus("emoji").interop().control,
-  });
+  const label = useLensWatch(buttonLens.focus("label"));
+  const emoji = useLensWatch(buttonLens.focus("emoji"));
 
   return (
     <>
@@ -91,6 +86,7 @@ export function ButtonEditor({
       <FormField
         {...buttonLens.focus("label").interop()}
         rules={{
+          // Require at least a label or emoji
           validate: () => !(!label && !emoji),
           maxLength: {
             value: 80,

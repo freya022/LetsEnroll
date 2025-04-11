@@ -1,6 +1,17 @@
 import { Component } from "@/dto/RolesConfigDTO.ts";
 import { useParams, useRouteLoaderData } from "react-router";
 import { GuildDTO } from "@/dto/GuildDTO.ts";
+import { Lens } from "@hookform/lenses";
+import { useWatch } from "react-hook-form";
+
+export function useLensWatch<T>(lens: Lens<T>): T {
+  // @ts-expect-error The Lens generic guarantees use the return type
+  return useWatch({
+    // @ts-expect-error The name is a valid path at runtime
+    name: lens.interop().name,
+    control: lens.interop().control,
+  });
+}
 
 export function getComponentCount(component: Component | Component[]): number {
   if (component instanceof Array) {
