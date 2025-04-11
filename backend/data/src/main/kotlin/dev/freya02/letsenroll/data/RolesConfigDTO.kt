@@ -41,7 +41,7 @@ data class RolesConfigDTO @MapStructConstructor constructor(
         data class Button(
             val roleName: String,
             val style: Style,
-            val label: String? = null,
+            val label: NullableString = null,
             val emoji: Emoji? = null,
         ) : Component {
 
@@ -55,17 +55,17 @@ data class RolesConfigDTO @MapStructConstructor constructor(
         @Serializable
         @SerialName("string_select_menu")
         data class SelectMenu @MapStructConstructor constructor(
-            val placeholder: String? = null,
+            val placeholder: NullableString = null,
             val choices: List<Choice>,
         ) : Component {
 
-            constructor(placeholder: String? = null, vararg choices: Choice) : this(placeholder, choices.toList())
+            constructor(placeholder: NullableString = null, vararg choices: Choice) : this(placeholder, choices.toList())
 
             @Serializable
             data class Choice(
                 val roleName: String,
                 val label: String,
-                val description: String? = null,
+                val description: NullableString = null,
                 val emoji: Emoji? = null,
             )
         }
