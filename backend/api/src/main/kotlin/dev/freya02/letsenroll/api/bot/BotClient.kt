@@ -3,6 +3,7 @@ package dev.freya02.letsenroll.api.bot
 import dev.freya02.letsenroll.data.GuildDTO
 import dev.freya02.letsenroll.data.MemberDTO
 import dev.freya02.letsenroll.data.PublishSelectorsDTO
+import dev.freya02.letsenroll.data.RolesConfigDTO
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -28,6 +29,9 @@ interface BotClient {
 
     @GetExchange("/guilds/{guildId}/channels")
     fun getGuildChannels(@PathVariable guildId: Long): String
+
+    @PostExchange("/guilds/{guildId}/roles/check")
+    fun checkRolesConfig(@PathVariable guildId: Long, @RequestBody data: RolesConfigDTO): String
 
     @PostExchange("/guilds/{guildId}/roles/publish")
     fun publishRoleSelectors(@PathVariable guildId: Long, @RequestBody data: PublishSelectorsDTO)

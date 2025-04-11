@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator.tsx";
 import { ReactNode, useEffect, useState } from "react";
 import { cn } from "@/lib/utils.ts";
 import { PathString } from "react-hook-form";
-import { useFormCollapsibleCallbacks } from "@/roles-config-editor/contexts.ts";
+import { useFormCollapsibleCallbacks, useValidationCollapsibleCallbacks } from "@/roles-config-editor/contexts.ts";
 
 export function ConfigCollapsible({
   objectPath,
@@ -78,16 +78,21 @@ function useFormCollapsibleValidationCallback(
   setOpen: (open: boolean) => void,
 ) {
   const formCollapsibleCallbacks = useFormCollapsibleCallbacks();
+  const validationCollapsibleCallbacks = useValidationCollapsibleCallbacks()
 
   useEffect(() => {
     formCollapsibleCallbacks.set(objectPath, (errors) =>
       setOpen(hasError(objectPath, "messages", errors.messages)),
     );
+    validationCollapsibleCallbacks.set(objectPath, (errors) =>
+      setOpen(errors.some((error) => error.path.startsWith(objectPath))),
+    );
 
     return () => {
       formCollapsibleCallbacks.delete(objectPath);
+      validationCollapsibleCallbacks.delete(objectPath);
     };
-  }, [formCollapsibleCallbacks, objectPath, setOpen]);
+  }, [formCollapsibleCallbacks, validationCollapsibleCallbacks, objectPath, setOpen]);
 }
 
 function hasError(

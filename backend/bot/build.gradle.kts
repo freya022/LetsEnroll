@@ -43,6 +43,9 @@ dependencies {
     implementation(projects.data)
 
     // Mockk needs bytebuddy to be upgraded to support Java 24
+    testImplementation(libs.mockk)
+    testImplementation(libs.bytebuddy)
+
     jmh(libs.mockk)
     jmh(libs.bytebuddy)
 }

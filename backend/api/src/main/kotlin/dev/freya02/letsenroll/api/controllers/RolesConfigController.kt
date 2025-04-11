@@ -37,6 +37,14 @@ class RolesConfigController(
         return rolesConfigService.retrieveConfig(guildId)
     }
 
+    @PostMapping("/api/guilds/{guildId}/roles/check")
+    fun checkRolesConfig(@PathVariable("guildId") guildId: Long, @RequestBody data: RolesConfigDTO, @DashboardUser user: OAuth2User): String {
+        if (!botClient.isInGuild(guildId, user.discordId))
+            throw ResponseStatusException(HttpStatus.FORBIDDEN)
+
+        return rolesConfigService.checkRolesConfig(guildId, data)
+    }
+
     @PostMapping("/api/guilds/{guildId}/roles/publish")
     fun publishRoleSelectors(@PathVariable("guildId") guildId: Long, @RequestBody data: PublishRoleSelectorsDTO, @DashboardUser user: OAuth2User) {
         if (!botClient.isInGuild(guildId, user.discordId))

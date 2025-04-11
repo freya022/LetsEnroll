@@ -4,15 +4,19 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RolesConfigDTO(
+data class RolesConfigDTO @MapStructConstructor constructor(
     val messages: List<Message>,
 ) {
 
+    constructor(vararg messages: Message) : this(messages.toList())
+
     @Serializable
-    data class Message(
+    data class Message @MapStructConstructor constructor(
         val content: String,
         val components: List<Component>,
     ) {
+
+        constructor(content: String, vararg components: Component, ) : this(content, components.toList())
 
         @Serializable
         sealed interface Emoji
@@ -50,10 +54,12 @@ data class RolesConfigDTO(
         }
         @Serializable
         @SerialName("string_select_menu")
-        data class SelectMenu(
+        data class SelectMenu @MapStructConstructor constructor(
             val placeholder: String? = null,
             val choices: List<Choice>,
         ) : Component {
+
+            constructor(placeholder: String? = null, vararg choices: Choice) : this(placeholder, choices.toList())
 
             @Serializable
             data class Choice(
@@ -63,5 +69,10 @@ data class RolesConfigDTO(
                 val emoji: Emoji? = null,
             )
         }
+    }
+
+    companion object {
+
+        const val MAX_MESSAGES = 10
     }
 }

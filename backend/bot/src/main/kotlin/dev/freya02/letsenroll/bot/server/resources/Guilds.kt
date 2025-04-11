@@ -21,6 +21,9 @@ class Guilds {
         @Resource("roles")
         class Roles(val guild: Id) {
 
+            @Resource("check")
+            class Check(val roles: Roles)
+
             @Resource("publish")
             class Publish(val roles: Roles)
         }

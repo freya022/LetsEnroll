@@ -37,6 +37,10 @@ class RolesConfigService(
         return mapper.toRolesConfigDTO(rolesConfig)
     }
 
+    fun checkRolesConfig(guildId: Long, data: RolesConfigDTO): String {
+        return botClient.checkRolesConfig(guildId, data)
+    }
+
     fun publishSelectors(guildId: Long, channelId: Long) {
         val config = retrieveConfig(guildId)
         botClient.publishRoleSelectors(guildId, PublishSelectorsDTO(channelId, config))

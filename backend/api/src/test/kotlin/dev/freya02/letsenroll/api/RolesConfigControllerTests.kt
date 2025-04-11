@@ -118,6 +118,26 @@ class RolesConfigControllerTests @Autowired constructor(
     }
 
     @Test
+    fun `Must be in guild to check roles config`() {
+        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
+        every { botClient.isInGuild(any(), any()) } returns false
+
+        mockMvc.post("/api/guilds/$EXAMPLE_GUILD_ID/roles/check") {
+            withLoggedInInvalidUser()
+
+            contentType = MediaType.APPLICATION_JSON
+            //language=json
+            content = """
+                {
+                    "messages": []
+                }
+            """.trimIndent()
+        }.andExpect {
+            status { isForbidden() }
+        }
+    }
+
+    @Test
     fun `Must be in guild to publish selectors`() {
         mockkStatic(BotClient::isInGuild) // Top-level extensions are static
         every { botClient.isInGuild(any(), any()) } returns false
