@@ -121,7 +121,7 @@ function UnicodeEmojiEditor<T extends EmojiContainer<UnicodeEmoji>>({
       }}
       render={({ field }) => (
         <>
-          <FormLabel className="col-start-2">Unicode*</FormLabel>
+          <FormLabel className="col-start-2">Unicode / Discord alias*</FormLabel>
           <FormControl className="col-start-2">
             <Input {...field} value={emojiWatch?.unicode ?? ""} />
           </FormControl>
