@@ -142,6 +142,7 @@ export default function RolesConfigEditor() {
             type="button"
             variant="secondary"
             onClick={handleCreateMessage}
+            disabled={msgFields.length >= 10}
           >
             Add message
           </Button>
