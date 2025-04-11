@@ -20,7 +20,7 @@ bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.15.11" }
 
 dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version = "6.5.0" }
 
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.0" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.1" }
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
 
 botcommands = { module = "io.github.freya022:BotCommands", version = "3.0.0-beta.1" }
