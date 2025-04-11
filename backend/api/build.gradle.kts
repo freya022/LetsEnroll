@@ -11,6 +11,16 @@ plugins {
 	kotlin("kapt")
 }
 
+val generateVersionFile = tasks.register<GenerateVersionFileTask>("generateVersionFile")
+
+sourceSets {
+	main {
+		resources {
+			srcDir(generateVersionFile)
+		}
+	}
+}
+
 dependencies {
 	implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
 

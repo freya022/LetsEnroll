@@ -18,10 +18,17 @@ import {
 } from "@/components/ui/dropdown-menu.tsx";
 import { fetcher } from "@/utils.ts";
 import { Separator } from "@/components/ui/separator.tsx";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import DiscordLogoBlue from "@/assets/discord-mark-blue.svg";
 import DiscordLogoWhite from "@/assets/Discord-Symbol-White.svg?react";
 import Github from "@/assets/github.svg?react";
+import {
+  useQueryErrorResetBoundary,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import axios from "axios";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { ErrorBoundary } from "react-error-boundary";
 
 interface Props {
   user?: UserDTO;
@@ -79,17 +86,54 @@ export default function Root() {
       <main className="grow p-4">
         <Outlet />
       </main>
-      <footer className="flex items-center justify-between border-t bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
+      <footer className="grid grid-cols-[1fr_auto_1fr] items-center border-t bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
+        <div>
+          <FooterVersion />
+        </div>
         <p className="text-secondary-foreground text-sm">
           {user === undefined && "Log in to access the dashboard"}
         </p>
-        <Button variant="ghost" size="icon" asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="justify-self-end"
+          asChild
+        >
           <a href="https://github.com/freya022/LetsEnroll" target="_blank">
             <Github className="fill-primary size-6" aria-label="Github" />
           </a>
         </Button>
       </footer>
     </div>
+  );
+}
+
+function FooterVersion() {
+  const { reset } = useQueryErrorResetBoundary();
+
+  return (
+    <ErrorBoundary fallback={<></>} onReset={reset}>
+      <Suspense fallback={<Skeleton className="h-4 w-[75px]" />}>
+        <Version />
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+function Version() {
+  const { data: versionHash } = useSuspenseQuery({
+    queryKey: ["version"],
+    queryFn: () => axios.get("api/version").then((res) => res.data as string),
+  });
+
+  return (
+    <a
+      className="text-secondary-foreground/60 text-sm"
+      href={`https://github.com/freya022/LetsEnroll/commit/${versionHash}`}
+      target="_blank"
+    >
+      {versionHash.substring(0, 10)}
+    </a>
   );
 }
 

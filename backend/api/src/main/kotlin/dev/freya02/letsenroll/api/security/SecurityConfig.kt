@@ -39,6 +39,7 @@ class SecurityConfig(
                 authorize("/oauth2/**", permitAll)
                 authorize("/error", permitAll) // Exceptions and messages are removed
                 authorize("/api/jwt", permitAll) // Only on dev profile
+                authorize("/api/version", permitAll)
                 authorize("/api/**", authenticated)
 
                 authorize(anyRequest, denyAll)
