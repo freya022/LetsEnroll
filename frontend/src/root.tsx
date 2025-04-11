@@ -123,7 +123,7 @@ function FooterVersion() {
 function Version() {
   const { data: versionHash } = useSuspenseQuery({
     queryKey: ["version"],
-    queryFn: () => axios.get("api/version").then((res) => res.data as string),
+    queryFn: () => axios.get("/api/version").then((res) => res.data as string),
   });
 
   return (
