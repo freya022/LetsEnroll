@@ -11,6 +11,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
@@ -124,6 +125,7 @@ function UnicodeEmojiEditor<T extends EmojiContainer<UnicodeEmoji>>({
           <FormControl className="col-start-2">
             <Input {...field} value={emojiWatch?.unicode ?? ""} />
           </FormControl>
+          <FormMessage className="col-start-2 row-start-3" />
         </>
       )}
     />
@@ -148,6 +150,7 @@ function CustomEmojiEditor<T extends EmojiContainer<CustomEmoji>>({
             <FormControl className="col-start-2 row-start-2">
               <Input {...field} value={field.value ?? ""} />
             </FormControl>
+            <FormMessage className="col-start-2 row-start-3" />
           </>
         )}
       />
@@ -164,6 +167,7 @@ function CustomEmojiEditor<T extends EmojiContainer<CustomEmoji>>({
             <FormControl className="col-start-3 row-start-2">
               <Input pattern="\d*" {...field} value={field.value ?? ""} />
             </FormControl>
+            <FormMessage className="col-start-3 row-start-3" />
           </>
         )}
       />
@@ -178,6 +182,7 @@ function CustomEmojiEditor<T extends EmojiContainer<CustomEmoji>>({
               />
             </FormControl>
             <FormLabel className="col-start-4 row-start-1">Animated?</FormLabel>
+            <FormMessage className="col-start-4 row-start-3" />
           </FormItem>
         )}
       />
