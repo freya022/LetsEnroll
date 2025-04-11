@@ -124,6 +124,13 @@ class RolesConfigControllerTests @Autowired constructor(
 
         mockMvc.post("/api/guilds/$EXAMPLE_GUILD_ID/roles/publish") {
             withLoggedInInvalidUser()
+
+            contentType = MediaType.APPLICATION_JSON
+            content = """
+                {
+                    "channelId": "1234"
+                }
+            """.trimIndent()
         }.andExpect {
             status { isForbidden() }
         }
