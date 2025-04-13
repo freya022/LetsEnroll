@@ -92,9 +92,16 @@ export default function RolesConfigPublisher() {
   return (
     <div className="flex h-full items-center justify-center">
       <div className="flex h-full w-max flex-col items-center justify-center gap-y-4">
-        <h3 className="text-2xl font-semibold">
-          Publish role selectors for '{guild.name}'
-        </h3>
+        <div className="space-y-2">
+          <h3 className="text-2xl font-semibold">
+            Publish role selectors for '{guild.name}'
+          </h3>
+
+          <p className="w-md text-center text-primary/60">
+            Publishing a new role selector will not invalidate others, you can
+            safely use this to do a preview in a private channel.
+          </p>
+        </div>
         <Separator />
         <div className="grid grid-cols-[repeat(3,auto)] items-center gap-x-2 gap-y-1">
           <ChannelSelector
