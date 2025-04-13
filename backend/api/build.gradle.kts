@@ -11,7 +11,9 @@ plugins {
 	kotlin("kapt")
 }
 
-val generateVersionFile = tasks.register<GenerateVersionFileTask>("generateVersionFile")
+val generateVersionFile = tasks.register<GenerateVersionFileTask>("generateVersionFile") {
+	outputs.upToDateWhen { false }
+}
 
 sourceSets {
 	main {
