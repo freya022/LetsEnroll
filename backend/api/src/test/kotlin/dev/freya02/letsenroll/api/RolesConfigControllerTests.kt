@@ -10,6 +10,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockkStatic
 import io.mockk.runs
+import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -48,6 +49,9 @@ class RolesConfigControllerTests @Autowired constructor(
         }.andExpect {
             status { isForbidden() }
         }
+
+        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 0) { rolesConfigService.upsertConfig(any(), any()) }
     }
 
     @Test
@@ -102,6 +106,9 @@ class RolesConfigControllerTests @Autowired constructor(
         }.andExpect {
             status { isForbidden() }
         }
+
+        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 0) { rolesConfigService.retrieveConfig(any()) }
     }
 
     @Test
@@ -115,6 +122,8 @@ class RolesConfigControllerTests @Autowired constructor(
         }.andExpect {
             status { isNotFound() }
         }
+
+        verify(exactly = 1) { rolesConfigService.retrieveConfig(any()) }
     }
 
     @Test
@@ -135,6 +144,9 @@ class RolesConfigControllerTests @Autowired constructor(
         }.andExpect {
             status { isForbidden() }
         }
+
+        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 0) { rolesConfigService.checkRolesConfig(any(), any()) }
     }
 
     @Test
@@ -154,5 +166,8 @@ class RolesConfigControllerTests @Autowired constructor(
         }.andExpect {
             status { isForbidden() }
         }
+
+        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 0) { rolesConfigService.publishSelectors(any(), any()) }
     }
 }
