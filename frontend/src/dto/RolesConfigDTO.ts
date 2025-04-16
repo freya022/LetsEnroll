@@ -1,15 +1,3 @@
-export type UnicodeEmoji = {
-  type: "unicode";
-  unicode: string;
-};
-export type CustomEmoji = {
-  type: "custom";
-  name: string;
-  discordId: string;
-  animated: boolean;
-};
-export type Emoji = UnicodeEmoji | CustomEmoji;
-
 export type Component = Row | Button | SelectMenu;
 
 export type Row = {
@@ -29,14 +17,14 @@ export type Button = {
   roleName: string;
   style: ButtonStyle;
   label: string | null;
-  emoji: Emoji | null;
+  emoji: string | null;
 };
 
 export type SelectMenuChoice = {
   roleName: string;
   label: string;
   description: string | null;
-  emoji: Emoji | null;
+  emoji: string | null;
 };
 export type SelectMenu = {
   type: "string_select_menu";

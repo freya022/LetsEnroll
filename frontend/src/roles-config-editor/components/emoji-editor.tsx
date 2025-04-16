@@ -1,9 +1,4 @@
-import {
-  CustomEmoji,
-  Emoji,
-  RolesConfig,
-  UnicodeEmoji,
-} from "@/dto/RolesConfigDTO.ts";
+import { RolesConfig } from "@/dto/RolesConfigDTO.ts";
 import { Lens } from "@hookform/lenses";
 import { useFormContext } from "react-hook-form";
 import {
@@ -13,179 +8,148 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form.tsx";
-import { Input } from "@/components/ui/input.tsx";
-import { Checkbox } from "@/components/ui/checkbox.tsx";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
-import { ReactElement } from "react";
-import { useLensWatch } from "@/roles-config-editor/utils.ts";
+import { useState } from "react";
+import { useSelectedGuild } from "@/roles-config-editor/utils.ts";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import axios from "axios";
+import { ChevronsUpDown } from "lucide-react";
+import { capitalize } from "@/utils.ts";
+import {
+  CustomEmojiCandidate,
+  UnicodeEmojiCandidate,
+} from "@/roles-config-editor/types.ts";
+import { getUnicodeEmojiSrc } from "@/emoji-picker/utils.ts";
+import { EmojiPicker } from "@/emoji-picker/components/emoji-picker.tsx";
 
-export function EmojiEditor<T extends EmojiContainer<Emoji>>({
+type EmojiContainer = { emoji: string | null };
+
+export function EmojiEditor<T extends EmojiContainer>({
   emojiContainerLens,
 }: {
   emojiContainerLens: Lens<T>;
 }) {
-  const emojiWatch = useLensWatch(emojiContainerLens.focus("emoji"));
+  const { id: guildId } = useSelectedGuild();
+  const form = useFormContext<RolesConfig>();
 
-  let editor: ReactElement | undefined;
-  if (!emojiWatch) {
-    editor = undefined;
-  } else if (emojiWatch.type === "custom") {
-    editor = (
-      <CustomEmojiEditor
-        emojiContainerLens={
-          // @ts-expect-error Type asserted above
-          emojiContainerLens as Lens<EmojiContainer<CustomEmoji>>
-        }
-      />
-    );
-  } else {
-    editor = (
-      <UnicodeEmojiEditor
-        emojiContainerLens={
-          // @ts-expect-error Type asserted above
-          emojiContainerLens as Lens<EmojiContainer<UnicodeEmoji>>
-        }
-      />
-    );
-  }
+  const { data: unicodeEmojis } = useSuspenseQuery({
+    queryKey: ["unicode_emojis"],
+    queryFn: async () => {
+      const response = await axios.get("/api/emojis");
+      return response.data as UnicodeEmojiCandidate[];
+    },
+    // Unicode emojis are never outdated
+    staleTime: Infinity,
+  });
+
+  const { data: customEmojis } = useSuspenseQuery({
+    queryKey: ["custom_emojis", guildId],
+    queryFn: async () => {
+      const response = await axios.get(`/api/guilds/${guildId}/emojis`);
+      return response.data as CustomEmojiCandidate[];
+    },
+  });
+
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="grid grid-cols-[min-content_repeat(3,_1fr)] gap-x-2 gap-y-1">
-      <FormLabel>Emoji</FormLabel>
-      <TypeToggle emojiContainerLens={emojiContainerLens} />
-      {editor}
+    <div>
+      <FormField
+        {...emojiContainerLens.focus("emoji").interop()}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Emoji</FormLabel>
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    role="combobox"
+                    aria-expanded={open}
+                    id="channel-selector"
+                    variant="secondary"
+                    className="justify-between"
+                    type="button"
+                  >
+                    {field.value ? (
+                      <SelectedEmoji
+                        formattedEmoji={field.value}
+                        unicodeEmojis={unicodeEmojis}
+                        customEmojis={customEmojis}
+                      />
+                    ) : (
+                      "No emoji"
+                    )}
+                    <ChevronsUpDown
+                      aria-label="Channel selector chevrons"
+                      className="opacity-50"
+                    />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-3">
+                <EmojiPicker
+                  unicodeEmojis={unicodeEmojis}
+                  customEmojis={customEmojis}
+                  onSelect={(formattedEmoji) => {
+                    form.setValue(
+                      // @ts-expect-error Path is correct
+                      emojiContainerLens.focus("emoji").interop().name,
+                      formattedEmoji,
+                    );
+                    setOpen(false);
+                  }}
+                />
+              </PopoverContent>
+            </Popover>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </div>
   );
 }
 
-type EmojiContainer<T extends Emoji> = { emoji: T | null };
-
-function TypeToggle<T extends EmojiContainer<Emoji>>({
-  emojiContainerLens,
+function SelectedEmoji({
+  formattedEmoji,
+  unicodeEmojis,
+  customEmojis,
 }: {
-  emojiContainerLens: Lens<T>;
+  formattedEmoji: string;
+  unicodeEmojis: UnicodeEmojiCandidate[];
+  customEmojis: CustomEmojiCandidate[];
 }) {
-  const form = useFormContext<RolesConfig>();
-  const emoji = useLensWatch(emojiContainerLens.focus("emoji"));
+  const customMatch = formattedEmoji.match(/<a?:\w+:(\d+)>/);
+  if (customMatch) {
+    const id = customMatch[1];
+    const emoji = customEmojis.find((e) => e.id === id)!;
 
-  return (
-    <ToggleGroup
-      className="col-start-1 row-start-2"
-      type="single"
-      variant="outline"
-      value={emoji ? emoji.type : "none"}
-      onValueChange={(value) => {
-        let newEmoji: Emoji | null;
-        if (value === "unicode") {
-          newEmoji = {
-            type: "unicode",
-            unicode: "",
-          };
-        } else if (value === "custom") {
-          newEmoji = {
-            type: "custom",
-            name: "",
-            discordId: "",
-            animated: false,
-          };
-        } else {
-          newEmoji = null;
-        }
+    const alt = `'${emoji.name}' emoji`;
+    const src = `https://cdn.discordapp.com/emojis/${emoji.id}.webp?animated=true`;
+    return (
+      <div className="flex items-center gap-2">
+        <img src={src} alt={alt} className="size-6" />
+        {emoji.name}
+      </div>
+    );
+  } else {
+    const emoji = unicodeEmojis.find(
+      (e) =>
+        e.unicode === formattedEmoji || e.variants.includes(formattedEmoji),
+    )!;
 
-        form.setValue(
-          // @ts-expect-error It can only be an Emoji
-          emojiContainerLens.focus("emoji").interop().name,
-          newEmoji,
-        );
-      }}
-    >
-      <ToggleGroupItem value="none">No emoji</ToggleGroupItem>
-      <ToggleGroupItem value="unicode">Unicode</ToggleGroupItem>
-      <ToggleGroupItem value="custom">Custom</ToggleGroupItem>
-    </ToggleGroup>
-  );
-}
-
-function UnicodeEmojiEditor<T extends EmojiContainer<UnicodeEmoji>>({
-  emojiContainerLens,
-}: {
-  emojiContainerLens: Lens<T>;
-}) {
-  const emojiWatch = useLensWatch(emojiContainerLens.focus("emoji"));
-
-  return (
-    <FormField
-      {...emojiContainerLens.focus("emoji.unicode").interop()}
-      rules={{
-        required: true,
-      }}
-      render={({ field }) => (
-        <>
-          <FormLabel className="col-start-2">Unicode / Discord alias*</FormLabel>
-          <FormControl className="col-start-2">
-            <Input {...field} value={emojiWatch?.unicode ?? ""} />
-          </FormControl>
-          <FormMessage className="col-start-2 row-start-3" />
-        </>
-      )}
-    />
-  );
-}
-
-function CustomEmojiEditor<T extends EmojiContainer<CustomEmoji>>({
-  emojiContainerLens,
-}: {
-  emojiContainerLens: Lens<T>;
-}) {
-  return (
-    <>
-      <FormField
-        {...emojiContainerLens.focus("emoji.name").interop()}
-        rules={{
-          required: true,
-        }}
-        render={({ field }) => (
-          <>
-            <FormLabel className="col-start-2 row-start-1">Name*</FormLabel>
-            <FormControl className="col-start-2 row-start-2">
-              <Input {...field} value={field.value ?? ""} />
-            </FormControl>
-            <FormMessage className="col-start-2 row-start-3" />
-          </>
-        )}
-      />
-      <FormField
-        {...emojiContainerLens.focus("emoji.discordId").interop()}
-        rules={{
-          required: true,
-        }}
-        render={({ field }) => (
-          <>
-            <FormLabel className="col-start-3 row-start-1">
-              Discord ID*
-            </FormLabel>
-            <FormControl className="col-start-3 row-start-2">
-              <Input pattern="\d*" {...field} value={field.value ?? ""} />
-            </FormControl>
-            <FormMessage className="col-start-3 row-start-3" />
-          </>
-        )}
-      />
-      <FormField
-        {...emojiContainerLens.focus("emoji.animated").interop()}
-        render={({ field }) => (
-          <FormItem className="col-start-4 row-start-2 flex items-center">
-            <FormControl>
-              <Checkbox
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-            </FormControl>
-            <FormLabel className="col-start-4 row-start-1">Animated?</FormLabel>
-            <FormMessage className="col-start-4 row-start-3" />
-          </FormItem>
-        )}
-      />
-    </>
-  );
+    const humanAlias = emoji.aliases[0].replace(/:/g, "").replace(/_/g, " ");
+    const alt = `'${humanAlias}' emoji`;
+    const src = getUnicodeEmojiSrc(formattedEmoji);
+    return (
+      <div className="flex items-center gap-2">
+        <img src={src} alt={alt} className="size-6" />
+        {capitalize(humanAlias)}
+      </div>
+    );
+  }
 }

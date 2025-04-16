@@ -18,6 +18,9 @@ class Guilds {
         @Resource("channels")
         class Channels(val guild: Id)
 
+        @Resource("emojis")
+        class Emojis(val guild: Id)
+
         @Resource("roles")
         class Roles(val guild: Id) {
 

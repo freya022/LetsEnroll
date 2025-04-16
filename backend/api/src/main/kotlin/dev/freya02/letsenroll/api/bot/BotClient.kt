@@ -30,6 +30,12 @@ interface BotClient {
     @GetExchange("/guilds/{guildId}/channels")
     fun getGuildChannels(@PathVariable guildId: Long): String
 
+    @GetExchange("/emojis")
+    fun getUnicodeEmojis(): String
+
+    @GetExchange("/guilds/{guildId}/emojis")
+    fun getGuildEmojis(@PathVariable guildId: Long): String
+
     @PostExchange("/guilds/{guildId}/roles/check")
     fun checkRolesConfig(@PathVariable guildId: Long, @RequestBody data: RolesConfigDTO): String
 
