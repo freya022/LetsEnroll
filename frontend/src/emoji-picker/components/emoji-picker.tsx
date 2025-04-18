@@ -13,6 +13,12 @@ import {
 } from "@/emoji-picker/utils.ts";
 import { FitzpatrickPicker } from "@/emoji-picker/components/fitzpatrick-picker.tsx";
 
+const columns = 9;
+
+const emojiSize = 32;
+const paddingSize = 2 * 4;
+const itemSize = emojiSize + paddingSize;
+
 export function EmojiPicker({
   unicodeEmojis,
   customEmojis,
@@ -22,9 +28,7 @@ export function EmojiPicker({
   customEmojis: CustomEmojiCandidate[];
   onSelect: (formattedEmoji: string) => void;
 }) {
-  const columns = 9;
   const [fitzpatrickIndex, setFitzpatrickIndex] = useState(0);
-  console.log(fitzpatrickIndex);
 
   function findEmoji(col: number, row: number): EmojiCandidate | null {
     const index = col + row * columns;
@@ -37,9 +41,6 @@ export function EmojiPicker({
     }
   }
 
-  const emojiSize = 32;
-  const paddingSize = 2 * 4;
-  const itemSize = emojiSize + paddingSize;
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-x-2">
@@ -57,7 +58,7 @@ export function EmojiPicker({
         columnCount={columns}
         columnWidth={itemSize}
         height={itemSize * 5}
-        rowCount={(customEmojis.length + unicodeEmojis.length) / 9 + 1}
+        rowCount={(customEmojis.length + unicodeEmojis.length) / columns + 1}
         rowHeight={itemSize}
         width={columns * (itemSize + 2)}
         itemKey={({ columnIndex, rowIndex }) => {
