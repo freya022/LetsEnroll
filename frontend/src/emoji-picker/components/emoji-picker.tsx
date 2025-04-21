@@ -37,7 +37,7 @@ export function EmojiPicker({
     if (index < customEmojis.length) {
       return customEmojis[index];
     } else {
-      return unicodeEmojis[index];
+      return unicodeEmojis[index - customEmojis.length];
     }
   }
 
