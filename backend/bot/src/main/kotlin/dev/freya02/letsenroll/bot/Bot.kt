@@ -16,8 +16,8 @@ class Bot(
     private val config: Config
 ) : JDAService() {
 
-    override val cacheFlags: Set<CacheFlag> = enumSetOf()
-    override val intents: Set<GatewayIntent> = enumSetOf()
+    override val cacheFlags: Set<CacheFlag> = enumSetOf(CacheFlag.EMOJI)
+    override val intents: Set<GatewayIntent> = enumSetOf(GatewayIntent.GUILD_EXPRESSIONS)
 
     override fun createJDA(event: BReadyEvent, eventManager: IEventManager) {
         light(config.token, activity = Activity.customStatus("Overengineering stuff")) {

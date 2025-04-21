@@ -1,5 +1,6 @@
 package dev.freya02.letsenroll.data
 
+import dev.freya02.letsenroll.data.serializer.EmojiSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -18,13 +19,10 @@ data class RolesConfigDTO @MapStructConstructor constructor(
 
         constructor(content: String, vararg components: Component, ) : this(content, components.toList())
 
-        @Serializable
+        // Subclasses are intentionally not serializable as they are represented as a single string
+        @Serializable(with = EmojiSerializer::class)
         sealed interface Emoji
-        @Serializable
-        @SerialName("unicode")
         data class UnicodeEmoji(val unicode: String) : Emoji
-        @Serializable
-        @SerialName("custom")
         data class CustomEmoji(val animated: Boolean, val name: String, val discordId: Snowflake) : Emoji
 
         @Serializable

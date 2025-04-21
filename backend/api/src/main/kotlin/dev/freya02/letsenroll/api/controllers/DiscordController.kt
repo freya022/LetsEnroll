@@ -42,4 +42,17 @@ class DiscordController(
 
         return botClient.getGuildChannels(guildId)
     }
+
+    @GetMapping("/api/emojis")
+    fun getUnicodeEmojis(): String {
+        return botClient.getUnicodeEmojis()
+    }
+
+    @GetMapping("/api/guilds/{guildId}/emojis")
+    fun getGuildEmojis(@PathVariable guildId: Long, @DashboardUser user: OAuth2User): String {
+        if (!botClient.isInGuild(guildId, user.discordId))
+            throw ResponseStatusException(HttpStatus.FORBIDDEN)
+
+        return botClient.getGuildEmojis(guildId)
+    }
 }

@@ -40,4 +40,20 @@ class DiscordControllerTests @Autowired constructor(
         verify(exactly = 1) { botClient.isInGuild(any(), any()) }
         verify(exactly = 0) { botClient.getGuildChannels(any()) }
     }
+
+    @Test
+    fun `Must be in guild to get emojis`() {
+        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
+        every { botClient.isInGuild(any(), any()) } returns false
+        every { botClient.getGuildEmojis(any()) } returns ""
+
+        mockMvc.get("/api/guilds/$EXAMPLE_GUILD_ID/emojis") {
+            withLoggedInInvalidUser()
+        }.andExpect {
+            status { isForbidden() }
+        }
+
+        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 0) { botClient.getGuildEmojis(any()) }
+    }
 }
