@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/popover.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import axios from "axios";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, X } from "lucide-react";
 import { capitalize } from "@/utils.ts";
 import {
   CustomEmojiCandidate,
@@ -64,48 +64,68 @@ export function EmojiEditor<T extends EmojiContainer>({
         render={({ field }) => (
           <FormItem>
             <FormLabel>Emoji</FormLabel>
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <FormControl>
-                  <Button
-                    role="combobox"
-                    aria-expanded={open}
-                    id="channel-selector"
-                    variant="secondary"
-                    className="justify-between"
-                    type="button"
-                  >
-                    {field.value ? (
-                      <SelectedEmoji
-                        formattedEmoji={field.value}
-                        unicodeEmojis={unicodeEmojis}
-                        customEmojis={customEmojis}
+            <div className="flex items-center gap-2">
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger className="grow" asChild>
+                  <FormControl>
+                    <Button
+                      role="combobox"
+                      aria-expanded={open}
+                      id="channel-selector"
+                      variant="secondary"
+                      className="justify-between"
+                      type="button"
+                    >
+                      {field.value ? (
+                        <SelectedEmoji
+                          formattedEmoji={field.value}
+                          unicodeEmojis={unicodeEmojis}
+                          customEmojis={customEmojis}
+                        />
+                      ) : (
+                        "No emoji"
+                      )}
+                      <ChevronsUpDown
+                        aria-label="Channel selector chevrons"
+                        className="opacity-50"
                       />
-                    ) : (
-                      "No emoji"
-                    )}
-                    <ChevronsUpDown
-                      aria-label="Channel selector chevrons"
-                      className="opacity-50"
-                    />
-                  </Button>
-                </FormControl>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-3">
-                <EmojiPicker
-                  unicodeEmojis={unicodeEmojis}
-                  customEmojis={customEmojis}
-                  onSelect={(formattedEmoji) => {
-                    form.setValue(
-                      // @ts-expect-error Path is correct
-                      emojiContainerLens.focus("emoji").interop().name,
-                      formattedEmoji,
-                    );
-                    setOpen(false);
-                  }}
-                />
-              </PopoverContent>
-            </Popover>
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-3">
+                  <EmojiPicker
+                    unicodeEmojis={unicodeEmojis}
+                    customEmojis={customEmojis}
+                    onSelect={(formattedEmoji) => {
+                      form.setValue(
+                        // @ts-expect-error Path is correct
+                        field.name,
+                        formattedEmoji,
+                        {
+                          shouldDirty: true,
+                        },
+                      );
+                      setOpen(false);
+                    }}
+                  />
+                </PopoverContent>
+              </Popover>
+              <X
+                role="button"
+                aria-label="Remove emoji"
+                className="text-destructive hover:bg-accent size-9 cursor-pointer rounded-sm"
+                onClick={() => {
+                  form.setValue(
+                    // @ts-expect-error Path is correct
+                    field.name,
+                    null,
+                    {
+                      shouldDirty: true,
+                    },
+                  );
+                }}
+              />
+            </div>
             <FormMessage />
           </FormItem>
         )}
