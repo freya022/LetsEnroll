@@ -53,6 +53,7 @@ export function EmojiEditor<T extends EmojiContainer>({
       const response = await axios.get(`/api/guilds/${guildId}/emojis`);
       return response.data as CustomEmojiCandidate[];
     },
+    refetchOnMount: "always"
   });
 
   const [open, setOpen] = useState(false);
