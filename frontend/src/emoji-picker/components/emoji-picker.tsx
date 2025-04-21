@@ -62,7 +62,10 @@ export function EmojiPicker({
         rowHeight={itemSize}
         width={columns * (itemSize + 2)}
         itemKey={({ columnIndex, rowIndex }) => {
-          const emoji = findEmoji(columnIndex, rowIndex)!;
+          const emoji = findEmoji(columnIndex, rowIndex);
+          if (!emoji) {
+            return columnIndex + rowIndex * columns;
+          }
           return "unicode" in emoji
             ? getUnicodeVariant(emoji, fitzpatrickIndex)
             : emoji.id;
