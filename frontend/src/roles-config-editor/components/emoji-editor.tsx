@@ -168,7 +168,7 @@ function SelectedEmoji({
     const src = getUnicodeEmojiSrc(formattedEmoji);
     return (
       <div className="flex items-center gap-2">
-        <img src={src} alt={alt} className="size-6" />
+        <img src={src} alt={alt} className="size-6 object-contain" />
         {capitalize(humanAlias)}
       </div>
     );

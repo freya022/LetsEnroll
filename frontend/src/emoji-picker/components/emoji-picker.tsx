@@ -113,7 +113,7 @@ function UnicodeEmojiImg({
     <img
       src={src}
       alt={alt}
-      className="size-8 cursor-pointer"
+      className="size-8 cursor-pointer object-contain"
       onClick={onSelect}
     />
   );
@@ -132,7 +132,7 @@ function CustomEmojiImg({
     <img
       src={src}
       alt={alt}
-      className="size-8 cursor-pointer"
+      className="size-8 cursor-pointer object-contain"
       onClick={onSelect}
     />
   );
