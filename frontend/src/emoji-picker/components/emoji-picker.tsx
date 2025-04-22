@@ -76,7 +76,7 @@ export function EmojiPicker({
           if (!emoji) return <></>;
 
           return (
-            <div style={style} className="p-1">
+            <div style={style} className="hover:bg-accent rounded-sm p-1">
               {"unicode" in emoji ? (
                 <UnicodeEmojiImg
                   emoji={emoji}
