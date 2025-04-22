@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Separator } from "@/components/ui/separator.tsx";
 import { FixedSizeGrid } from "react-window";
 import {
+  getAliases,
   getEmojiSrc,
   getFormatted,
   getUnicodeVariant,
@@ -29,6 +30,7 @@ export function EmojiPicker({
   onSelect: (formattedEmoji: string) => void;
 }) {
   const [fitzpatrickIndex, setFitzpatrickIndex] = useState(0);
+  const [hoveredEmojiAlias, setHoveredEmojiAlias] = useState<string>();
 
   function findEmoji(col: number, row: number): EmojiCandidate | null {
     const index = col + row * columns;
@@ -45,7 +47,7 @@ export function EmojiPicker({
     <div className="space-y-2">
       <div className="flex items-center gap-x-2">
         <input
-          placeholder="Search emojis"
+          placeholder={hoveredEmojiAlias ? hoveredEmojiAlias : "Search emojis"}
           className="grow rounded-md border p-1.5"
         />
         <FitzpatrickPicker
@@ -80,6 +82,10 @@ export function EmojiPicker({
               style={style}
               className="hover:bg-accent cursor-pointer rounded-sm p-1"
               onClick={() => onSelect(getFormatted(emoji, fitzpatrickIndex))}
+              onMouseEnter={() =>
+                setHoveredEmojiAlias(() => getAliases(emoji).join(" "))
+              }
+              onMouseLeave={() => setHoveredEmojiAlias(() => undefined)}
             >
               {"unicode" in emoji ? (
                 <UnicodeEmojiImg

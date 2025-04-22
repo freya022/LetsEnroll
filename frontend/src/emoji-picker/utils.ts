@@ -45,3 +45,15 @@ export function getUnicodeVariant(
     return emoji.variants[fitzpatrickIndex - 1];
   }
 }
+
+export function getAliases(emoji: EmojiCandidate) {
+  if ("unicode" in emoji) {
+    return (
+      emoji.aliases
+        // Remove emoticons
+        .filter((alias) => alias.startsWith(":") && alias.endsWith(":"))
+    );
+  } else {
+    return [`:${emoji.name}:`];
+  }
+}
