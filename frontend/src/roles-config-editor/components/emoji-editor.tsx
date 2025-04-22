@@ -114,6 +114,7 @@ export function EmojiEditor<T extends EmojiContainer>({
                 </Popover>
                 <X
                   role="button"
+                  tabIndex={0}
                   aria-label="Remove emoji"
                   className="text-destructive hover:bg-accent size-9 cursor-pointer rounded-sm"
                   onClick={() => {

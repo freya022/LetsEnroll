@@ -3,7 +3,7 @@ import {
   EmojiCandidate,
   UnicodeEmojiCandidate,
 } from "@/roles-config-editor/types.ts";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Separator } from "@/components/ui/separator.tsx";
 import { FixedSizeGrid } from "react-window";
 import {
@@ -49,6 +49,13 @@ export function EmojiPicker({
     return filteredEmojis[index];
   }
 
+  // useMemo() will ensure the type does not get recreated each render pass.
+  // This also fixes scrolling glitching out
+  const OuterElementType = useMemo(
+    () => (props: object) => <div {...props} tabIndex={-1} />,
+    [],
+  );
+
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-x-2">
@@ -64,6 +71,7 @@ export function EmojiPicker({
       </div>
       <Separator orientation="horizontal" />
       <FixedSizeGrid
+        outerElementType={OuterElementType}
         columnCount={columns}
         columnWidth={itemSize}
         height={itemSize * 5}
@@ -87,6 +95,7 @@ export function EmojiPicker({
             <div
               style={style}
               className="hover:bg-accent cursor-pointer rounded-sm p-1"
+              tabIndex={0}
               onClick={() => onSelect(getFormatted(emoji, fitzpatrickIndex))}
               onMouseEnter={() =>
                 setHoveredEmojiAlias(() =>
