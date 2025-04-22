@@ -48,12 +48,14 @@ export function getUnicodeVariant(
 
 export function getAliases(emoji: EmojiCandidate) {
   if ("unicode" in emoji) {
-    return (
-      emoji.aliases
-        // Remove emoticons
-        .filter((alias) => alias.startsWith(":") && alias.endsWith(":"))
-    );
+    return emoji.aliases;
   } else {
     return [`:${emoji.name}:`];
   }
+}
+
+export function removeEmoticons(aliases: string[]) {
+  return aliases.filter(
+    (alias) => alias.startsWith(":") && alias.endsWith(":"),
+  );
 }

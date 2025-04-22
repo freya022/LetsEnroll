@@ -11,6 +11,7 @@ import {
   getEmojiSrc,
   getFormatted,
   getUnicodeVariant,
+  removeEmoticons,
 } from "@/emoji-picker/utils.ts";
 import { FitzpatrickPicker } from "@/emoji-picker/components/fitzpatrick-picker.tsx";
 
@@ -80,7 +81,9 @@ export function EmojiPicker({
               className="hover:bg-accent cursor-pointer rounded-sm p-1"
               onClick={() => onSelect(getFormatted(emoji, fitzpatrickIndex))}
               onMouseEnter={() =>
-                setHoveredEmojiAlias(() => getAliases(emoji).join(" "))
+                setHoveredEmojiAlias(() =>
+                  removeEmoticons(getAliases(emoji)).join(" "),
+                )
               }
               onMouseLeave={() => setHoveredEmojiAlias(() => undefined)}
             >
