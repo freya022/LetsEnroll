@@ -13,14 +13,15 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag
 
 @BService
 class Bot(
-    private val config: Config
+    private val config: Config,
+    private val memberCachePolicy: BotMemberCachePolicy,
 ) : JDAService() {
 
     override val cacheFlags: Set<CacheFlag> = enumSetOf(CacheFlag.EMOJI)
     override val intents: Set<GatewayIntent> = enumSetOf(GatewayIntent.GUILD_EXPRESSIONS)
 
     override fun createJDA(event: BReadyEvent, eventManager: IEventManager) {
-        light(config.token, activity = Activity.customStatus("Overengineering stuff")) {
+        light(config.token, activity = Activity.customStatus("Overengineering stuff"), memberCachePolicy = memberCachePolicy) {
 
         }
     }
