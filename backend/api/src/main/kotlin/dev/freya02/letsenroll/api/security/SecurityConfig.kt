@@ -50,7 +50,7 @@ class SecurityConfig(
             }
 
             oauth2Login {
-                authenticationSuccessHandler = SimpleUrlAuthenticationSuccessHandler("${frontUrl}/dashboard").apply {
+                authenticationSuccessHandler = SimpleUrlAuthenticationSuccessHandler("${frontUrl}/login/success").apply {
                     setAlwaysUseDefaultTargetUrl(true)
                 }
             }

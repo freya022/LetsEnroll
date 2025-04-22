@@ -10,6 +10,7 @@ export default function ErrorPage() {
     // error is type `ErrorResponse`
     errorMessage = error.data?.message || error.statusText;
   } else if (error instanceof AxiosError && error.status === 401) {
+    localStorage.setItem("last_location", location.href);
     location.href = "/oauth2/authorization/discord";
     errorMessage = "Not authorized, redirecting to login page...";
   } else if (error instanceof Error) {

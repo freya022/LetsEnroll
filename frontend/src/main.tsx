@@ -11,6 +11,7 @@ import { AxiosError } from "axios";
 import RolesConfigPanel from "@/roles-config-editor/routes/roles-config-panel.tsx";
 import RolesConfigEditor from "@/roles-config-editor/routes/roles-config-editor.tsx";
 import RolesConfigPublisher from "@/roles-config-editor/routes/roles-config-publisher.tsx";
+import { loader as LoginSuccessLoader } from "@/routes/login-success.tsx";
 
 declare module "@tanstack/react-query" {
   interface Register {
@@ -61,6 +62,11 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "/login/success",
+    loader: LoginSuccessLoader,
+    element: <></>,
   },
 ]);
 

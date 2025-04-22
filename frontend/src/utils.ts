@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 
 export async function checkAuthOrRedirect(response: Response) {
   if (response.status === 401) {
+    localStorage.setItem("last_location", location.href);
     location.href = "/oauth2/authorization/discord";
     // Wait while it redirects, this is done by never resolving the given function
     await new Promise(() => {});
@@ -40,6 +41,7 @@ function getCsrfFromCookies() {
 type BackendError = {
   error: string;
 };
+
 export function getErrorMessage(error: AxiosError): string {
   const response = error.response;
   if (response) {
