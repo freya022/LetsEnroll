@@ -99,7 +99,6 @@ export function ButtonEditor({
             <FormControl>
               <Input {...field} value={field.value ?? ""} />
             </FormControl>
-            <FormDescription>The button's label</FormDescription>
             <FormMessage />
           </FormItem>
         )}
