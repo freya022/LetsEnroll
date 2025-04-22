@@ -1,4 +1,7 @@
-import { EmojiCandidate, UnicodeEmojiCandidate } from "@/roles-config-editor/types.ts";
+import {
+  EmojiCandidate,
+  UnicodeEmojiCandidate,
+} from "@/roles-config-editor/types.ts";
 
 export function getEmojiHexCodepoints(unicode: string): string[] {
   const hexCodepoints: string[] = [];
@@ -8,7 +11,10 @@ export function getEmojiHexCodepoints(unicode: string): string[] {
   return hexCodepoints;
 }
 
-export function getEmojiSrc(emoji: UnicodeEmojiCandidate, fitzpatrickIndex: number) {
+export function getEmojiSrc(
+  emoji: UnicodeEmojiCandidate,
+  fitzpatrickIndex: number,
+) {
   return getUnicodeEmojiSrc(getFormatted(emoji, fitzpatrickIndex));
 }
 
@@ -24,7 +30,10 @@ export function getFormatted(emoji: EmojiCandidate, fitzpatrickIndex: number) {
   }
 }
 
-export function getUnicodeVariant(emoji: UnicodeEmojiCandidate, fitzpatrickIndex: number) {
+export function getUnicodeVariant(
+  emoji: UnicodeEmojiCandidate,
+  fitzpatrickIndex: number,
+) {
   if (emoji.variants.length == 0) {
     // No fitzpatrick
     return emoji.unicode;
