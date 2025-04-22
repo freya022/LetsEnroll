@@ -93,6 +93,7 @@ export function EmojiPicker({
 
           return (
             <div
+              role="button"
               style={style}
               className="hover:bg-accent cursor-pointer rounded-sm p-1 -outline-offset-2 focus:outline-2"
               tabIndex={0}
