@@ -61,7 +61,7 @@ export function EmojiPicker({
       <div className="flex items-center gap-x-2">
         <input
           placeholder={hoveredEmojiAlias ? hoveredEmojiAlias : "Search emojis"}
-          className="grow rounded-md border p-1.5"
+          className="grow rounded-md border p-1.5 focus:outline-2"
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         <FitzpatrickPicker
@@ -94,7 +94,7 @@ export function EmojiPicker({
           return (
             <div
               style={style}
-              className="hover:bg-accent cursor-pointer rounded-sm p-1"
+              className="hover:bg-accent cursor-pointer rounded-sm p-1 -outline-offset-2 focus:outline-2"
               tabIndex={0}
               onClick={() => onSelect(getFormatted(emoji, fitzpatrickIndex))}
               onMouseEnter={() =>

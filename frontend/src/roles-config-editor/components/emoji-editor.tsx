@@ -116,7 +116,7 @@ export function EmojiEditor<T extends EmojiContainer>({
                   role="button"
                   tabIndex={0}
                   aria-label="Remove emoji"
-                  className="text-destructive hover:bg-accent size-9 cursor-pointer rounded-sm"
+                  className="text-destructive hover:bg-accent size-9 cursor-pointer rounded-sm focus:outline-2"
                   onClick={() => {
                     form.setValue(
                       // @ts-expect-error Path is correct
