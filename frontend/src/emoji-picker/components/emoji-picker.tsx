@@ -34,12 +34,19 @@ export function EmojiPicker({
 
   const [fitzpatrickIndex, setFitzpatrickIndex] = useState(0);
   const [hoveredEmojiAlias, setHoveredEmojiAlias] = useState<string>();
+  const [searchQuery, setSearchQuery] = useState<string>();
+
+  const filteredEmojis = searchQuery
+    ? mergedEmojis.filter((e) =>
+        getAliases(e).some((alias) => alias.includes(searchQuery)),
+      )
+    : mergedEmojis;
 
   function findEmoji(col: number, row: number): EmojiCandidate | null {
     const index = col + row * columns;
-    if (index >= mergedEmojis.length) return null;
+    if (index >= filteredEmojis.length) return null;
 
-    return mergedEmojis[index];
+    return filteredEmojis[index];
   }
 
   return (
@@ -48,6 +55,7 @@ export function EmojiPicker({
         <input
           placeholder={hoveredEmojiAlias ? hoveredEmojiAlias : "Search emojis"}
           className="grow rounded-md border p-1.5"
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
         <FitzpatrickPicker
           fitzpatrickIndex={fitzpatrickIndex}
@@ -59,7 +67,7 @@ export function EmojiPicker({
         columnCount={columns}
         columnWidth={itemSize}
         height={itemSize * 5}
-        rowCount={mergedEmojis.length / columns + 1}
+        rowCount={filteredEmojis.length / columns + 1}
         rowHeight={itemSize}
         width={columns * (itemSize + 2)}
         itemKey={({ columnIndex, rowIndex }) => {
