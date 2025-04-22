@@ -104,6 +104,10 @@ export function EmojiPicker({
                 )
               }
               onMouseLeave={() => setHoveredEmojiAlias(() => undefined)}
+              onKeyDown={(e) => {
+                if (e.code.endsWith("Enter"))
+                  onSelect(getFormatted(emoji, fitzpatrickIndex));
+              }}
             >
               {"unicode" in emoji ? (
                 <UnicodeEmojiImg
