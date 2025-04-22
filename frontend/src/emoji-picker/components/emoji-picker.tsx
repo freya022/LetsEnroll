@@ -76,22 +76,18 @@ export function EmojiPicker({
           if (!emoji) return <></>;
 
           return (
-            <div style={style} className="hover:bg-accent rounded-sm p-1">
+            <div
+              style={style}
+              className="hover:bg-accent cursor-pointer rounded-sm p-1"
+              onClick={() => onSelect(getFormatted(emoji, fitzpatrickIndex))}
+            >
               {"unicode" in emoji ? (
                 <UnicodeEmojiImg
                   emoji={emoji}
                   fitzpatrickIndex={fitzpatrickIndex}
-                  onSelect={() =>
-                    onSelect(getFormatted(emoji, fitzpatrickIndex))
-                  }
                 />
               ) : (
-                <CustomEmojiImg
-                  emoji={emoji}
-                  onSelect={() =>
-                    onSelect(getFormatted(emoji, fitzpatrickIndex))
-                  }
-                />
+                <CustomEmojiImg emoji={emoji} />
               )}
             </div>
           );
@@ -104,39 +100,17 @@ export function EmojiPicker({
 function UnicodeEmojiImg({
   emoji,
   fitzpatrickIndex,
-  onSelect,
 }: {
   emoji: UnicodeEmojiCandidate;
   fitzpatrickIndex: number;
-  onSelect: () => void;
 }) {
   const alt = `'${emoji.aliases[0].replace(/:/g, "").replace(/_/g, " ")}' emoji`;
   const src = getEmojiSrc(emoji, fitzpatrickIndex);
-  return (
-    <img
-      src={src}
-      alt={alt}
-      className="size-8 cursor-pointer object-contain"
-      onClick={onSelect}
-    />
-  );
+  return <img src={src} alt={alt} className="size-8 object-contain" />;
 }
 
-function CustomEmojiImg({
-  emoji,
-  onSelect,
-}: {
-  emoji: CustomEmojiCandidate;
-  onSelect: () => void;
-}) {
+function CustomEmojiImg({ emoji }: { emoji: CustomEmojiCandidate }) {
   const alt = `'${emoji.name}' emoji`;
   const src = `https://cdn.discordapp.com/emojis/${emoji.id}.webp?animated=true`;
-  return (
-    <img
-      src={src}
-      alt={alt}
-      className="size-8 cursor-pointer object-contain"
-      onClick={onSelect}
-    />
-  );
+  return <img src={src} alt={alt} className="size-8 object-contain" />;
 }
