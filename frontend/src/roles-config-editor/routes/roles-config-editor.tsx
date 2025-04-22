@@ -90,7 +90,10 @@ export default function RolesConfigEditor() {
   // Reset the form if the rolesConfig changes,
   // this happens when the page is reloaded after submission
   useEffect(() => {
-    form.reset(rolesConfig);
+    form.reset(rolesConfig, {
+      keepDirty: false,
+      keepDirtyValues: false,
+    });
   }, [form, rolesConfig]);
 
   const lens = useLens({ control: form.control });
