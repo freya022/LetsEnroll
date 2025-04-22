@@ -29,18 +29,16 @@ export function EmojiPicker({
   customEmojis: CustomEmojiCandidate[];
   onSelect: (formattedEmoji: string) => void;
 }) {
+  const mergedEmojis: EmojiCandidate[] = [...customEmojis, ...unicodeEmojis];
+
   const [fitzpatrickIndex, setFitzpatrickIndex] = useState(0);
   const [hoveredEmojiAlias, setHoveredEmojiAlias] = useState<string>();
 
   function findEmoji(col: number, row: number): EmojiCandidate | null {
     const index = col + row * columns;
-    if (index >= customEmojis.length + unicodeEmojis.length) return null;
+    if (index >= mergedEmojis.length) return null;
 
-    if (index < customEmojis.length) {
-      return customEmojis[index];
-    } else {
-      return unicodeEmojis[index - customEmojis.length];
-    }
+    return mergedEmojis[index];
   }
 
   return (
@@ -60,14 +58,13 @@ export function EmojiPicker({
         columnCount={columns}
         columnWidth={itemSize}
         height={itemSize * 5}
-        rowCount={(customEmojis.length + unicodeEmojis.length) / columns + 1}
+        rowCount={mergedEmojis.length / columns + 1}
         rowHeight={itemSize}
         width={columns * (itemSize + 2)}
         itemKey={({ columnIndex, rowIndex }) => {
           const emoji = findEmoji(columnIndex, rowIndex);
-          if (!emoji) {
-            return columnIndex + rowIndex * columns;
-          }
+          if (!emoji) return columnIndex + rowIndex * columns;
+
           return "unicode" in emoji
             ? getUnicodeVariant(emoji, fitzpatrickIndex)
             : emoji.id;
