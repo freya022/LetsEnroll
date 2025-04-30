@@ -79,10 +79,7 @@ class RolesConfigControllerTests @Autowired constructor(
                           "roleName": "role name",
                           "style": "PRIMARY",
                           "label": "label",
-                          "emoji": {
-                            "type": "unicode",
-                            "unicode": "bell"
-                          }
+                          "emoji": "🔔"
                         }
                       ]
                     }
