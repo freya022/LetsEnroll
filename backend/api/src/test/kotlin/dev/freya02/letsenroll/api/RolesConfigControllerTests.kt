@@ -2,13 +2,12 @@ package dev.freya02.letsenroll.api
 
 import com.ninjasquad.springmockk.MockkBean
 import dev.freya02.letsenroll.api.bot.BotClient
-import dev.freya02.letsenroll.api.bot.isInGuild
+import dev.freya02.letsenroll.api.bot.canInteract
 import dev.freya02.letsenroll.api.controllers.RolesConfigController
 import dev.freya02.letsenroll.api.exceptions.NoSuchRolesConfigException
 import dev.freya02.letsenroll.api.service.RolesConfigService
 import io.mockk.every
 import io.mockk.just
-import io.mockk.mockkStatic
 import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.Test
@@ -33,8 +32,7 @@ class RolesConfigControllerTests @Autowired constructor(
 
     @Test
     fun `Must be in guild to create config`() {
-        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
-        every { botClient.isInGuild(any(), any()) } returns false
+        botClient.mockUnauthorizedMember()
 
         mockMvc.put("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
             withLoggedInInvalidUser()
@@ -50,15 +48,14 @@ class RolesConfigControllerTests @Autowired constructor(
             status { isForbidden() }
         }
 
-        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 1) { botClient.canInteract(any(), any()) }
         verify(exactly = 0) { rolesConfigService.upsertConfig(any(), any()) }
     }
 
     @Test
     fun `Insert roles config with polymorphic components and emojis`() {
-        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
+        botClient.mockAuthorizedMember()
         every { rolesConfigService.upsertConfig(any(), any()) } just runs
-        every { botClient.isInGuild(EXAMPLE_GUILD_ID, EXAMPLE_USER_ID) } returns true
 
         mockMvc.put("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
             withLoggedInUser()
@@ -95,8 +92,7 @@ class RolesConfigControllerTests @Autowired constructor(
 
     @Test
     fun `Must be in guild to receive config`() {
-        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
-        every { botClient.isInGuild(any(), any()) } returns false
+        botClient.mockUnauthorizedMember()
 
         mockMvc.get("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
             withLoggedInInvalidUser()
@@ -104,14 +100,13 @@ class RolesConfigControllerTests @Autowired constructor(
             status { isForbidden() }
         }
 
-        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 1) { botClient.canInteract(any(), any()) }
         verify(exactly = 0) { rolesConfigService.retrieveConfig(any()) }
     }
 
     @Test
     fun `No config returns 404`() {
-        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
-        every { botClient.isInGuild(any(), any()) } returns true
+        botClient.mockAuthorizedMember()
         every { rolesConfigService.retrieveConfig(EXAMPLE_GUILD_ID) } throws(NoSuchRolesConfigException("No roles config found for guild"))
 
         mockMvc.get("/api/guilds/$EXAMPLE_GUILD_ID/roles") {
@@ -125,8 +120,7 @@ class RolesConfigControllerTests @Autowired constructor(
 
     @Test
     fun `Must be in guild to check roles config`() {
-        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
-        every { botClient.isInGuild(any(), any()) } returns false
+        botClient.mockUnauthorizedMember()
 
         mockMvc.post("/api/guilds/$EXAMPLE_GUILD_ID/roles/check") {
             withLoggedInInvalidUser()
@@ -142,14 +136,13 @@ class RolesConfigControllerTests @Autowired constructor(
             status { isForbidden() }
         }
 
-        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 1) { botClient.canInteract(any(), any()) }
         verify(exactly = 0) { rolesConfigService.checkRolesConfig(any(), any()) }
     }
 
     @Test
     fun `Must be in guild to publish selectors`() {
-        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
-        every { botClient.isInGuild(any(), any()) } returns false
+        botClient.mockUnauthorizedMember()
 
         mockMvc.post("/api/guilds/$EXAMPLE_GUILD_ID/roles/publish") {
             withLoggedInInvalidUser()
@@ -164,7 +157,7 @@ class RolesConfigControllerTests @Autowired constructor(
             status { isForbidden() }
         }
 
-        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 1) { botClient.canInteract(any(), any()) }
         verify(exactly = 0) { rolesConfigService.publishSelectors(any(), any()) }
     }
 }

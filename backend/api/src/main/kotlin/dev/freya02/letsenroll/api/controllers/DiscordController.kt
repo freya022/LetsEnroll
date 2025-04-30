@@ -2,7 +2,7 @@ package dev.freya02.letsenroll.api.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import dev.freya02.letsenroll.api.bot.BotClient
-import dev.freya02.letsenroll.api.bot.isInGuild
+import dev.freya02.letsenroll.api.bot.canInteract
 import dev.freya02.letsenroll.api.discord.DiscordClient
 import dev.freya02.letsenroll.api.utils.DashboardUser
 import dev.freya02.letsenroll.api.utils.discordId
@@ -37,7 +37,7 @@ class DiscordController(
 
     @GetMapping("/api/guilds/{guildId}/channels")
     fun getGuildChannels(@PathVariable guildId: Long, @DashboardUser user: OAuth2User): String {
-        if (!botClient.isInGuild(guildId, user.discordId))
+        if (!botClient.canInteract(guildId, user.discordId))
             throw ResponseStatusException(HttpStatus.FORBIDDEN)
 
         return botClient.getGuildChannels(guildId)
@@ -50,7 +50,7 @@ class DiscordController(
 
     @GetMapping("/api/guilds/{guildId}/emojis")
     fun getGuildEmojis(@PathVariable guildId: Long, @DashboardUser user: OAuth2User): String {
-        if (!botClient.isInGuild(guildId, user.discordId))
+        if (!botClient.canInteract(guildId, user.discordId))
             throw ResponseStatusException(HttpStatus.FORBIDDEN)
 
         return botClient.getGuildEmojis(guildId)

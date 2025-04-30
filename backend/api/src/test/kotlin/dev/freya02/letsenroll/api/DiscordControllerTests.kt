@@ -2,11 +2,10 @@ package dev.freya02.letsenroll.api
 
 import com.ninjasquad.springmockk.MockkBean
 import dev.freya02.letsenroll.api.bot.BotClient
-import dev.freya02.letsenroll.api.bot.isInGuild
+import dev.freya02.letsenroll.api.bot.canInteract
 import dev.freya02.letsenroll.api.controllers.DiscordController
 import dev.freya02.letsenroll.api.discord.DiscordClient
 import io.mockk.every
-import io.mockk.mockkStatic
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,8 +26,7 @@ class DiscordControllerTests @Autowired constructor(
 
     @Test
     fun `Must be in guild to get channels`() {
-        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
-        every { botClient.isInGuild(any(), any()) } returns false
+        botClient.mockUnauthorizedMember()
         every { botClient.getGuildChannels(any()) } returns ""
 
         mockMvc.get("/api/guilds/$EXAMPLE_GUILD_ID/channels") {
@@ -37,14 +35,13 @@ class DiscordControllerTests @Autowired constructor(
             status { isForbidden() }
         }
 
-        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 1) { botClient.canInteract(any(), any()) }
         verify(exactly = 0) { botClient.getGuildChannels(any()) }
     }
 
     @Test
     fun `Must be in guild to get emojis`() {
-        mockkStatic(BotClient::isInGuild) // Top-level extensions are static
-        every { botClient.isInGuild(any(), any()) } returns false
+        botClient.mockUnauthorizedMember()
         every { botClient.getGuildEmojis(any()) } returns ""
 
         mockMvc.get("/api/guilds/$EXAMPLE_GUILD_ID/emojis") {
@@ -53,7 +50,7 @@ class DiscordControllerTests @Autowired constructor(
             status { isForbidden() }
         }
 
-        verify(exactly = 1) { botClient.isInGuild(any(), any()) }
+        verify(exactly = 1) { botClient.canInteract(any(), any()) }
         verify(exactly = 0) { botClient.getGuildEmojis(any()) }
     }
 }

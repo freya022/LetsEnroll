@@ -4,6 +4,7 @@ import dev.freya02.letsenroll.data.GuildDTO
 import dev.freya02.letsenroll.data.MemberDTO
 import dev.freya02.letsenroll.data.PublishSelectorsDTO
 import dev.freya02.letsenroll.data.RolesConfigDTO
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -18,6 +19,8 @@ import org.springframework.web.service.annotation.HttpExchange
 import org.springframework.web.service.annotation.PostExchange
 import org.springframework.web.service.invoker.HttpServiceProxyFactory
 import org.springframework.web.service.invoker.createClient
+
+private val logger = KotlinLogging.logger { }
 
 @HttpExchange
 interface BotClient {
@@ -43,9 +46,21 @@ interface BotClient {
     fun publishRoleSelectors(@PathVariable guildId: Long, @RequestBody data: PublishSelectorsDTO)
 }
 
-fun BotClient.isInGuild(guildId: Long, userId: Long): Boolean {
+/**
+ * Only the API uses this; the frontend does the same checks using Discord's data
+ */
+fun BotClient.canInteract(guildId: Long, userId: Long): Boolean {
     val responseEntity = getMember(guildId, userId)
-    return responseEntity.statusCode == HttpStatus.OK && responseEntity.body != null
+    if (responseEntity.statusCode != HttpStatus.OK) return false
+    val body = responseEntity.body ?: run {
+        logger.warn { "Expected a response body on OK HTTP status" }
+        return false
+    }
+
+    if ("MANAGE_ROLES" !in body.permissions) return false
+    if ("MANAGE_SERVER" !in body.permissions) return false
+
+    return true
 }
 
 @Configuration

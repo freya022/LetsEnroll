@@ -1,7 +1,7 @@
 package dev.freya02.letsenroll.api.controllers
 
 import dev.freya02.letsenroll.api.bot.BotClient
-import dev.freya02.letsenroll.api.bot.isInGuild
+import dev.freya02.letsenroll.api.bot.canInteract
 import dev.freya02.letsenroll.api.dto.PublishRoleSelectorsDTO
 import dev.freya02.letsenroll.api.exceptions.NoSuchRolesConfigException
 import dev.freya02.letsenroll.api.exceptions.RolesConfigEmptyException
@@ -23,7 +23,7 @@ class RolesConfigController(
 
     @PutMapping("/api/guilds/{guildId}/roles")
     fun upsertRoleConfig(@PathVariable guildId: Long, @RequestBody config: RolesConfigDTO, @DashboardUser user: OAuth2User) {
-        if (!botClient.isInGuild(guildId, user.discordId))
+        if (!botClient.canInteract(guildId, user.discordId))
             throw ResponseStatusException(HttpStatus.FORBIDDEN)
 
         rolesConfigService.upsertConfig(guildId, config)
@@ -31,7 +31,7 @@ class RolesConfigController(
 
     @GetMapping("/api/guilds/{guildId}/roles")
     fun getRoleConfig(@PathVariable guildId: Long, @DashboardUser user: OAuth2User): RolesConfigDTO? {
-        if (!botClient.isInGuild(guildId, user.discordId))
+        if (!botClient.canInteract(guildId, user.discordId))
             throw ResponseStatusException(HttpStatus.FORBIDDEN)
 
         return rolesConfigService.retrieveConfig(guildId)
@@ -39,7 +39,7 @@ class RolesConfigController(
 
     @PostMapping("/api/guilds/{guildId}/roles/check")
     fun checkRolesConfig(@PathVariable("guildId") guildId: Long, @RequestBody data: RolesConfigDTO, @DashboardUser user: OAuth2User): String {
-        if (!botClient.isInGuild(guildId, user.discordId))
+        if (!botClient.canInteract(guildId, user.discordId))
             throw ResponseStatusException(HttpStatus.FORBIDDEN)
 
         return rolesConfigService.checkRolesConfig(guildId, data)
@@ -47,7 +47,7 @@ class RolesConfigController(
 
     @PostMapping("/api/guilds/{guildId}/roles/publish")
     fun publishRoleSelectors(@PathVariable("guildId") guildId: Long, @RequestBody data: PublishRoleSelectorsDTO, @DashboardUser user: OAuth2User) {
-        if (!botClient.isInGuild(guildId, user.discordId))
+        if (!botClient.canInteract(guildId, user.discordId))
             throw ResponseStatusException(HttpStatus.FORBIDDEN)
 
         rolesConfigService.publishSelectors(guildId, data.channelId)

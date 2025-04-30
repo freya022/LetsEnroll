@@ -1,5 +1,9 @@
 package dev.freya02.letsenroll.api
 
+import dev.freya02.letsenroll.api.bot.BotClient
+import dev.freya02.letsenroll.api.bot.canInteract
+import io.mockk.every
+import io.mockk.mockkStatic
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login
 import org.springframework.test.web.servlet.MockHttpServletRequestDsl
@@ -19,4 +23,14 @@ fun MockHttpServletRequestDsl.withLoggedInInvalidUser() {
     with(oauth2Login().attributes {
         it["id"] = "1234"
     })
+}
+
+fun BotClient.mockAuthorizedMember() {
+    mockkStatic(BotClient::canInteract)
+    every { canInteract(any(), any()) } returns true
+}
+
+fun BotClient.mockUnauthorizedMember() {
+    mockkStatic(BotClient::canInteract)
+    every { canInteract(any(), any()) } returns false
 }
