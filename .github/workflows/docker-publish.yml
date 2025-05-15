@@ -40,6 +40,7 @@ jobs:
           result-encoding: 'string'
 
       - name: Build and push images
+        working-directory: ./backend
         env:
           # GitHub Actions has 16GBs of available RAM for workers, so let's bump it a bit up!
           # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
