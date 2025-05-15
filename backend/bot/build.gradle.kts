@@ -96,7 +96,7 @@ jib {
     }
 
     to {
-        image = "letsenroll-bot"
+        image = "ghcr.io/freya022/letsenroll-bot"
     }
 
     container {

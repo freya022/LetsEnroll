@@ -1,0 +1,52 @@
+name: "Publish docker images"
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 24
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      - name: Docker metadata
+        id: metadata
+        uses: docker/metadata-action@v5
+
+      - name: Transform labels to JIB's map format
+        id: formatted-labels
+        uses: actions/github-script@v7
+        env:
+          LABELS: ${{ steps.metadata.outputs.labels }}
+        with:
+          script: 'return process.env.LABELS.replaceAll("\n", ",")'
+          result-encoding: 'string'
+
+      - name: Build and push images
+        env:
+          # GitHub Actions has 16GBs of available RAM for workers, so let's bump it a bit up!
+          # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
+          GRADLE_OPTS: -Xmx5G -Xms5G
+        run: >
+          ./gradlew jib
+          -Djib.to.auth.username=${{ github.actor }}
+          -Djib.to.auth.password=${{ github.token }}
+          -Djib.to.tags=${{ steps.metadata.outputs.tags }}
+          -Djib.container.labels="${{ steps.formatted-labels.outputs.result }}"

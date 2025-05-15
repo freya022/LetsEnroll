@@ -64,7 +64,7 @@ jib {
 	}
 
 	to {
-		image = "letsenroll-api"
+		image = "ghcr.io/freya022/letsenroll-api"
 	}
 
 	container {
