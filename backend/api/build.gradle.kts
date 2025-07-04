@@ -11,6 +11,11 @@ plugins {
 	kotlin("kapt")
 }
 
+// We use JIB instead.
+tasks.named("bootJar").configure {
+	enabled = false
+}
+
 val generateVersionFile = tasks.register<GenerateVersionFileTask>("generateVersionFile") {
 	outputs.upToDateWhen { false }
 }
