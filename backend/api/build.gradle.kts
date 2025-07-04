@@ -67,7 +67,7 @@ allOpen {
 
 jib {
 	from {
-		image = "eclipse-temurin:23-jre"
+		image = "eclipse-temurin:24-jre"
 	}
 
 	to {

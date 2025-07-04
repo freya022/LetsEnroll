@@ -92,7 +92,7 @@ jmh {
 
 jib {
     from {
-        image = "eclipse-temurin:23-jdk"
+        image = "eclipse-temurin:24-jdk"
     }
 
     to {
