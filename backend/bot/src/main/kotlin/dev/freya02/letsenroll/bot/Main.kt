@@ -61,10 +61,6 @@ fun main(args: Array<String>) {
                 addResponseBundle("responses")
             }
 
-            appEmojis {
-                enable = true
-            }
-
             textCommands {
                 enable = false
             }

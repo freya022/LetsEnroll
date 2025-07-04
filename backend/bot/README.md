@@ -4,7 +4,6 @@ Module for the main Discord bot.
 
 ## Features used
 
-- Application emojis
 - Slash commands
 - Components (and database)
 - Localization
