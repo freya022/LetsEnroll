@@ -1,5 +1,6 @@
 [versions]
 kotlin = "2.2.0" # Also change in buildSrc
+jib = "3.4.4"
 jackson = "2.17.2"
 flyway = "11.1.1"
 ktor = "3.1.0"
@@ -14,6 +15,9 @@ kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", vers
 jmh = { id = "me.champeau.jmh", version = "0.7.2" }
 
 [libraries]
+kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+jib-plugin = { module = "com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib" }
+
 mockk = { module = "io.mockk:mockk", version = "1.13.16" }
 springmockk = { module = "com.ninja-squad:springmockk", version = "4.0.2" }
 bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.15.11" }
