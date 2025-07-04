@@ -18,9 +18,12 @@ jmh = { id = "me.champeau.jmh", version = "0.7.2" }
 kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 jib-plugin = { module = "com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib" }
 
-mockk = { module = "io.mockk:mockk", version = "1.13.16" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version = "5.13.1" }
+mockk = { module = "io.mockk:mockk", version = "1.14.3" }
 springmockk = { module = "com.ninja-squad:springmockk", version = "4.0.2" }
-bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.15.11" }
+
+kotlin-logging  = "io.github.oshai:kotlin-logging-jvm:7.0.0"
 
 dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version = "6.5.0" }
 
@@ -52,3 +55,5 @@ mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.re
 
 [bundles]
 flyway = ["flyway-core", "flyway-database-postgresql"]
+testing = ["kotlin-test-junit5", "junit-jupiter-params"]
+mocking-spring = ["mockk", "springmockk"]

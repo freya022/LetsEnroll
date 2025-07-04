@@ -26,6 +26,7 @@ sourceSets {
 dependencies {
 	implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
 
+	implementation(libs.kotlin.logging)
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
@@ -41,9 +42,10 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(module = "mockito-core")
 	}
-	testImplementation(libs.springmockk)
-	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.security:spring-security-test")
+
+	testImplementation(libs.bundles.testing)
+	testImplementation(libs.bundles.mocking.spring)
 
 	implementation(projects.data)
 	implementation(libs.kotlinx.serialization.json)

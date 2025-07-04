@@ -10,6 +10,8 @@ dependencies {
     // Configuration
     implementation(libs.dotenv.kotlin)
 
+    implementation(libs.kotlin.logging)
+
     // Serialization (data and localization)
     implementation(libs.jackson.dataformat.yaml)
     implementation(libs.kotlinx.serialization.json)
@@ -42,12 +44,10 @@ dependencies {
 
     implementation(projects.data)
 
-    // Mockk needs bytebuddy to be upgraded to support Java 24
+    testImplementation(libs.bundles.testing)
     testImplementation(libs.mockk)
-    testImplementation(libs.bytebuddy)
 
     jmh(libs.mockk)
-    jmh(libs.bytebuddy)
 }
 
 jmh {
