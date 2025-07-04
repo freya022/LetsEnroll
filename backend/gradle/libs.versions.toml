@@ -1,59 +1,59 @@
 [versions]
-kotlin = "2.2.0"
-jib = "3.4.4"
-jackson = "2.17.2"
 flyway = "11.1.1"
+jackson = "2.17.2"
+jib = "3.4.4"
+kotlin = "2.2.0"
 ktor = "3.1.0"
 mapstruct = "1.6.3"
 
 [plugins]
-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
-spring-boot = { id = "org.springframework.boot", version = "3.5.3" }
-spring-dependency-management = { id = "io.spring.dependency-management", version = "1.1.7" }
+jmh = "me.champeau.jmh:0.7.2"
 jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-jmh = { id = "me.champeau.jmh", version = "0.7.2" }
+spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spring-boot = "org.springframework.boot:3.5.3"
+spring-dependency-management = "io.spring.dependency-management:1.1.7"
+version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
 
 [libraries]
-kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-jib-plugin = { module = "com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib" }
-
-kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
-junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version = "5.13.1" }
-mockk = { module = "io.mockk:mockk", version = "1.14.3" }
-springmockk = { module = "com.ninja-squad:springmockk", version = "4.0.2" }
-
-kotlin-logging  = "io.github.oshai:kotlin-logging-jvm:7.0.0"
-
-dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version = "6.5.0" }
-
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.1" }
-jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
-
-botcommands = { module = "io.github.freya022:BotCommands", version = "3.0.0-beta.1" }
-jda = { module = "net.dv8tion:JDA", version = "5.3.0" }
-
-postgresql = { module = "org.postgresql:postgresql", version = "42.7.5" }
-hikaricp = { module = "com.zaxxer:HikariCP", version = "6.2.1" }
+botcommands = "io.github.freya022:BotCommands:3.0.0-beta.1"
+dotenv-kotlin = "io.github.cdimascio:dotenv-kotlin:6.5.0"
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
-
-nimbus-jose-jwt = { module = "com.nimbusds:nimbus-jose-jwt", version = "10.0.1" }
-
+hikaricp = "com.zaxxer:HikariCP:6.2.1"
+jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
+jda = "net.dv8tion:JDA:5.3.0"
+jib-plugin = { module = "com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib" }
+junit-jupiter-params = "org.junit.jupiter:junit-jupiter-params:5.13.1"
+kotlin-logging = "io.github.oshai:kotlin-logging-jvm:7.0.0"
+kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
+kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1"
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
 ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref = "ktor" }
-ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
-
 mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
 mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
+mockk = "io.mockk:mockk:1.14.3"
+nimbus-jose-jwt = "com.nimbusds:nimbus-jose-jwt:10.0.1"
+postgresql = "org.postgresql:postgresql:42.7.5"
+springmockk = "com.ninja-squad:springmockk:4.0.2"
 
 [bundles]
-flyway = ["flyway-core", "flyway-database-postgresql"]
-testing = ["kotlin-test-junit5", "junit-jupiter-params"]
-mocking-spring = ["mockk", "springmockk"]
+flyway = [
+    "flyway-core",
+    "flyway-database-postgresql",
+]
+mocking-spring = [
+    "mockk",
+    "springmockk",
+]
+testing = [
+    "junit-jupiter-params",
+    "kotlin-test-junit5",
+]
