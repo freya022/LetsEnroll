@@ -23,7 +23,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.13.1")
 
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.0")
 }
