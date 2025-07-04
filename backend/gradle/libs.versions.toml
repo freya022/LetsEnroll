@@ -1,13 +1,13 @@
 [versions]
-flyway = "11.1.1"
-jackson = "2.17.2"
+flyway = "11.10.1"
+jackson = "2.19.1"
 jib = "3.4.4"
 kotlin = "2.2.0"
-ktor = "3.1.0"
+ktor = "3.2.1"
 mapstruct = "1.6.3"
 
 [plugins]
-jmh = "me.champeau.jmh:0.7.2"
+jmh = "me.champeau.jmh:0.7.3"
 jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
@@ -16,19 +16,19 @@ spring-dependency-management = "io.spring.dependency-management:1.1.7"
 version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
 
 [libraries]
-botcommands = "io.github.freya022:BotCommands:3.0.0-beta.1"
-dotenv-kotlin = "io.github.cdimascio:dotenv-kotlin:6.5.0"
+botcommands = "io.github.freya022:BotCommands:3.0.0-beta.2"
+dotenv-kotlin = "io.github.cdimascio:dotenv-kotlin:6.5.1"
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
-hikaricp = "com.zaxxer:HikariCP:6.2.1"
+hikaricp = "com.zaxxer:HikariCP:6.3.0"
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
-jda = "net.dv8tion:JDA:5.3.0"
+jda = "net.dv8tion:JDA:5.6.1"
 jib-plugin = { module = "com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib" }
-junit-jupiter-params = "org.junit.jupiter:junit-jupiter-params:5.13.1"
-kotlin-logging = "io.github.oshai:kotlin-logging-jvm:7.0.0"
+junit-jupiter-params = "org.junit.jupiter:junit-jupiter-params:5.13.3"
+kotlin-logging = "io.github.oshai:kotlin-logging-jvm:7.0.7"
 kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1"
+kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
@@ -39,9 +39,9 @@ ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor"
 ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref = "ktor" }
 mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
 mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
-mockk = "io.mockk:mockk:1.14.3"
-nimbus-jose-jwt = "com.nimbusds:nimbus-jose-jwt:10.0.1"
-postgresql = "org.postgresql:postgresql:42.7.5"
+mockk = "io.mockk:mockk:1.14.4"
+nimbus-jose-jwt = "com.nimbusds:nimbus-jose-jwt:10.3.1"
+postgresql = "org.postgresql:postgresql:42.7.7"
 springmockk = "com.ninja-squad:springmockk:4.0.2"
 
 [bundles]
