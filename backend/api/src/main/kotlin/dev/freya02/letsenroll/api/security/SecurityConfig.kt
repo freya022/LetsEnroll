@@ -21,7 +21,7 @@ import java.util.function.Supplier
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    @Value("\${api.front-url}") private val frontUrl: String,
+    @param:Value($$"${api.front-url}") private val frontUrl: String,
 ) {
 
     // Otherwise the default is [[AuthenticatedPrincipalOAuth2AuthorizedClientRepository]],

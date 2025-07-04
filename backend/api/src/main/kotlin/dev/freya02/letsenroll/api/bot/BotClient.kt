@@ -67,7 +67,7 @@ fun BotClient.canInteract(guildId: Long, userId: Long): Boolean {
 class BotClientProvider {
 
     @Bean
-    fun botClient(@Value("\${api.bot.server.host}") host: String, @Value("\${api.bot.server.port}") port: Int): BotClient {
+    fun botClient(@Value($$"${api.bot.server.host}") host: String, @Value($$"${api.bot.server.port}") port: Int): BotClient {
         return RestClient.builder()
             .baseUrl("http://$host:$port")
             .build()

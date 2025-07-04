@@ -15,7 +15,7 @@ import kotlin.io.path.readText
 @OptIn(ExperimentalEncodingApi::class)
 @Component
 class JwtService(
-    @Value("\${api.jwt.secret-key-file}")
+    @Value($$"${api.jwt.secret-key-file}")
     keyFile: String,
 ) {
 

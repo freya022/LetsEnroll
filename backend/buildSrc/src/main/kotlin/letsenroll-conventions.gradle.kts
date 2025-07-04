@@ -12,8 +12,8 @@ java {
         languageVersion = JavaLanguageVersion.of(24)
     }
 
-    sourceCompatibility = JavaVersion.VERSION_23
-    targetCompatibility = JavaVersion.VERSION_23
+    sourceCompatibility = JavaVersion.VERSION_24
+    targetCompatibility = JavaVersion.VERSION_24
 }
 
 repositories {
@@ -30,9 +30,11 @@ dependencies {
 
 kotlin {
     compilerOptions {
-        jvmTarget = JvmTarget.JVM_23
+        jvmTarget = JvmTarget.JVM_24
 
-        freeCompilerArgs.addAll("-Xjsr305=strict", "-Xwhen-guards")
+        freeCompilerArgs.addAll(
+            "-Xjsr305=strict",
+        )
     }
 }
 
