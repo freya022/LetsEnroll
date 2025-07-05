@@ -21,6 +21,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import axios from "axios";
+import { useTheme } from "@/components/theme-provider.tsx";
 
 export default function AppSidebarFooter() {
   return (
@@ -86,6 +87,8 @@ function VersionSkeleton() {
 }
 
 function ThemeItem() {
+  const { setTheme } = useTheme();
+
   return (
     <SidebarMenuItem>
       <DropdownMenu>
@@ -104,15 +107,15 @@ function ThemeItem() {
           </SidebarMenuButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="right" className="min-w-40">
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("light")}>
             <Sun aria-label="Light mode" />
             <span>Light</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("dark")}>
             <Moon aria-label="Dark mode" />
             <span>Dark</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("system")}>
             <Computer aria-label="System" />
             <span>System</span>
           </DropdownMenuItem>
