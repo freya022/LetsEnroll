@@ -1,7 +1,6 @@
 import "@/App.css";
-import { NavLink, Outlet, To, useLoaderData } from "react-router";
+import { NavLink, To, useLoaderData } from "react-router";
 import { UserDTO } from "@/dto/UserDTO.ts";
-import { ModeToggle } from "@/components/mode-toggle.tsx";
 import {
   Avatar,
   AvatarFallback,
@@ -17,11 +16,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { fetcher } from "@/utils.ts";
-import { Separator } from "@/components/ui/separator.tsx";
 import { ReactNode, Suspense } from "react";
 import DiscordLogoBlue from "@/assets/discord-mark-blue.svg";
-import DiscordLogoWhite from "@/assets/Discord-Symbol-White.svg?react";
-import Github from "@/assets/github.svg?react";
 import {
   useQueryErrorResetBoundary,
   useSuspenseQuery,
@@ -29,6 +25,8 @@ import {
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { ErrorBoundary } from "react-error-boundary";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar.tsx";
+import AppSidebar from "@/sidebar/AppSidebar.tsx";
 
 interface Props {
   user?: UserDTO;
@@ -49,63 +47,74 @@ export default function Root() {
   const { user } = useLoaderData<Props>();
 
   return (
-    <div className="flex h-full flex-col">
-      <header className="grid grid-cols-[1fr_min-content_1fr] items-center border-b bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
-        <div className="flex h-full items-center">
-          <img
-            alt="Let's Enroll Logo"
-            src="/logo.svg"
-            className="size-8 rounded-full"
-          />
-          <Separator
-            orientation="vertical"
-            className="mx-2 data-[orientation=vertical]:w-[1.5px]"
-          />
-          <NavBarLink to={`/`}>Home</NavBarLink>
-          {user && <NavBarLink to={`/dashboard`}>Dashboard</NavBarLink>}
-        </div>
-        {/* Use brand colors */}
-        <Button
-          variant="outline"
-          className="bg-[hsl(235,86%,65%)] text-[hsl(0,0%,100%)] hover:bg-[hsl(235,86%,60%)] hover:text-[hsl(0,0%,100%)]"
-          asChild
-        >
-          <a
-            href="https://discord.com/oauth2/authorize?client_id=1327727455716245564&permissions=268435456&integration_type=0&scope=bot"
-            target="_blank"
-          >
-            <DiscordLogoWhite aria-label="Discord logo" className="size-6" />
-            Invite me
-          </a>
-        </Button>
-        <div className="flex items-center justify-end gap-x-2">
-          <ModeToggle />
-          {user ? <User user={user} /> : <LogIn />}
-        </div>
-      </header>
-      <main className="grow p-4">
-        <Outlet />
+    <SidebarProvider>
+      <AppSidebar />
+
+      <main>
+        <SidebarTrigger />
+        <div>test</div>
       </main>
-      <footer className="grid grid-cols-[1fr_auto_1fr] items-center border-t bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
-        <div>
-          <FooterVersion />
-        </div>
-        <p className="text-secondary-foreground text-sm">
-          {user === undefined && "Log in to access the dashboard"}
-        </p>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="justify-self-end"
-          asChild
-        >
-          <a href="https://github.com/freya022/LetsEnroll" target="_blank">
-            <Github className="fill-primary size-6" aria-label="Github" />
-          </a>
-        </Button>
-      </footer>
-    </div>
+    </SidebarProvider>
   );
+
+  // return (
+  //   <div className="flex h-full flex-col">
+  //     <header className="grid grid-cols-[1fr_min-content_1fr] items-center border-b bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
+  //       <div className="flex h-full items-center">
+  //         <img
+  //           alt="Let's Enroll Logo"
+  //           src="/logo.svg"
+  //           className="size-8 rounded-full"
+  //         />
+  //         <Separator
+  //           orientation="vertical"
+  //           className="mx-2 data-[orientation=vertical]:w-[1.5px]"
+  //         />
+  //         <NavBarLink to={`/`}>Home</NavBarLink>
+  //         {user && <NavBarLink to={`/dashboard`}>Dashboard</NavBarLink>}
+  //       </div>
+  //       {/* Use brand colors */}
+  //       <Button
+  //         variant="outline"
+  //         className="bg-[hsl(235,86%,65%)] text-[hsl(0,0%,100%)] hover:bg-[hsl(235,86%,60%)] hover:text-[hsl(0,0%,100%)]"
+  //         asChild
+  //       >
+  //         <a
+  //           href="https://discord.com/oauth2/authorize?client_id=1327727455716245564&permissions=268435456&integration_type=0&scope=bot"
+  //           target="_blank"
+  //         >
+  //           <DiscordLogoWhite aria-label="Discord logo" className="size-6" />
+  //           Invite me
+  //         </a>
+  //       </Button>
+  //       <div className="flex items-center justify-end gap-x-2">
+  //         <ModeToggle />
+  //         {user ? <User user={user} /> : <LogIn />}
+  //       </div>
+  //     </header>
+  //     <main className="grow p-4">
+  //       <Outlet />
+  //     </main>
+  //     <footer className="grid grid-cols-[1fr_auto_1fr] items-center border-t bg-neutral-200 px-4 py-2 dark:bg-neutral-900">
+  //       <div>
+  //         <FooterVersion />
+  //       </div>
+  //       <p className="text-secondary-foreground text-sm">
+  //         {user === undefined && "Log in to access the dashboard"}
+  //       </p>
+  //       <Button
+  //         variant="ghost"
+  //         size="icon"
+  //         className="justify-self-end"
+  //         asChild
+  //       >
+  //         <a href="https://github.com/freya022/LetsEnroll" target="_blank">
+  //           <Github className="fill-primary size-6" aria-label="Github" />
+  //         </a>
+  //       </Button>
+  //     </footer>
+  //   </div>
+  // );
 }
 
 function FooterVersion() {
