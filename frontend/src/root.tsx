@@ -117,36 +117,6 @@ export default function Root() {
   // );
 }
 
-function FooterVersion() {
-  const { reset } = useQueryErrorResetBoundary();
-
-  return (
-    <ErrorBoundary fallback={<></>} onReset={reset}>
-      <Suspense fallback={<Skeleton className="h-4 w-[75px]" />}>
-        <Version />
-      </Suspense>
-    </ErrorBoundary>
-  );
-}
-
-function Version() {
-  const { data: versionHash } = useSuspenseQuery({
-    queryKey: ["version"],
-    queryFn: () => axios.get("/api/version").then((res) => res.data as string),
-    staleTime: Infinity, // Never refresh
-  });
-
-  return (
-    <a
-      className="text-secondary-foreground/60 text-sm"
-      href={`https://github.com/freya022/LetsEnroll/commit/${versionHash}`}
-      target="_blank"
-    >
-      {versionHash.substring(0, 10)}
-    </a>
-  );
-}
-
 function NavBarLink({ to, children }: { to: To; children: ReactNode }) {
   return (
     <NavLink

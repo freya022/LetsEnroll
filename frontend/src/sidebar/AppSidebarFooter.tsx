@@ -13,6 +13,14 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import { ChevronRight, Computer, LogOut, Moon, Sun } from "lucide-react";
+import {
+  useQueryErrorResetBoundary,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
+import axios from "axios";
 
 export default function AppSidebarFooter() {
   return (
@@ -27,22 +35,53 @@ export default function AppSidebarFooter() {
 }
 
 function VersionItem() {
+  const { reset } = useQueryErrorResetBoundary();
+
   return (
     <SidebarMenuItem className="flex w-full items-center gap-2 overflow-hidden p-2 text-sm">
       <a href="https://github.com/freya022/LetsEnroll" target="_blank">
         <Github className="fill-primary size-4" aria-label="Github" />
       </a>
+      <ErrorBoundary fallback={<>GitHub</>} onReset={reset}>
+        <Suspense fallback={<VersionSkeleton />}>
+          {/* Load in a separate component, or it will block */}
+          <VersionDetails />
+        </Suspense>
+      </ErrorBoundary>
+    </SidebarMenuItem>
+  );
+}
+
+function VersionDetails() {
+  const { data: versionHash } = useSuspenseQuery({
+    queryKey: ["version"],
+    queryFn: () => axios.get("/api/version").then((res) => res.data as string),
+    staleTime: Infinity, // Never refresh
+    retry: false,
+  });
+
+  return (
+    <>
       <span>Version </span>
       <a
-        href="https://github.com/freya022/LetsEnroll/commit/79cb246603abc166cd6241266ec9c7526b92dce4"
+        href={`https://github.com/freya022/LetsEnroll/commit/${versionHash}`}
         target="_blank"
         className="ml-auto"
       >
         <code className="rounded-md bg-gray-300 px-1 py-0.5 text-blue-800 dark:bg-gray-950 dark:text-blue-500">
-          79cb246603
+          {versionHash.substring(0, 10)}
         </code>
       </a>
-    </SidebarMenuItem>
+    </>
+  );
+}
+
+function VersionSkeleton() {
+  return (
+    <>
+      <Skeleton className="h-5 w-16" />
+      <Skeleton className="ml-auto h-5 w-20" />
+    </>
   );
 }
 
