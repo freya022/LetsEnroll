@@ -22,14 +22,16 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import axios from "axios";
 import { useTheme } from "@/components/theme-provider.tsx";
+import DiscordLogoWhite from "@/assets/Discord-Symbol-White.svg?react";
+import { UserDTO } from "@/dto/UserDTO.ts";
 
-export default function AppSidebarFooter() {
+export default function AppSidebarFooter({ user }: { user?: UserDTO }) {
   return (
     <SidebarFooter>
       <SidebarMenu>
         <VersionItem />
         <ThemeItem />
-        <ProfileItem />
+        <ProfileItem user={user} />
       </SidebarMenu>
     </SidebarFooter>
   );
@@ -125,30 +127,59 @@ function ThemeItem() {
   );
 }
 
-function ProfileItem() {
+function ProfileItem({ user }: { user?: UserDTO }) {
   return (
     <SidebarMenuItem>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <SidebarMenuButton size="lg">
-            <Avatar>
-              <img
-                className="aspect-square size-full"
-                alt="freya02 avatar"
-                src="https://cdn.discordapp.com/avatars/222046562543468545/53692122a3172fa41e481f66a7a98da4.png"
-              />
-            </Avatar>
-            <span>freya02</span>
-            <ChevronRight className="ml-auto" />
-          </SidebarMenuButton>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" className="min-w-40">
-          <DropdownMenuItem>
-            <LogOut />
-            <span className="text-destructive">Log out</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {user ? <LoggedInUser user={user} /> : <LogIn />}
     </SidebarMenuItem>
+  );
+}
+
+function LoggedInUser({ user }: { user: UserDTO }) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <SidebarMenuButton size="lg">
+          <Avatar>
+            <img
+              className="aspect-square size-full"
+              alt={`${user.effectiveName} avatar`}
+              src={getAvatarUrl(user)}
+            />
+          </Avatar>
+          <span>{user.effectiveName}</span>
+          <ChevronRight className="ml-auto" />
+        </SidebarMenuButton>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent side="right" className="min-w-40">
+        <DropdownMenuItem>
+          <LogOut />
+          <span className="text-destructive">Log out</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function getAvatarUrl({ id, avatarHash }: UserDTO) {
+  if (avatarHash) {
+    const extension = avatarHash.startsWith("a_") ? "gif" : "png";
+    return `https://cdn.discordapp.com/avatars/${id}/${avatarHash}.${extension}`;
+  } else {
+    return `https://cdn.discordapp.com/avatars/${(BigInt(id) >> BigInt(22)) % BigInt(6)}.png`;
+  }
+}
+
+function LogIn() {
+  return (
+    <SidebarMenuButton
+      className="justify-center bg-[hsl(235,86%,65%)] text-[hsl(0,0%,100%)] hover:bg-[hsl(235,86%,60%)] hover:text-[hsl(0,0%,100%)]"
+      asChild
+    >
+      <a href="/oauth2/authorization/discord">
+        <DiscordLogoWhite aria-label="Discord logo" />
+        Log in
+      </a>
+    </SidebarMenuButton>
   );
 }

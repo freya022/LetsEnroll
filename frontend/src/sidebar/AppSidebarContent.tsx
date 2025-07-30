@@ -48,10 +48,7 @@ function AppGroup() {
                 href="https://discord.com/oauth2/authorize?client_id=1327727455716245564&permissions=268435456&integration_type=0&scope=bot"
                 target="_blank"
               >
-                <DiscordLogoWhite
-                  aria-label="Discord logo"
-                  className="size-6"
-                />
+                <DiscordLogoWhite aria-label="Discord logo" />
                 <span>Invite me</span>
                 <ExternalLink className="ml-auto" />
               </a>

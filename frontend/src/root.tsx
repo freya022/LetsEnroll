@@ -48,7 +48,7 @@ export default function Root() {
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar user={user} />
 
       <main>
         <div>test</div>
