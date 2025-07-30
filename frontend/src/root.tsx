@@ -51,7 +51,6 @@ export default function Root() {
       <AppSidebar />
 
       <main>
-        <SidebarTrigger />
         <div>test</div>
       </main>
     </SidebarProvider>
