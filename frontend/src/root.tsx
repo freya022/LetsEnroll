@@ -15,40 +15,56 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
-import { fetcher } from "@/utils.ts";
+import { fetcher, hasPermission, MANAGE_ROLES, MANAGE_SERVER } from "@/utils.ts";
 import { ReactNode, Suspense } from "react";
 import DiscordLogoBlue from "@/assets/discord-mark-blue.svg";
 import {
   useQueryErrorResetBoundary,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { ErrorBoundary } from "react-error-boundary";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar.tsx";
 import AppSidebar from "@/sidebar/AppSidebar.tsx";
+import { GuildDTO } from "@/dto/GuildDTO.ts";
 
 interface Props {
   user?: UserDTO;
+  guilds?: GuildDTO[];
 }
 
 async function loader(): Promise<Props> {
   const userResponse = await fetch("/api/user");
   const user: UserDTO = userResponse.ok ? await userResponse.json() : undefined;
 
+  const sharedGuilds = await axios.get("/api/guilds")
+    .then<GuildDTO[]>((res) => res.data)
+    .catch(err => {
+      if (err instanceof AxiosError) {
+        // Ignore when not connected
+        if (err.status !== 401) console.error(err);
+        return undefined
+      }
+    });
+  const managedGuilds = sharedGuilds?.filter((guild) =>
+    hasPermission(guild.permissions, MANAGE_SERVER, MANAGE_ROLES),
+  );
+
   return {
     user,
+    guilds: managedGuilds,
   };
 }
 
 Root.loader = loader;
 
 export default function Root() {
-  const { user } = useLoaderData<Props>();
+  const { user, guilds } = useLoaderData<Props>();
 
   return (
     <SidebarProvider>
-      <AppSidebar user={user} />
+      <AppSidebar user={user} guilds={guilds} />
 
       <main>
         <div>test</div>

@@ -1,5 +1,8 @@
 import { AxiosError } from "axios";
 
+export const MANAGE_SERVER = BigInt(1) << BigInt(5);
+export const MANAGE_ROLES = BigInt(1) << BigInt(28);
+
 export async function checkAuthOrRedirect(response: Response) {
   if (response.status === 401) {
     localStorage.setItem("last_location", location.href);

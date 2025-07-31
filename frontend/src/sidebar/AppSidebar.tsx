@@ -3,13 +3,14 @@ import AppSidebarHeader from "@/sidebar/AppSidebarHeader.tsx";
 import AppSidebarContent from "@/sidebar/AppSidebarContent.tsx";
 import AppSidebarFooter from "@/sidebar/AppSidebarFooter.tsx";
 import { UserDTO } from "@/dto/UserDTO.ts";
+import { GuildDTO } from "@/dto/GuildDTO.ts";
 
 // TODO set "isActive" on current page's button
-export default function AppSidebar({ user }: { user?: UserDTO }) {
+export default function AppSidebar({ user, guilds }: { user?: UserDTO, guilds?: GuildDTO[] }) {
   return (
     <Sidebar collapsible="icon">
       <AppSidebarHeader />
-      <AppSidebarContent />
+      <AppSidebarContent guilds={guilds} />
       <SidebarSeparator />
       <AppSidebarFooter user={user} />
     </Sidebar>

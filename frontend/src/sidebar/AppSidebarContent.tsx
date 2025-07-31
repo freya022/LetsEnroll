@@ -19,12 +19,13 @@ import {
 import { ChevronDown, ExternalLink, Home } from "lucide-react";
 import { NavLink, To } from "react-router";
 import { ReactNode } from "react";
+import { GuildDTO } from "@/dto/GuildDTO.ts";
 
-export default function AppSidebarContent() {
+export default function AppSidebarContent({ guilds }: { guilds?: GuildDTO[] }) {
   return (
     <SidebarContent>
       <AppGroup />
-      <ConfigurationsGroup />
+      {guilds && <ConfigurationsGroup guilds={guilds} />}
     </SidebarContent>
   );
 }
@@ -81,7 +82,7 @@ function SidebarMenuNavLink({ to, children }: { to: To; children: ReactNode }) {
   );
 }
 
-function ConfigurationsGroup() {
+function ConfigurationsGroup({ guilds }: { guilds: GuildDTO[] }) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>
@@ -89,14 +90,14 @@ function ConfigurationsGroup() {
       </SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          <ConfigurationItem
-            name="Testing"
-            iconUrl="https://cdn.discordapp.com/icons/722891685755093072/34a403cedaab118d14a0c1560d1af674.webp?animated=true"
-          />
-          <ConfigurationItem
-            name="Yet another JDA framework"
-            iconUrl="https://cdn.discordapp.com/icons/848502702731165738/18dbb344401341508195f33e605d1e73.webp?animated=true"
-          />
+          {guilds.map((guild) => (
+            <ConfigurationItem
+              id={guild.id}
+              name={guild.name}
+              icon={guild.icon}
+              key={guild.id}
+            />
+          ))}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
@@ -104,11 +105,13 @@ function ConfigurationsGroup() {
 }
 
 function ConfigurationItem({
+  id,
   name,
-  iconUrl,
+  icon
 }: {
+  id: string;
   name: string;
-  iconUrl: string;
+  icon: string;
 }) {
   return (
     <Collapsible className={`group/collapsible-configuration`}>
@@ -118,7 +121,7 @@ function ConfigurationItem({
             <img
               className="size-6 rounded-full border"
               alt={`Icon of ${name}`}
-              src={iconUrl}
+              src={`https://cdn.discordapp.com/icons/${id}/${icon}.webp?animated=true`}
             />
             <span className="truncate text-nowrap">{name}</span>
             <ChevronDown
@@ -129,10 +132,14 @@ function ConfigurationItem({
         <CollapsibleContent>
           <SidebarMenuSub>
             <SidebarMenuSubItem>
-              <SidebarMenuSubButton>Edit</SidebarMenuSubButton>
+              <SidebarMenuNavLink to={`/dashboard/${id}/roles/edit`}>
+                <SidebarMenuSubButton>Edit</SidebarMenuSubButton>
+              </SidebarMenuNavLink>
             </SidebarMenuSubItem>
             <SidebarMenuSubItem>
-              <SidebarMenuSubButton>Publish</SidebarMenuSubButton>
+              <SidebarMenuNavLink to={`/dashboard/${id}/roles/publish`}>
+                <SidebarMenuSubButton>Publish</SidebarMenuSubButton>
+              </SidebarMenuNavLink>
             </SidebarMenuSubItem>
           </SidebarMenuSub>
         </CollapsibleContent>
