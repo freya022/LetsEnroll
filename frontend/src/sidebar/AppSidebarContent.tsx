@@ -17,6 +17,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
 import { ChevronDown, ExternalLink, Home } from "lucide-react";
+import { NavLink, To } from "react-router";
+import { ReactNode } from "react";
 
 export default function AppSidebarContent() {
   return (
@@ -34,10 +36,12 @@ function AppGroup() {
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton>
-              <Home />
-              <span>Home</span>
-            </SidebarMenuButton>
+            <SidebarMenuNavLink to="/">
+              <SidebarMenuButton className="cursor-pointer">
+                <Home />
+                <span>Home</span>
+              </SidebarMenuButton>
+            </SidebarMenuNavLink>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton
@@ -57,6 +61,23 @@ function AppGroup() {
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
+  );
+}
+
+function SidebarMenuNavLink({ to, children }: { to: To; children: ReactNode }) {
+  return (
+    <NavLink
+      to={to}
+      className={({ isPending }) =>
+        [
+          "transition-opacity delay-50 duration-200 ease-in-out",
+          // is(Not)Active prevents the animation when loading a child route
+          isPending ? "opacity-25" : "",
+        ].join(" ")
+      }
+    >
+      {children}
+    </NavLink>
   );
 }
 
