@@ -17,9 +17,10 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
 import { ChevronDown, ExternalLink, Home } from "lucide-react";
-import { NavLink, To } from "react-router";
-import { ReactNode } from "react";
+import { NavLink, NavLinkRenderProps, To } from "react-router";
+import * as React from "react";
 import { GuildDTO } from "@/dto/GuildDTO.ts";
+import Spinner from "@/assets/spinner.svg?react";
 
 export default function AppSidebarContent({ guilds }: { guilds?: GuildDTO[] }) {
   return (
@@ -65,7 +66,13 @@ function AppGroup() {
   );
 }
 
-function SidebarMenuNavLink({ to, children }: { to: To; children: ReactNode }) {
+function SidebarMenuNavLink({
+  to,
+  children,
+}: {
+  to: To;
+  children: React.ReactNode | ((props: NavLinkRenderProps) => React.ReactNode);
+}) {
   return (
     <NavLink
       to={to}
@@ -76,9 +83,8 @@ function SidebarMenuNavLink({ to, children }: { to: To; children: ReactNode }) {
           isPending ? "opacity-25" : "",
         ].join(" ")
       }
-    >
-      {children}
-    </NavLink>
+      children={children}
+    />
   );
 }
 
@@ -133,12 +139,32 @@ function ConfigurationItem({
           <SidebarMenuSub>
             <SidebarMenuSubItem>
               <SidebarMenuNavLink to={`/dashboard/${id}/roles/edit`}>
-                <SidebarMenuSubButton>Edit</SidebarMenuSubButton>
+                {({ isPending }) => (
+                  <SidebarMenuSubButton className="justify-between">
+                    <span>Edit</span>
+                    {isPending && (
+                      <Spinner
+                        aria-label="Loading animation"
+                        className="dark:stroke-foreground stroke-foreground size-4 animate-spin"
+                      />
+                    )}
+                  </SidebarMenuSubButton>
+                )}
               </SidebarMenuNavLink>
             </SidebarMenuSubItem>
             <SidebarMenuSubItem>
               <SidebarMenuNavLink to={`/dashboard/${id}/roles/publish`}>
-                <SidebarMenuSubButton>Publish</SidebarMenuSubButton>
+                {({ isPending }) => (
+                  <SidebarMenuSubButton className="justify-between">
+                    <span>Publish</span>
+                    {isPending && (
+                      <Spinner
+                        aria-label="Loading animation"
+                        className="dark:stroke-foreground stroke-foreground size-4 animate-spin"
+                      />
+                    )}
+                  </SidebarMenuSubButton>
+                )}
               </SidebarMenuNavLink>
             </SidebarMenuSubItem>
           </SidebarMenuSub>
