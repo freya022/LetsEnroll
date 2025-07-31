@@ -6,7 +6,13 @@ import { UserDTO } from "@/dto/UserDTO.ts";
 import { GuildDTO } from "@/dto/GuildDTO.ts";
 
 // TODO set "isActive" on current page's button
-export default function AppSidebar({ user, guilds }: { user?: UserDTO, guilds?: GuildDTO[] }) {
+export default function AppSidebar({
+  user,
+  guilds,
+}: {
+  user?: UserDTO;
+  guilds?: GuildDTO[];
+}) {
   return (
     <Sidebar collapsible="icon">
       <AppSidebarHeader />

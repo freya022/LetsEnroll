@@ -107,7 +107,7 @@ function ConfigurationsGroup({ guilds }: { guilds: GuildDTO[] }) {
 function ConfigurationItem({
   id,
   name,
-  icon
+  icon,
 }: {
   id: string;
   name: string;
