@@ -51,8 +51,8 @@ export function getRoleCount(component: Component | Component[]): number {
 
 export function useSelectedGuild() {
   const { guildId } = useParams<{ guildId: string }>();
-  const { managedGuilds } = useRouteLoaderData<{ managedGuilds: GuildDTO[] }>(
-    "dashboard",
+  const { guilds } = useRouteLoaderData<{ guilds: GuildDTO[] }>(
+    "root",
   )!;
-  return managedGuilds.find((g) => g.id === guildId!)!;
+  return guilds.find((g) => g.id === guildId!)!;
 }
