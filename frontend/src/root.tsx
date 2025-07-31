@@ -1,5 +1,5 @@
 import "@/App.css";
-import { NavLink, To, useLoaderData } from "react-router";
+import { NavLink, Outlet, To, useLoaderData } from "react-router";
 import { UserDTO } from "@/dto/UserDTO.ts";
 import {
   Avatar,
@@ -66,8 +66,8 @@ export default function Root() {
     <SidebarProvider>
       <AppSidebar user={user} guilds={guilds} />
 
-      <main>
-        <div>test</div>
+      <main className="grow p-4">
+        <Outlet />
       </main>
     </SidebarProvider>
   );
