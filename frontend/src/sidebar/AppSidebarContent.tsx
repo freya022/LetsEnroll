@@ -16,11 +16,19 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
-import { ChevronDown, ExternalLink, Home } from "lucide-react";
-import { NavLink, NavLinkRenderProps, To } from "react-router";
-import * as React from "react";
+import {
+  ChevronDown,
+  ExternalLink,
+  Home,
+  PenBox,
+  WandSparkles,
+} from "lucide-react";
 import { GuildDTO } from "@/dto/GuildDTO.ts";
-import Spinner from "@/assets/spinner.svg?react";
+import {
+  SidebarMenuNavLink,
+  SidebarMenuNavLinkButton,
+  SidebarMenuNavLinkSubButton,
+} from "@/components/ui/sidebar-ext.tsx";
 
 export default function AppSidebarContent({ guilds }: { guilds?: GuildDTO[] }) {
   return (
@@ -39,10 +47,13 @@ function AppGroup() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuNavLink to="/">
-              <SidebarMenuButton className="cursor-pointer">
-                <Home />
-                <span>Home</span>
-              </SidebarMenuButton>
+              {(props) => (
+                <SidebarMenuNavLinkButton
+                  label="Home"
+                  icon={<Home />}
+                  props={props}
+                />
+              )}
             </SidebarMenuNavLink>
           </SidebarMenuItem>
           <SidebarMenuItem>
@@ -63,28 +74,6 @@ function AppGroup() {
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  );
-}
-
-function SidebarMenuNavLink({
-  to,
-  children,
-}: {
-  to: To;
-  children: React.ReactNode | ((props: NavLinkRenderProps) => React.ReactNode);
-}) {
-  return (
-    <NavLink
-      to={to}
-      className={({ isPending }) =>
-        [
-          "transition-opacity delay-50 duration-200 ease-in-out",
-          // is(Not)Active prevents the animation when loading a child route
-          isPending ? "opacity-25" : "",
-        ].join(" ")
-      }
-      children={children}
-    />
   );
 }
 
@@ -139,31 +128,23 @@ function ConfigurationItem({
           <SidebarMenuSub>
             <SidebarMenuSubItem>
               <SidebarMenuNavLink to={`/dashboard/${id}/roles/edit`}>
-                {({ isPending }) => (
-                  <SidebarMenuSubButton className="justify-between">
-                    <span>Edit</span>
-                    {isPending && (
-                      <Spinner
-                        aria-label="Loading animation"
-                        className="dark:stroke-foreground stroke-foreground size-4 animate-spin"
-                      />
-                    )}
-                  </SidebarMenuSubButton>
+                {(props) => (
+                  <SidebarMenuNavLinkSubButton
+                    label="Edit"
+                    icon={<PenBox />}
+                    props={props}
+                  />
                 )}
               </SidebarMenuNavLink>
             </SidebarMenuSubItem>
             <SidebarMenuSubItem>
               <SidebarMenuNavLink to={`/dashboard/${id}/roles/publish`}>
-                {({ isPending }) => (
-                  <SidebarMenuSubButton className="justify-between">
-                    <span>Publish</span>
-                    {isPending && (
-                      <Spinner
-                        aria-label="Loading animation"
-                        className="dark:stroke-foreground stroke-foreground size-4 animate-spin"
-                      />
-                    )}
-                  </SidebarMenuSubButton>
+                {(props) => (
+                  <SidebarMenuNavLinkSubButton
+                    label="Publish"
+                    icon={<WandSparkles />}
+                    props={props}
+                  />
                 )}
               </SidebarMenuNavLink>
             </SidebarMenuSubItem>
