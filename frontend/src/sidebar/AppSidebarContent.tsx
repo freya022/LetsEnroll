@@ -122,7 +122,7 @@ function ConfigurationItem({
               alt={`Icon of ${name}`}
               src={`https://cdn.discordapp.com/icons/${id}/${icon}.webp?animated=true`}
             />
-            <span className="truncate text-nowrap">{name}</span>
+            <span className="truncate text-nowrap select-none">{name}</span>
             <ChevronDown
               aria-label="Chevron"
               className={`ml-auto transition-transform group-data-[state=open]/collapsible-configuration:rotate-180`}
