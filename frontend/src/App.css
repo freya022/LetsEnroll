@@ -38,6 +38,8 @@
   --sidebar-accent-foreground: hsl(240 5.9% 10%);
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --blurple: hsl(235 86% 65%);
+  --blurple-accent: hsl(235 86% 70%);
 }
 
 .dark {
@@ -73,6 +75,8 @@
   --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --blurple: hsl(235 86% 65%);
+  --blurple-accent: hsl(235 86% 60%);
 }
 
 @theme inline {
@@ -112,6 +116,8 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+  --color-blurple: hsl(235 86% 65%);
+  --color-blurple-accent: hsl(235 86% 60%);
 }
 
 @layer base {

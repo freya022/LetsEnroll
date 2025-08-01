@@ -181,7 +181,7 @@ function getAvatarUrl({ id, avatarHash }: UserDTO) {
 function LogIn() {
   return (
     <SidebarMenuButton
-      className="justify-center bg-[hsl(235,86%,65%)] text-[hsl(0,0%,100%)] hover:bg-[hsl(235,86%,60%)] hover:text-[hsl(0,0%,100%)]"
+      className="bg-blurple hover:bg-blurple-accent justify-center text-white hover:text-white"
       asChild
     >
       <a href="/oauth2/authorization/discord">

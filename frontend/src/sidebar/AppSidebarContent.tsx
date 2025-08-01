@@ -58,7 +58,7 @@ function AppGroup() {
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton
-              className="bg-[hsl(235,86%,65%)] text-[hsl(0,0%,100%)] hover:bg-[hsl(235,86%,60%)] hover:text-[hsl(0,0%,100%)]"
+              className="bg-blurple hover:bg-blurple-accent text-white hover:text-white"
               asChild
             >
               <a
