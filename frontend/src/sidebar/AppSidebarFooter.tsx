@@ -106,7 +106,7 @@ function ThemeItem() {
               className="absolute scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
             />
             <span>Theme</span>
-            <ChevronRight className="ml-auto" />
+            <ChevronRight aria-label="Chevron right" className="ml-auto" />
           </SidebarMenuButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="right" className="min-w-40">
@@ -156,7 +156,7 @@ function LoggedInUser({ user }: { user: UserDTO }) {
             />
           </Avatar>
           <span>{user.effectiveName}</span>
-          <ChevronRight className="ml-auto" />
+          <ChevronRight aria-label="Chevron right" className="ml-auto" />
         </SidebarMenuButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="right" className="min-w-40">

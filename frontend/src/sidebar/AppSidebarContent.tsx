@@ -51,7 +51,7 @@ function AppGroup() {
               {(props) => (
                 <SidebarMenuNavLinkButton
                   label="Home"
-                  icon={<Home />}
+                  icon={<Home aria-label="Home icon" />}
                   props={props}
                 />
               )}
@@ -68,7 +68,10 @@ function AppGroup() {
               >
                 <DiscordLogoWhite aria-label="Discord logo" />
                 <span>Invite me</span>
-                <ExternalLink className="ml-auto" />
+                <ExternalLink
+                  aria-label="External link icon"
+                  className="ml-auto"
+                />
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -126,6 +129,7 @@ function ConfigurationItem({
             />
             <span className="truncate text-nowrap">{name}</span>
             <ChevronDown
+              aria-label="Chevron"
               className={`ml-auto transition-transform group-data-[state=open]/collapsible-configuration:rotate-180`}
             />
           </SidebarMenuSubButton>
@@ -137,7 +141,7 @@ function ConfigurationItem({
                 {(props) => (
                   <SidebarMenuNavLinkSubButton
                     label="Edit"
-                    icon={<PenBox />}
+                    icon={<PenBox aria-label="Pen icon" />}
                     props={props}
                   />
                 )}
@@ -148,7 +152,7 @@ function ConfigurationItem({
                 {(props) => (
                   <SidebarMenuNavLinkSubButton
                     label="Publish"
-                    icon={<WandSparkles />}
+                    icon={<WandSparkles aria-label="Wand icon" />}
                     props={props}
                   />
                 )}
