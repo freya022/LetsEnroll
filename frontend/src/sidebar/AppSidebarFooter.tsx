@@ -24,7 +24,6 @@ import axios from "axios";
 import { useTheme } from "@/components/theme-provider.tsx";
 import DiscordLogoWhite from "@/assets/Discord-Symbol-White.svg?react";
 import { UserDTO } from "@/dto/UserDTO.ts";
-import { fetcher } from "@/utils.ts";
 
 export default function AppSidebarFooter({ user }: { user?: UserDTO }) {
   return (
@@ -138,9 +137,7 @@ function ProfileItem({ user }: { user?: UserDTO }) {
 
 function LoggedInUser({ user }: { user: UserDTO }) {
   async function handleLogout() {
-    await fetcher("/logout", {
-      method: "POST",
-    });
+    await axios.post("/logout");
     window.location.href = "/";
   }
 

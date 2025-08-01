@@ -12,35 +12,6 @@ export async function checkAuthOrRedirect(response: Response) {
   }
 }
 
-export async function fetcher(
-  request: RequestInfo | URL,
-  init?: RequestInit,
-): Promise<Response> {
-  return fetch(request, {
-    ...init,
-    headers: {
-      ...init?.headers,
-      "X-XSRF-TOKEN": getCsrfFromCookies(),
-    },
-  });
-}
-
-function getCsrfFromCookies() {
-  if (!document.cookie) {
-    return "";
-  }
-
-  const xsrfCookies = document.cookie
-    .split(";")
-    .map((c) => c.trim())
-    .filter((c) => c.startsWith("XSRF-TOKEN="));
-
-  if (xsrfCookies.length === 0) {
-    return "";
-  }
-  return xsrfCookies[0].split("=")[1];
-}
-
 type BackendError = {
   error: string;
 };
