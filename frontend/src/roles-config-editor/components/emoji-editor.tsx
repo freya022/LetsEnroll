@@ -9,7 +9,6 @@ import {
   FormMessage,
 } from "@/components/ui/form.tsx";
 import { useState } from "react";
-import { useSelectedGuild } from "@/roles-config-editor/utils.ts";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   Popover,
@@ -26,6 +25,7 @@ import {
 } from "@/roles-config-editor/types.ts";
 import { getUnicodeEmojiSrc } from "@/emoji-picker/utils.ts";
 import { EmojiPicker } from "@/emoji-picker/components/emoji-picker.tsx";
+import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
 
 type EmojiContainer = { emoji: string | null };
 

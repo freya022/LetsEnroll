@@ -22,13 +22,13 @@ import {
 } from "@/components/ui/command.tsx";
 import { Check, ChevronsUpDown, Lock } from "lucide-react";
 import { Separator } from "@/components/ui/separator.tsx";
-import { useSelectedGuild } from "@/roles-config-editor/utils.ts";
 import { getErrorMessage } from "@/utils.ts";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip.tsx";
+import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
 
 type Params = {
   guildId: string;

@@ -7,8 +7,9 @@ import {
 } from "react-router";
 import axios from "axios";
 import { Button } from "@/components/ui/button.tsx";
-import { getRoleCount, useSelectedGuild } from "@/roles-config-editor/utils.ts";
+import { getRoleCount } from "@/roles-config-editor/utils.ts";
 import { Separator } from "@/components/ui/separator.tsx";
+import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
 
 type Params = {
   guildId: string;

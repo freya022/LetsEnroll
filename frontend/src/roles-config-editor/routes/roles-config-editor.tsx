@@ -27,9 +27,9 @@ import { MessageEditor } from "@/roles-config-editor/components/message-editor.t
 import { Button } from "@/components/ui/button.tsx";
 import { getErrorMessage } from "@/utils.ts";
 import axios, { AxiosError } from "axios";
-import { useSelectedGuild } from "@/roles-config-editor/utils.ts";
 import { useMutation } from "@tanstack/react-query";
 import { ValidationError } from "@/roles-config-editor/types.ts";
+import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
 
 type Params = {
   guildId: string;
