@@ -22,6 +22,7 @@ declare module "@tanstack/react-query" {
 const router = createBrowserRouter([
   {
     path: "/",
+    id: "root",
     loader: Root.loader,
     element: <Root />,
     errorElement: <ErrorPage />,
@@ -32,7 +33,6 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        loader: Dashboard.loader,
         element: <Dashboard />,
         id: "dashboard",
         children: [
