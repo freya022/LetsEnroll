@@ -1,76 +1,80 @@
-import { NavLink, NavLinkRenderProps, To } from "react-router";
-import * as React from "react";
-import { ReactElement } from "react";
+import { NavLink, To, useMatch } from "react-router";
+import { forwardRef, HTMLAttributes, ReactElement } from "react";
 import {
   SidebarMenuButton,
   SidebarMenuSubButton,
 } from "@/components/ui/sidebar.tsx";
 import Spinner from "@/assets/spinner.svg?react";
+import { cn } from "@/lib/utils.ts";
 
-export function SidebarMenuNavLink({
-  to,
-  children,
-}: {
+interface NavLinkProps extends HTMLAttributes<HTMLAnchorElement> {
   to: To;
-  children: React.ReactNode | ((props: NavLinkRenderProps) => React.ReactNode);
-}) {
-  return (
-    <NavLink
-      to={to}
-      className={({ isPending }) =>
-        [
-          "transition-opacity delay-50 duration-200 ease-in-out",
-          // is(Not)Active prevents the animation when loading a child route
-          isPending ? "opacity-25" : "",
-        ].join(" ")
-      }
-      children={children}
-    />
-  );
-}
-
-export function SidebarMenuNavLinkButton({
-  label,
-  icon,
-  props: { isPending, isActive },
-}: {
   label: string;
   icon?: ReactElement;
-  props: NavLinkRenderProps;
-}) {
-  return (
-    <SidebarMenuButton isActive={isActive} className="cursor-pointer">
-      {icon}
-      <span>{label}</span>
-      {isPending && (
-        <Spinner
-          aria-label="Loading animation"
-          className="dark:stroke-foreground stroke-foreground ml-auto animate-spin"
-        />
+}
+
+const SidebarMenuNavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(
+  ({ to, icon, label, ...props }, ref) => (
+    <NavLink
+      {...props}
+      to={to}
+      ref={ref}
+      className={({ isPending }) =>
+        cn(
+          props.className,
+          "transition-opacity delay-50 duration-200 ease-in-out",
+          isPending && "opacity-25",
+        )
+      }
+    >
+      {({ isPending }) => (
+        <>
+          {icon}
+          <span>{label}</span>
+          {isPending && (
+            <Spinner
+              aria-label="Loading animation"
+              className="dark:stroke-foreground stroke-foreground ml-auto animate-spin"
+            />
+          )}
+        </>
       )}
+    </NavLink>
+  ),
+);
+
+export function SidebarMenuNavLinkButton({
+  to,
+  label,
+  icon,
+}: {
+  to: string;
+  label: string;
+  icon?: ReactElement;
+}) {
+  const match = useMatch(to);
+
+  return (
+    <SidebarMenuButton isActive={match !== null} asChild>
+      <SidebarMenuNavLink to={to} label={label} icon={icon} />
     </SidebarMenuButton>
   );
 }
 
 export function SidebarMenuNavLinkSubButton({
+  to,
   label,
   icon,
-  props: { isPending, isActive },
 }: {
+  to: string;
   label: string;
   icon?: ReactElement;
-  props: NavLinkRenderProps;
 }) {
+  const match = useMatch(to);
+
   return (
-    <SidebarMenuSubButton isActive={isActive} className="cursor-pointer">
-      {icon}
-      <span>{label}</span>
-      {isPending && (
-        <Spinner
-          aria-label="Loading animation"
-          className="dark:stroke-foreground stroke-foreground ml-auto animate-spin"
-        />
-      )}
+    <SidebarMenuSubButton isActive={match !== null} asChild>
+      <SidebarMenuNavLink to={to} label={label} icon={icon} />
     </SidebarMenuSubButton>
   );
 }

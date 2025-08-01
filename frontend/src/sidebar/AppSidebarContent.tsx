@@ -25,7 +25,6 @@ import {
 } from "lucide-react";
 import { GuildDTO } from "@/dto/GuildDTO.ts";
 import {
-  SidebarMenuNavLink,
   SidebarMenuNavLinkButton,
   SidebarMenuNavLinkSubButton,
 } from "@/components/ui/sidebar-ext.tsx";
@@ -47,15 +46,11 @@ function AppGroup() {
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuNavLink to="/">
-              {(props) => (
-                <SidebarMenuNavLinkButton
-                  label="Home"
-                  icon={<Home aria-label="Home icon" />}
-                  props={props}
-                />
-              )}
-            </SidebarMenuNavLink>
+            <SidebarMenuNavLinkButton
+              to="/"
+              label="Home"
+              icon={<Home aria-label="Home icon" />}
+            />
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton
@@ -137,26 +132,18 @@ function ConfigurationItem({
         <CollapsibleContent>
           <SidebarMenuSub>
             <SidebarMenuSubItem>
-              <SidebarMenuNavLink to={`/dashboard/${id}/roles/edit`}>
-                {(props) => (
-                  <SidebarMenuNavLinkSubButton
-                    label="Edit"
-                    icon={<PenBox aria-label="Pen icon" />}
-                    props={props}
-                  />
-                )}
-              </SidebarMenuNavLink>
+              <SidebarMenuNavLinkSubButton
+                to={`/dashboard/${id}/roles/edit`}
+                label="Edit"
+                icon={<PenBox aria-label="Pen icon" />}
+              />
             </SidebarMenuSubItem>
             <SidebarMenuSubItem>
-              <SidebarMenuNavLink to={`/dashboard/${id}/roles/publish`}>
-                {(props) => (
-                  <SidebarMenuNavLinkSubButton
-                    label="Publish"
-                    icon={<WandSparkles aria-label="Wand icon" />}
-                    props={props}
-                  />
-                )}
-              </SidebarMenuNavLink>
+              <SidebarMenuNavLinkSubButton
+                to={`/dashboard/${id}/roles/publish`}
+                label="Publish"
+                icon={<WandSparkles aria-label="Wand icon" />}
+              />
             </SidebarMenuSubItem>
           </SidebarMenuSub>
         </CollapsibleContent>
