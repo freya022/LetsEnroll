@@ -29,6 +29,7 @@ import {
   SidebarMenuNavLinkButton,
   SidebarMenuNavLinkSubButton,
 } from "@/components/ui/sidebar-ext.tsx";
+import { useMatch } from "react-router";
 
 export default function AppSidebarContent({ guilds }: { guilds?: GuildDTO[] }) {
   return (
@@ -108,8 +109,13 @@ function ConfigurationItem({
   name: string;
   icon: string;
 }) {
+  const thisGuildMatch = useMatch(`/dashboard/${id}/*`);
+
   return (
-    <Collapsible className={`group/collapsible-configuration`}>
+    <Collapsible
+      defaultOpen={thisGuildMatch !== null}
+      className={`group/collapsible-configuration`}
+    >
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuSubButton>
