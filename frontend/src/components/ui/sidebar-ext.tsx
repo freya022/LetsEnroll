@@ -5,7 +5,6 @@ import {
   SidebarMenuButton,
   SidebarMenuSubButton,
 } from "@/components/ui/sidebar.tsx";
-import { cn } from "@/lib/utils.ts";
 import Spinner from "@/assets/spinner.svg?react";
 
 export function SidebarMenuNavLink({
@@ -40,12 +39,7 @@ export function SidebarMenuNavLinkButton({
   props: NavLinkRenderProps;
 }) {
   return (
-    <SidebarMenuButton
-      className={cn(
-        "cursor-pointer",
-        isActive && "bg-accent/60 outline-ring/40 outline-1",
-      )}
-    >
+    <SidebarMenuButton isActive={isActive} className="cursor-pointer">
       {icon}
       <span>{label}</span>
       {isPending && (
@@ -68,12 +62,7 @@ export function SidebarMenuNavLinkSubButton({
   props: NavLinkRenderProps;
 }) {
   return (
-    <SidebarMenuSubButton
-      className={cn(
-        "cursor-pointer",
-        isActive && "bg-accent/60 outline-ring/40 outline-1",
-      )}
-    >
+    <SidebarMenuSubButton isActive={isActive} className="cursor-pointer">
       {icon}
       <span>{label}</span>
       {isPending && (
