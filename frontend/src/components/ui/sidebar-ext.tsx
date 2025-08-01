@@ -49,12 +49,10 @@ export function SidebarMenuNavLinkButton({
       {icon}
       <span>{label}</span>
       {isPending && (
-        <div className="flex grow justify-end">
-          <Spinner
-            aria-label="Loading animation"
-            className="dark:stroke-foreground stroke-foreground size-4 animate-spin"
-          />
-        </div>
+        <Spinner
+          aria-label="Loading animation"
+          className="dark:stroke-foreground stroke-foreground ml-auto animate-spin"
+        />
       )}
     </SidebarMenuButton>
   );
@@ -79,12 +77,10 @@ export function SidebarMenuNavLinkSubButton({
       {icon}
       <span>{label}</span>
       {isPending && (
-        <div className="flex grow justify-end">
-          <Spinner
-            aria-label="Loading animation"
-            className="dark:stroke-foreground stroke-foreground size-4 animate-spin"
-          />
-        </div>
+        <Spinner
+          aria-label="Loading animation"
+          className="dark:stroke-foreground stroke-foreground ml-auto animate-spin"
+        />
       )}
     </SidebarMenuSubButton>
   );
