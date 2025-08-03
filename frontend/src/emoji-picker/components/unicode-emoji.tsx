@@ -20,7 +20,7 @@ export function UnicodeEmoji({
     () => getEmojiSheetSrc(emoji, fitzpatrickIndex),
     [emoji, fitzpatrickIndex],
   );
-  const [clapOffsetX, clapOffsetY] = useMemo(
+  const [offsetX, offsetY] = useMemo(
     () => getEmojiOffsets(emoji, emojiSize),
     [emoji, emojiSize],
   );
@@ -35,8 +35,8 @@ export function UnicodeEmoji({
       style={{
         backgroundImage: `url(${emojiSheetSrc})`,
         backgroundSize: `${sheetWidth}px ${sheetHeight}px`,
-        backgroundPositionX: clapOffsetX,
-        backgroundPositionY: clapOffsetY,
+        backgroundPositionX: offsetX,
+        backgroundPositionY: offsetY,
         width: emojiSize,
         height: emojiSize,
       }}
