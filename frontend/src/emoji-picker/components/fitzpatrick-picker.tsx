@@ -4,45 +4,45 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover.tsx";
-import { getUnicodeEmojiSrc } from "@/emoji-picker/utils.ts";
+import { unicodeEmojis } from "@/emoji-picker/unicode-emojis.ts";
+import { UnicodeEmoji } from "@/emoji-picker/components/unicode-emoji.tsx";
 
-const claps = ["👏", "👏🏻", "👏🏼", "👏🏽", "👏🏾", "👏🏿"];
+const clapEmoji = unicodeEmojis.find((emoji) => emoji.names.includes("clap"))!;
 
 export function FitzpatrickPicker({
   fitzpatrickIndex,
   setFitzpatrickIndex,
+  size,
 }: {
   fitzpatrickIndex: number;
   setFitzpatrickIndex: (index: number) => void;
+  size: number;
 }) {
   const [open, setOpen] = useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <img
+        <div
           role="button"
-          src={getUnicodeEmojiSrc(claps[fitzpatrickIndex])}
-          alt="Select skin color"
-          className="size-6 cursor-pointer"
-        />
+          className="cursor-pointer"
+          aria-label="Select skin color"
+        >
+          <UnicodeEmoji emoji={clapEmoji} fitzpatrickIndex={fitzpatrickIndex} emojiSize={size} />
+        </div>
       </PopoverTrigger>
       <PopoverContent className="bg-secondary flex w-max flex-col gap-1 border-none p-0">
-        {claps.map((variant, index) => (
+        {[clapEmoji.unicode, ...clapEmoji.variants].map((variant, index) => (
           <div
-            key={variant}
+            role="button"
             className="hover:bg-background/50 cursor-pointer p-1"
             onClick={() => {
               setFitzpatrickIndex(index);
               setOpen(false);
             }}
+            key={variant}
           >
-            <img
-              role="button"
-              src={getUnicodeEmojiSrc(variant)}
-              alt={`'Clap' emoji, skin tone ${index}`}
-              className="size-6"
-            />
+            <UnicodeEmoji emoji={clapEmoji} fitzpatrickIndex={index} emojiSize={size} />
           </div>
         ))}
       </PopoverContent>

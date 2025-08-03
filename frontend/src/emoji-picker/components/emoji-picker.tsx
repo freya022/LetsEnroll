@@ -1,19 +1,18 @@
 import {
   CustomEmojiCandidate,
   EmojiCandidate,
-  UnicodeEmojiCandidate,
-} from "@/roles-config-editor/types.ts";
+} from "@/emoji-picker/types/emojis.ts";
 import { useMemo, useState } from "react";
 import { Separator } from "@/components/ui/separator.tsx";
 import { FixedSizeGrid } from "react-window";
 import {
   getAliases,
-  getEmojiSrc,
   getFormatted,
   getUnicodeVariant,
-  removeEmoticons,
 } from "@/emoji-picker/utils.ts";
 import { FitzpatrickPicker } from "@/emoji-picker/components/fitzpatrick-picker.tsx";
+import { unicodeEmojis } from "@/emoji-picker/unicode-emojis.ts";
+import { UnicodeEmoji } from "@/emoji-picker/components/unicode-emoji.tsx";
 
 const columns = 9;
 
@@ -22,11 +21,9 @@ const paddingSize = 2 * 4;
 const itemSize = emojiSize + paddingSize;
 
 export function EmojiPicker({
-  unicodeEmojis,
   customEmojis,
   onSelect,
 }: {
-  unicodeEmojis: UnicodeEmojiCandidate[];
   customEmojis: CustomEmojiCandidate[];
   onSelect: (formattedEmoji: string) => void;
 }) {
@@ -67,6 +64,7 @@ export function EmojiPicker({
         <FitzpatrickPicker
           fitzpatrickIndex={fitzpatrickIndex}
           setFitzpatrickIndex={setFitzpatrickIndex}
+          size={24}
         />
       </div>
       <Separator orientation="horizontal" />
@@ -100,7 +98,9 @@ export function EmojiPicker({
               onClick={() => onSelect(getFormatted(emoji, fitzpatrickIndex))}
               onMouseEnter={() =>
                 setHoveredEmojiAlias(() =>
-                  removeEmoticons(getAliases(emoji)).join(" "),
+                  getAliases(emoji)
+                    .map((alias) => `:${alias}:`)
+                    .join(" "),
                 )
               }
               onMouseLeave={() => setHoveredEmojiAlias(() => undefined)}
@@ -110,9 +110,10 @@ export function EmojiPicker({
               }}
             >
               {"unicode" in emoji ? (
-                <UnicodeEmojiImg
+                <UnicodeEmoji
                   emoji={emoji}
                   fitzpatrickIndex={fitzpatrickIndex}
+                  emojiSize={emojiSize}
                 />
               ) : (
                 <CustomEmojiImg emoji={emoji} />
@@ -125,20 +126,15 @@ export function EmojiPicker({
   );
 }
 
-function UnicodeEmojiImg({
-  emoji,
-  fitzpatrickIndex,
-}: {
-  emoji: UnicodeEmojiCandidate;
-  fitzpatrickIndex: number;
-}) {
-  const alt = `'${emoji.aliases[0].replace(/:/g, "").replace(/_/g, " ")}' emoji`;
-  const src = getEmojiSrc(emoji, fitzpatrickIndex);
-  return <img src={src} alt={alt} className="size-8 object-contain" />;
-}
-
 function CustomEmojiImg({ emoji }: { emoji: CustomEmojiCandidate }) {
   const alt = `'${emoji.name}' emoji`;
   const src = `https://cdn.discordapp.com/emojis/${emoji.id}.webp?animated=true`;
-  return <img src={src} alt={alt} className="size-8 object-contain" />;
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className="object-contain"
+      style={{ width: emojiSize, height: emojiSize }}
+    />
+  );
 }

@@ -1,26 +1,4 @@
-import {
-  EmojiCandidate,
-  UnicodeEmojiCandidate,
-} from "@/roles-config-editor/types.ts";
-
-export function getEmojiHexCodepoints(unicode: string): string[] {
-  const hexCodepoints: string[] = [];
-  for (const codepoint of unicode) {
-    hexCodepoints.push(codepoint.codePointAt(0)!.toString(16));
-  }
-  return hexCodepoints;
-}
-
-export function getEmojiSrc(
-  emoji: UnicodeEmojiCandidate,
-  fitzpatrickIndex: number,
-) {
-  return getUnicodeEmojiSrc(getFormatted(emoji, fitzpatrickIndex));
-}
-
-export function getUnicodeEmojiSrc(variation: string) {
-  return `https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/${getEmojiHexCodepoints(variation).join("-")}.svg`;
-}
+import { EmojiCandidate, UnicodeEmojiCandidate } from "@/emoji-picker/types/emojis.ts";
 
 export function getFormatted(emoji: EmojiCandidate, fitzpatrickIndex: number) {
   if ("unicode" in emoji) {
@@ -48,14 +26,8 @@ export function getUnicodeVariant(
 
 export function getAliases(emoji: EmojiCandidate) {
   if ("unicode" in emoji) {
-    return emoji.aliases;
+    return emoji.names;
   } else {
-    return [`:${emoji.name}:`];
+    return [emoji.name];
   }
-}
-
-export function removeEmoticons(aliases: string[]) {
-  return aliases.filter(
-    (alias) => alias.startsWith(":") && alias.endsWith(":"),
-  );
 }

@@ -18,14 +18,11 @@ import {
 import { Button } from "@/components/ui/button.tsx";
 import axios from "axios";
 import { ChevronsUpDown, X } from "lucide-react";
-import { capitalize } from "@/utils.ts";
-import {
-  CustomEmojiCandidate,
-  UnicodeEmojiCandidate,
-} from "@/roles-config-editor/types.ts";
-import { getUnicodeEmojiSrc } from "@/emoji-picker/utils.ts";
+import { CustomEmojiCandidate } from "@/emoji-picker/types/emojis.ts";
 import { EmojiPicker } from "@/emoji-picker/components/emoji-picker.tsx";
 import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
+import { getHumanName, unicodeEmojis } from "@/emoji-picker/unicode-emojis.ts";
+import { UnicodeEmoji } from "@/emoji-picker/components/unicode-emoji.tsx";
 
 type EmojiContainer = { emoji: string | null };
 
@@ -36,16 +33,6 @@ export function EmojiEditor<T extends EmojiContainer>({
 }) {
   const { id: guildId } = useSelectedGuild();
   const form = useFormContext<RolesConfig>();
-
-  const { data: unicodeEmojis } = useSuspenseQuery({
-    queryKey: ["unicode_emojis"],
-    queryFn: async () => {
-      const response = await axios.get("/api/emojis");
-      return response.data as UnicodeEmojiCandidate[];
-    },
-    // Unicode emojis are never outdated
-    staleTime: Infinity,
-  });
 
   const { data: customEmojis } = useSuspenseQuery({
     queryKey: ["custom_emojis", guildId],
@@ -82,7 +69,6 @@ export function EmojiEditor<T extends EmojiContainer>({
                         {field.value ? (
                           <SelectedEmoji
                             formattedEmoji={field.value}
-                            unicodeEmojis={unicodeEmojis}
                             customEmojis={customEmojis}
                           />
                         ) : (
@@ -97,7 +83,6 @@ export function EmojiEditor<T extends EmojiContainer>({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-3">
                     <EmojiPicker
-                      unicodeEmojis={unicodeEmojis}
                       customEmojis={customEmojis}
                       onSelect={(formattedEmoji) => {
                         form.setValue(
@@ -141,11 +126,9 @@ export function EmojiEditor<T extends EmojiContainer>({
 
 function SelectedEmoji({
   formattedEmoji,
-  unicodeEmojis,
   customEmojis,
 }: {
   formattedEmoji: string;
-  unicodeEmojis: UnicodeEmojiCandidate[];
   customEmojis: CustomEmojiCandidate[];
 }) {
   const customMatch = formattedEmoji.match(/<a?:\w+:(\d+)>/);
@@ -158,7 +141,7 @@ function SelectedEmoji({
     return (
       <div className="flex items-center gap-2">
         <img src={src} alt={alt} className="size-6" />
-        {emoji.name}
+        <span>{emoji.name}</span>
       </div>
     );
   } else {
@@ -166,14 +149,18 @@ function SelectedEmoji({
       (e) =>
         e.unicode === formattedEmoji || e.variants.includes(formattedEmoji),
     )!;
+    // +1 because 0 is the default diversity, which is the emoji object itself,
+    // equivalent to [emoji.unicode, ...emoji.variants].indexOf(formattedEmoji)
+    const fitzpatrickIndex = emoji.variants.indexOf(formattedEmoji) + 1;
 
-    const humanAlias = emoji.aliases[0].replace(/:/g, "").replace(/_/g, " ");
-    const alt = `'${humanAlias}' emoji`;
-    const src = getUnicodeEmojiSrc(formattedEmoji);
     return (
       <div className="flex items-center gap-2">
-        <img src={src} alt={alt} className="size-6 object-contain" />
-        {capitalize(humanAlias)}
+        <UnicodeEmoji
+          emoji={emoji}
+          fitzpatrickIndex={fitzpatrickIndex}
+          emojiSize={24}
+        />
+        <span>{getHumanName(emoji)}</span>
       </div>
     );
   }
