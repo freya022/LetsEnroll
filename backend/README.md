@@ -4,6 +4,7 @@
 - [Bot](bot) - The main Discord bot
 - [API](api) - The API for the frontend
 - [Data](data) - Contains shared data objects
+- [Emoji generator](emoji-generator) - Generates the JSON and spritesheets of Discord's Unicode emojis
 - [Convention plugins](buildSrc) - Contains shared build logic
 
 ## Running in docker
