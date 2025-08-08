@@ -12,7 +12,7 @@ import Thinking from "@/assets/thinking.svg?react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center gap-y-6">
+    <div className="flex flex-col items-center gap-y-6 p-4">
       <div className="flex flex-col gap-y-2">
         <h1 className="text-center text-3xl font-semibold">Welcome!</h1>
         <p className="text-xl">

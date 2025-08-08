@@ -45,7 +45,7 @@ export default function Root() {
     <SidebarProvider>
       <AppSidebar user={user} guilds={guilds} />
 
-      <main className="grow p-4">
+      <main className="grow">
         <Outlet />
       </main>
     </SidebarProvider>
