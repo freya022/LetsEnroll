@@ -24,6 +24,7 @@ import axios from "axios";
 import { useTheme } from "@/components/theme-provider.tsx";
 import DiscordLogoWhite from "@/assets/Discord-Symbol-White.svg?react";
 import { UserDTO } from "@/dto/UserDTO.ts";
+import { getAvatarUrl } from "@/utils/user";
 
 export default function AppSidebarFooter({ user }: { user?: UserDTO }) {
   return (
@@ -164,15 +165,6 @@ function LoggedInUser({ user }: { user: UserDTO }) {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
-function getAvatarUrl({ id, avatarHash }: UserDTO) {
-  if (avatarHash) {
-    const extension = avatarHash.startsWith("a_") ? "gif" : "png";
-    return `https://cdn.discordapp.com/avatars/${id}/${avatarHash}.${extension}`;
-  } else {
-    return `https://cdn.discordapp.com/avatars/${(BigInt(id) >> BigInt(22)) % BigInt(6)}.png`;
-  }
 }
 
 function LogIn() {
