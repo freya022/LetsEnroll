@@ -57,6 +57,8 @@ dependencies {
 
 	implementation(libs.mapstruct)
 	kapt(libs.mapstruct.processor)
+
+    testImplementation(libs.konsist)
 }
 
 allOpen {

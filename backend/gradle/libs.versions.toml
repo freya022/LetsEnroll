@@ -43,6 +43,7 @@ mockk = "io.mockk:mockk:1.14.4"
 nimbus-jose-jwt = "com.nimbusds:nimbus-jose-jwt:10.3.1"
 postgresql = "org.postgresql:postgresql:42.7.7"
 springmockk = "com.ninja-squad:springmockk:4.0.2"
+konsist = "com.lemonappdev:konsist:0.17.3"
 
 [bundles]
 flyway = [
