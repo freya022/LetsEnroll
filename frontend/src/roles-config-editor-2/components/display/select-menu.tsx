@@ -16,6 +16,8 @@ import { replaceIdentifiable } from "@/roles-config-editor-2/utils/identifiable.
 import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-node-context.ts";
 import ScrollableResizablePanel from "@/roles-config-editor-2/components/ScrollableResizablePanel.tsx";
 import { cn } from "@/lib/utils.ts";
+import { createPortal } from "react-dom";
+import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel.ts";
 
 export default function SelectMenu({
   selectMenu,
@@ -25,17 +27,12 @@ export default function SelectMenu({
   controls: Controls<SelectMenuData>;
 }) {
   const { selectedNode, setSelectedNode } = useMutableSelectedNode();
+  const propPanel = usePropertiesPanel();
 
   function handleSelectMenuClick(e: MouseEvent) {
     e.stopPropagation();
     setSelectedNode({
       id: selectMenu.id,
-      propertiesRenderer: () => (
-        <SelectMenuPropertiesPanels
-          selectMenu={selectMenu}
-          controls={controls}
-        />
-      ),
     });
   }
 
@@ -53,6 +50,15 @@ export default function SelectMenu({
         {selectMenu.placeholder || "Make a selection"}
       </span>
       <ChevronDown className="size-4" aria-hidden="true" />
+      {selectedNode?.id === selectMenu.id &&
+        propPanel &&
+        createPortal(
+          <SelectMenuPropertiesPanels
+            selectMenu={selectMenu}
+            controls={controls}
+          />,
+          propPanel,
+        )}
     </div>
   );
 }
@@ -119,10 +125,7 @@ function SelectMenuChoicePanel({
       <ResizableHandle />
       <ScrollableResizablePanel order={1}>
         <Properties name="Choice">
-          <SelectMenuChoiceProperties
-            choice={choice}
-            controls={controls}
-          />
+          <SelectMenuChoiceProperties choice={choice} controls={controls} />
         </Properties>
       </ScrollableResizablePanel>
     </>

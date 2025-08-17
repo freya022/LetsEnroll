@@ -11,6 +11,8 @@ import {
   UnicodeEmojiCandidate,
 } from "@/emoji-picker/types/emojis.ts";
 import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
+import { createPortal } from "react-dom";
+import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel.ts";
 
 export default function Button({
   button,
@@ -22,14 +24,12 @@ export default function Button({
   hasError: boolean;
 }) {
   const { selectedNode, setSelectedNode } = useMutableSelectedNode();
+  const propPanel = usePropertiesPanel();
 
   function handleButtonClick(e: MouseEvent) {
     e.stopPropagation();
     setSelectedNode({
       id: button.id,
-      propertiesRenderer: () => (
-        <ButtonPropertiesPanel button={button} controls={controls} />
-      ),
     });
   }
 
@@ -63,6 +63,12 @@ export default function Button({
         }}
       />
       <span className="text-sm font-semibold">{button.label}</span>
+      {selectedNode?.id === button.id &&
+        propPanel &&
+        createPortal(
+          <ButtonPropertiesPanel button={button} controls={controls} />,
+          propPanel,
+        )}
     </button>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -19,6 +19,7 @@ import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild
 import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
 import { replaceIdentifiable } from "@/roles-config-editor-2/utils/identifiable.ts";
 import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
+import { PropertiesPanelRefContext } from "@/roles-config-editor-2/hooks/properties-panel.ts";
 
 const testData: RolesConfigData = {
   messages: [
@@ -71,7 +72,6 @@ export default function RolesConfigEditor() {
   // State
   const [data, setData] = useState(testData);
   const [selectedNode, setSelectedNode] = useState<SelectedNode | null>(null);
-  const PropertiesPanels = selectedNode?.propertiesRenderer;
 
   // Prefetch custom emojis
   useQuery({
@@ -90,29 +90,34 @@ export default function RolesConfigEditor() {
 
   const messageControls: Controls<MessageData> = {
     update: onMessageChange,
-  }
+  };
+
+  // So the selected nodes can create portals to it
+  const propPanelRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <MutableSelectedNodeContext value={{ selectedNode, setSelectedNode }}>
-      <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={60}>
-          <div className="h-screen overflow-auto">
-            <div className="pt-4 pr-2 pb-2 pl-4">
-              {data.messages.map((message) => (
-                <Message
-                  message={message}
-                  controls={messageControls}
-                  key={message.id}
-                />
-              ))}
+      <PropertiesPanelRefContext value={propPanelRef}>
+        <ResizablePanelGroup direction="horizontal">
+          <ResizablePanel defaultSize={60}>
+            <div className="h-screen overflow-auto">
+              <div className="pt-4 pr-2 pb-2 pl-4">
+                {data.messages.map((message) => (
+                  <Message
+                    message={message}
+                    controls={messageControls}
+                    key={message.id}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        </ResizablePanel>
-        <ResizableHandle />
-        <ResizablePanel>
-          {PropertiesPanels && <PropertiesPanels />}
-        </ResizablePanel>
-      </ResizablePanelGroup>
+          </ResizablePanel>
+          <ResizableHandle />
+          <ResizablePanel>
+            <div className="size-full" ref={propPanelRef} />
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </PropertiesPanelRefContext>
     </MutableSelectedNodeContext>
   );
 }

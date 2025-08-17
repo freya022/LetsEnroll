@@ -14,6 +14,8 @@ import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
 import { replaceIdentifiable } from "@/roles-config-editor-2/utils/identifiable.ts";
 import { ComponentData } from "@/roles-config-editor-2/types/components.ts";
 import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
+import { createPortal } from "react-dom";
+import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel.ts";
 
 const MAX_COMPONENT_COUNT = 5;
 
@@ -26,6 +28,7 @@ export default function Message({
 }) {
   const { user } = useRouteLoaderData<{ user: UserDTO }>("root")!;
   const { selectedNode, setSelectedNode } = useMutableSelectedNode();
+  const propPanel = usePropertiesPanel();
 
   // TODO a better (?) selection system could be a single listener
   //  using "data" attributes in elements, setting the selected node to that ID,
@@ -36,9 +39,6 @@ export default function Message({
   function handleMessageClick() {
     setSelectedNode({
       id: message.id,
-      propertiesRenderer: () => (
-        <MessagePropertiesPanel message={message} controls={controls} />
-      ),
     });
   }
 
@@ -91,6 +91,12 @@ export default function Message({
           <AddMessage />
         </div>
       </div>
+      {selectedNode?.id == message.id &&
+        propPanel &&
+        createPortal(
+          <MessagePropertiesPanel message={message} controls={controls} />,
+          propPanel,
+        )}
     </div>
   );
 }
