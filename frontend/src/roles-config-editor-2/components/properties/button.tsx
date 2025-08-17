@@ -1,56 +1,97 @@
 import SingleLineProperty from "@/roles-config-editor-2/components/properties/primitive/single-line.tsx";
 import EmojiProperty from "@/roles-config-editor-2/components/properties/primitive/emoji.tsx";
-import { ButtonStyles } from "@/dto/RolesConfigDTO.ts";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import Property from "@/roles-config-editor-2/components/properties/base/property.tsx";
 import { Label } from "@/components/ui/label.tsx";
-import { useRef } from "react";
 import { capitalize } from "@/utils.ts";
+import {
+  ButtonData,
+  ButtonStyle,
+  ButtonStyles,
+} from "@/roles-config-editor-2/types/components.ts";
+import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
 
-export default function ButtonProperties() {
+export default function ButtonProperties({
+  button,
+  controls,
+}: {
+  button: ButtonData;
+  controls: Controls<ButtonData>;
+}) {
+  function onStyleChange(value: ButtonStyle) {
+    controls.update({
+      ...button,
+      style: value,
+    });
+  }
+
+  function onRoleNameChange(value: string) {
+    controls.update({
+      ...button,
+      roleName: value,
+    });
+  }
+
+  function onLabelChange(value: string) {
+    controls.update({
+      ...button,
+      label: value,
+    });
+  }
+
+  function onEmojiChange(value: string | null) {
+    controls.update({
+      ...button,
+      emoji: value,
+    });
+  }
+
   return (
     <>
       <ButtonStyleToggleGroupProperty
         label="Style"
-        path="message.0.components.0.components.0.style"
+        defaultValue={button.style}
+        onChange={onStyleChange}
       />
       <SingleLineProperty
         label="Role name (100 characters max)"
         placeholder="Role name"
         description="The role toggled by this button, it will be created if it does not exist"
-        path="message.0.components.0.components.0.role_name"
+        defaultValue={button.roleName}
+        onChange={onRoleNameChange}
       />
       <SingleLineProperty
         label="Label - Optional (80 characters max)"
         placeholder="Button label"
-        path="message.0.components.0.components.0.label"
+        defaultValue={button.label ?? ""}
+        onChange={onLabelChange}
       />
       <EmojiProperty
         label="Emoji - Optional"
-        path="message.0.components.0.components.0.emoji"
+        defaultValue={button.emoji}
+        onChange={onEmojiChange}
       />
     </>
   );
 }
 
 function ButtonStyleToggleGroupProperty({
-  path,
   label,
+  defaultValue,
+  onChange,
 }: {
-  path: string;
   label: string;
+  defaultValue: ButtonStyle;
+  onChange: (s: ButtonStyle) => void;
 }) {
-  const inputRef = useRef<HTMLInputElement | null>(null);
   return (
     <Property>
-      <Label onClick={() => inputRef.current?.focus()} htmlFor={path}>
-        {label}
-      </Label>
+      <Label>{label}</Label>
       <ToggleGroup
         variant="outline"
         type="single"
-        onValueChange={(value) => {}}
-        defaultValue="PRIMARY"
+        onValueChange={onChange}
+        defaultValue={defaultValue}
         className="w-full"
       >
         {ButtonStyles.map((style) => (

@@ -6,44 +6,54 @@ import {
 import { EmojiPicker } from "@/emoji-picker/components/emoji-picker.tsx";
 import { ChevronsUpDown, X } from "lucide-react";
 import { ComponentProps, forwardRef, useState } from "react";
-import { CustomEmojiCandidate } from "@/emoji-picker/types/emojis.ts";
-import { Button as ButtonComponent } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import { cn } from "@/lib/utils.ts";
-import { getHumanName, unicodeEmojis } from "@/emoji-picker/unicode-emojis.ts";
+import { getHumanName } from "@/emoji-picker/unicode-emojis.ts";
 import { UnicodeEmoji } from "@/emoji-picker/components/unicode-emoji.tsx";
+import Emoji from "@/emoji-picker/components/emoji.tsx";
+import {
+  CustomEmojiCandidate,
+  UnicodeEmojiCandidate,
+} from "@/emoji-picker/types/emojis.ts";
 
 export default function EmojiPickerPopover({
-  selectedEmoji,
-  customEmojis,
+  defaultValue,
+  id,
   onChange,
 }: {
-  selectedEmoji: string | null;
-  customEmojis: CustomEmojiCandidate[];
+  defaultValue: string | null;
+  id: string;
   onChange: (value: string | null) => void;
 }) {
+  const [selectedEmoji, setSelectedEmoji] = useState(defaultValue);
   const [open, setOpen] = useState(false);
+
+  function handleSelect(formattedEmoji: string) {
+    setSelectedEmoji(formattedEmoji);
+    onChange(formattedEmoji);
+    setOpen(false);
+  }
+
+  function handleClear() {
+    setSelectedEmoji(null);
+    onChange(null);
+  }
 
   return (
     <div className="flex items-center gap-1">
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger className="grow" asChild>
+        <PopoverTrigger className="grow" id={id} asChild>
           <EmojiPickerTrigger
             open={open}
             selectedEmoji={selectedEmoji}
-            customEmojis={customEmojis}
+            onClear={handleClear}
           />
         </PopoverTrigger>
         <PopoverContent className="w-auto p-3">
-          <EmojiPicker
-            customEmojis={customEmojis}
-            onSelect={(formattedEmoji) => {
-              onChange(formattedEmoji);
-              setOpen(false);
-            }}
-          />
+          <EmojiPicker onSelect={handleSelect} />
         </PopoverContent>
       </Popover>
-      <ClearEmoji onClear={() => onChange(null)} />
+      <ClearEmoji onClear={handleClear} />
     </div>
   );
 }
@@ -63,13 +73,13 @@ function ClearEmoji({ onClear }: { onClear: () => void }) {
 interface EmojiPickerTriggerProps extends ComponentProps<"button"> {
   open: boolean;
   selectedEmoji: string | null;
-  customEmojis: CustomEmojiCandidate[];
+  onClear: () => void;
 }
 const EmojiPickerTrigger = forwardRef<
   HTMLButtonElement,
   EmojiPickerTriggerProps
->(({ customEmojis, open, selectedEmoji, ...props }, ref) => (
-  <ButtonComponent
+>(({ open, selectedEmoji, onClear, ...props }, ref) => (
+  <Button
     {...props}
     role="combobox"
     aria-expanded={open}
@@ -78,56 +88,49 @@ const EmojiPickerTrigger = forwardRef<
     type="button"
     ref={ref}
   >
-    {selectedEmoji ? (
-      <SelectedEmoji
-        formattedEmoji={selectedEmoji}
-        customEmojis={customEmojis}
-      />
-    ) : (
-      "No emoji"
-    )}
+    <Emoji
+      formattedEmoji={selectedEmoji}
+      onUnicode={SelectedUnicodeEmoji}
+      onCustom={SelectedCustomEmoji}
+      onUnknown={() => {
+        if (selectedEmoji != null)
+          onClear();
+        return "No emoji";
+      }}
+    />
     <ChevronsUpDown aria-hidden="true" className="opacity-50" />
-  </ButtonComponent>
+  </Button>
 ));
 
-function SelectedEmoji({
-  formattedEmoji,
-  customEmojis,
+function SelectedUnicodeEmoji({
+  emoji,
+  fitzpatrickIndex,
 }: {
-  formattedEmoji: string;
-  customEmojis: CustomEmojiCandidate[];
+  emoji: UnicodeEmojiCandidate;
+  fitzpatrickIndex: number;
 }) {
-  const customMatch = formattedEmoji.match(/<a?:\w+:(\d+)>/);
-  if (customMatch) {
-    const id = customMatch[1];
-    const emoji = customEmojis.find((e) => e.id === id)!;
+  return (
+    <div className="flex items-center gap-2">
+      <UnicodeEmoji
+        emoji={emoji}
+        fitzpatrickIndex={fitzpatrickIndex}
+        emojiSize={24}
+      />
+      <span aria-hidden>
+        {getHumanName(emoji)}
+        {fitzpatrickIndex > 1 && `skin tone ${fitzpatrickIndex}`}
+      </span>
+    </div>
+  );
+}
 
-    const alt = `'${emoji.name}' emoji`;
-    const src = `https://cdn.discordapp.com/emojis/${emoji.id}.webp?animated=true`;
-    return (
-      <div className="flex items-center gap-2">
-        <img src={src} alt={alt} className="size-6" />
-        <span>{emoji.name}</span>
-      </div>
-    );
-  } else {
-    const emoji = unicodeEmojis.find(
-      (e) =>
-        e.unicode === formattedEmoji || e.variants.includes(formattedEmoji),
-    )!;
-    // +1 because 0 is the default diversity, which is the emoji object itself,
-    // equivalent to [emoji.unicode, ...emoji.variants].indexOf(formattedEmoji)
-    const fitzpatrickIndex = emoji.variants.indexOf(formattedEmoji) + 1;
-
-    return (
-      <div className="flex items-center gap-2">
-        <UnicodeEmoji
-          emoji={emoji}
-          fitzpatrickIndex={fitzpatrickIndex}
-          emojiSize={24}
-        />
-        <span>{getHumanName(emoji)}</span>
-      </div>
-    );
-  }
+function SelectedCustomEmoji({ emoji }: { emoji: CustomEmojiCandidate }) {
+  const alt = `'${emoji.name}' emoji`;
+  const src = `https://cdn.discordapp.com/emojis/${emoji.id}.webp?animated=true`;
+  return (
+    <div className="flex items-center gap-2">
+      <img src={src} alt={alt} className="size-6" />
+      <span aria-hidden>{emoji.name}</span>
+    </div>
+  );
 }

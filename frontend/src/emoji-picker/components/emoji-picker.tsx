@@ -13,6 +13,7 @@ import {
 import { FitzpatrickPicker } from "@/emoji-picker/components/fitzpatrick-picker.tsx";
 import { unicodeEmojis } from "@/emoji-picker/unicode-emojis.ts";
 import { UnicodeEmoji } from "@/emoji-picker/components/unicode-emoji.tsx";
+import { useCustomEmojisFromCurrentGuild } from "@/emoji-picker/hooks/use-custom-emojis.ts";
 
 const columns = 9;
 
@@ -21,12 +22,11 @@ const paddingSize = 2 * 4;
 const itemSize = emojiSize + paddingSize;
 
 export function EmojiPicker({
-  customEmojis,
   onSelect,
 }: {
-  customEmojis: CustomEmojiCandidate[];
   onSelect: (formattedEmoji: string) => void;
 }) {
+  const customEmojis = useCustomEmojisFromCurrentGuild();
   const mergedEmojis: EmojiCandidate[] = [...customEmojis, ...unicodeEmojis];
 
   const [fitzpatrickIndex, setFitzpatrickIndex] = useState(0);

@@ -1,24 +1,34 @@
 import Property from "@/roles-config-editor-2/components/properties/base/property.tsx";
 import { Label } from "@/components/ui/label.tsx";
-import { useRef } from "react";
+import { useId, useState } from "react";
 import { Textarea } from "@/components/ui/textarea.tsx";
 
 export default function MultiLineProperty({
-  path,
   label,
   placeholder,
+  defaultValue,
+  onChange,
 }: {
-  path: string;
   label: string;
   placeholder: string;
+  defaultValue: string;
+  onChange: (value: string) => void;
 }) {
-  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const id = useId()
+  const [value, setValue] = useState(defaultValue);
+
   return (
     <Property>
-      <Label onClick={() => textAreaRef.current?.focus()} htmlFor={path}>
-        {label}
-      </Label>
-      <Textarea placeholder={placeholder} ref={textAreaRef} id={path} />
+      <Label htmlFor={id}>{label}</Label>
+      <Textarea
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        id={id}
+      />
     </Property>
   );
 }

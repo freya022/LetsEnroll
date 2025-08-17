@@ -1,27 +1,23 @@
-import { CustomEmojiCandidate } from "@/emoji-picker/types/emojis.ts";
 import { Label } from "@/components/ui/label.tsx";
 import EmojiPickerPopover from "@/emoji-picker/components/emoji-picker-popover.tsx";
 import Property from "@/roles-config-editor-2/components/properties/base/property.tsx";
+import { useId } from "react";
 
 export default function EmojiProperty({
-  path,
   label,
+  defaultValue,
+  onChange,
 }: {
-  path: string;
   label: string;
+  defaultValue: string | null;
+  onChange: (e: string | null) => void;
 }) {
-  const selectedEmoji: string | null = null;
-  const customEmojis: CustomEmojiCandidate[] = [];
+  const id = useId();
 
   return (
     <Property>
-      <Label htmlFor={path}>{label}</Label>
-      {/* TODO set ID here */}
-      <EmojiPickerPopover
-        selectedEmoji={selectedEmoji}
-        customEmojis={customEmojis}
-        onChange={(newEmoji) => {}}
-      />
+      <Label htmlFor={id}>{label}</Label>
+      <EmojiPickerPopover defaultValue={defaultValue} id={id} onChange={onChange} />
     </Property>
   );
 }

@@ -83,7 +83,6 @@ export function EmojiEditor<T extends EmojiContainer>({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-3">
                     <EmojiPicker
-                      customEmojis={customEmojis}
                       onSelect={(formattedEmoji) => {
                         form.setValue(
                           // @ts-expect-error Path is correct

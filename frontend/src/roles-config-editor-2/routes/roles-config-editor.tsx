@@ -1,57 +1,119 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable.tsx";
-import { getPanelElement } from "react-resizable-panels";
 import Message from "@/roles-config-editor-2/components/display/message.tsx";
-import SelectMenuChoiceProperties from "@/roles-config-editor-2/components/properties/select-menu-choice.tsx";
-import SelectMenuProperties from "@/roles-config-editor-2/components/properties/select-menu.tsx";
-import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
+import {
+  MutableSelectedNodeContext,
+  SelectedNode,
+} from "@/roles-config-editor-2/hooks/selected-node-context.ts";
+import { RolesConfigData } from "@/roles-config-editor-2/types/roles-config-data.ts";
+import {
+  getCustomEmojis,
+  getCustomEmojisQueryKey,
+} from "@/emoji-picker/queries/custom-emojis.ts";
+import { useQuery } from "@tanstack/react-query";
+import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
+import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
+import { replaceIdentifiable } from "@/roles-config-editor-2/utils/identifiable.ts";
+import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
+
+const testData: RolesConfigData = {
+  messages: [
+    {
+      id: 1,
+      content: "Message content idk",
+      components: [
+        {
+          type: "row",
+          id: 2,
+          components: [
+            {
+              type: "button",
+              id: 3,
+              style: "PRIMARY",
+              roleName: "BC Updates",
+              label: "Toggle BC update pings",
+              emoji: "🔔",
+            },
+          ],
+        },
+        {
+          type: "row",
+          id: 4,
+          components: [
+            {
+              type: "string_select_menu",
+              id: 5,
+              placeholder: "",
+              choices: [
+                {
+                  id: 6,
+                  label: "Choice label idk",
+                  roleName: "Role name idk",
+                  emoji: "🔥",
+                  description: "Choice description idk",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
 
 export default function RolesConfigEditor() {
-  useEffect(() => {
-    const topPanelElement = getPanelElement("panel-1");
-    const bottomPanelElement = getPanelElement("panel-2");
+  const { id: guildId } = useSelectedGuild();
 
-    topPanelElement!.style.overflow = "auto";
-    bottomPanelElement!.style.overflow = "auto";
-  }, []);
+  // State
+  const [data, setData] = useState(testData);
+  const [selectedNode, setSelectedNode] = useState<SelectedNode | null>(null);
+  const PropertiesPanels = selectedNode?.propertiesRenderer;
+
+  // Prefetch custom emojis
+  useQuery({
+    queryKey: getCustomEmojisQueryKey(guildId),
+    queryFn: async () => getCustomEmojis(guildId),
+    // Optional optimization to avoid rerenders when this query changes:
+    notifyOnChangeProps: [],
+  });
+
+  // Handlers
+  function onMessageChange(m: MessageData) {
+    setData((data) => ({
+      messages: replaceIdentifiable(data.messages, m),
+    }));
+  }
+
+  const messageControls: Controls<MessageData> = {
+    update: onMessageChange,
+  }
 
   return (
-    <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel defaultSize={60}>
-        <div className="h-screen overflow-auto">
-          <div className="pt-4 pr-2 pb-2 pl-4">
-            <Message />
+    <MutableSelectedNodeContext value={{ selectedNode, setSelectedNode }}>
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel defaultSize={60}>
+          <div className="h-screen overflow-auto">
+            <div className="pt-4 pr-2 pb-2 pl-4">
+              {data.messages.map((message) => (
+                <Message
+                  message={message}
+                  controls={messageControls}
+                  key={message.id}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel>
-        <div className="h-screen overflow-scroll">
-          <ResizablePanelGroup direction="vertical">
-            <ResizablePanel
-              id="panel-1"
-              defaultSize={50}
-            >
-              <Properties name="Select menu" onDelete={() => {}}>
-                {/*<MessageProperties />*/}
-                {/*<ButtonProperties />*/}
-                <SelectMenuProperties />
-              </Properties>
-            </ResizablePanel>
-            <ResizableHandle />
-            <ResizablePanel id="panel-2">
-              <Properties name="Choice">
-                <SelectMenuChoiceProperties />
-              </Properties>
-            </ResizablePanel>
-          </ResizablePanelGroup>
-        </div>
-      </ResizablePanel>
-    </ResizablePanelGroup>
+        </ResizablePanel>
+        <ResizableHandle />
+        <ResizablePanel>
+          {PropertiesPanels && <PropertiesPanels />}
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </MutableSelectedNodeContext>
   );
 }
 
