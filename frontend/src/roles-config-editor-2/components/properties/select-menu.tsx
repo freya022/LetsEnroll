@@ -55,7 +55,7 @@ function SelectMenuChoices({
   setSelectedChoiceId: (choiceId: number) => void;
 }) {
   return (
-    <div className="border-accent grid border-2">
+    <div className="border-accent grid rounded-sm border-2 *:first:rounded-t-sm *:last:rounded-b-sm">
       {choices.map((choice) => (
         <SelectMenuChoiceItem
           choice={choice}
@@ -85,7 +85,9 @@ function SelectMenuChoiceItem({
       )}
       onClick={onToggle}
     >
-      <span className="grow border-r-2 pl-1">{choice.label}</span>
+      <span className="hover:bg-accent grow cursor-pointer border-r-2 pl-1 select-none">
+        {choice.label}
+      </span>
       <ChevronDown className="hover:bg-accent cursor-pointer border-r-2" />
       <ChevronUp className="hover:bg-accent cursor-pointer border-r-2" />
       <X className="text-destructive hover:bg-destructive/60 cursor-pointer" />
