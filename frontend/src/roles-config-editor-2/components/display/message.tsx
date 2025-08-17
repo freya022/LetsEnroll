@@ -54,50 +54,52 @@ export default function Message({
   };
 
   return (
-    <div
-      className={cn(
-        "flex gap-4",
-        selectedNode?.id === message.id &&
-          "outline-ring outline-2 outline-offset-1",
-      )}
-      onClick={handleMessageClick}
-    >
-      <Avatar className="mt-0.5">
-        <AvatarImage
-          src={getAvatarUrl(user)}
-          alt={`Avatar of ${user.effectiveName}`}
-        />
-      </Avatar>
-      <div className="select-none">
-        <div>
-          <span>{user.effectiveName}</span>
-        </div>
-        <div className="flex flex-col gap-y-1">
-          <span>{message.content}</span>
-          <Components>
-            {message.components.map((component) => (
-              <Component
-                component={component}
-                controls={componentsControls}
-                key={component.id}
-              />
-            ))}
-            {message.components.length < MAX_COMPONENT_COUNT && (
-              <AddTopLevelComponentDropdown />
-            )}
-          </Components>
-        </div>
-        <div className="mt-1">
-          <AddMessage />
-        </div>
-      </div>
-      {selectedNode?.id == message.id &&
-        propPanel &&
-        createPortal(
-          <MessagePropertiesPanel message={message} controls={controls} />,
-          propPanel,
+    <>
+      <div
+        className={cn(
+          "flex gap-4",
+          selectedNode?.id === message.id &&
+            "outline-ring rounded-sm outline-2 outline-offset-1",
         )}
-    </div>
+        onClick={handleMessageClick}
+      >
+        <Avatar className="mt-0.5">
+          <AvatarImage
+            src={getAvatarUrl(user)}
+            alt={`Avatar of ${user.effectiveName}`}
+          />
+        </Avatar>
+        <div className="select-none">
+          <div>
+            <span>{user.effectiveName}</span>
+          </div>
+          <div className="flex flex-col gap-y-1">
+            <span>{message.content}</span>
+            <Components>
+              {message.components.map((component) => (
+                <Component
+                  component={component}
+                  controls={componentsControls}
+                  key={component.id}
+                />
+              ))}
+              {message.components.length < MAX_COMPONENT_COUNT && (
+                <AddTopLevelComponentDropdown />
+              )}
+            </Components>
+          </div>
+        </div>
+        {selectedNode?.id == message.id &&
+          propPanel &&
+          createPortal(
+            <MessagePropertiesPanel message={message} controls={controls} />,
+            propPanel,
+          )}
+      </div>
+      <div className="mt-1 pl-12">
+        <AddMessage />
+      </div>
+    </>
   );
 }
 
