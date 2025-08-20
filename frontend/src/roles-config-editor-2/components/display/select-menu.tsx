@@ -12,7 +12,7 @@ import {
 import SelectMenuChoiceProperties from "@/roles-config-editor-2/components/properties/select-menu-choice.tsx";
 import SelectMenuProperties from "@/roles-config-editor-2/components/properties/select-menu.tsx";
 import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-node-context.ts";
-import ScrollableResizablePanel from "@/roles-config-editor-2/components/ScrollableResizablePanel.tsx";
+import ScrollableResizablePanel from "@/roles-config-editor-2/components/scrollable-resizable-panel.tsx";
 import { cn } from "@/lib/utils.ts";
 import { createPortal } from "react-dom";
 import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel.ts";
