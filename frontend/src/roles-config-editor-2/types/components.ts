@@ -1,11 +1,10 @@
-import { Identifiable } from "@/roles-config-editor-2/types/identifiable.ts";
-
 export type ComponentData = RowData | ButtonData | SelectMenuData;
 
-export type RowData = Identifiable<{
+export type RowData = {
   type: "row";
+  id: number;
   components: ComponentData[];
-}>;
+};
 
 export const ButtonStyles = [
   "PRIMARY",
@@ -14,23 +13,26 @@ export const ButtonStyles = [
   "DANGER",
 ] as const;
 export type ButtonStyle = (typeof ButtonStyles)[number];
-export type ButtonData = Identifiable<{
+export type ButtonData = {
   type: "button";
+  id: number;
   roleName: string;
   style: ButtonStyle;
   label: string | null;
   emoji: string | null;
-}>;
+};
 
-export type SelectMenuChoiceData = Identifiable<{
+export type SelectMenuChoiceData = {
   type: "select_menu_choice";
+  id: number;
   roleName: string;
   label: string;
   description: string | null;
   emoji: string | null;
-}>;
-export type SelectMenuData = Identifiable<{
+};
+export type SelectMenuData = {
+  id: number;
   type: "string_select_menu";
   placeholder: string | null;
   choices: SelectMenuChoiceData[];
-}>;
+};

@@ -1,25 +1,16 @@
 import { RolesConfigData } from "@/roles-config-editor-2/types/roles-config-data.ts";
-import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
-import {
-  ComponentData,
-  SelectMenuChoiceData,
-} from "@/roles-config-editor-2/types/components.ts";
+import { Identifiable } from "@/roles-config-editor-2/types/identifiable.ts";
 
-// TODO move "type" to Identifiable
-type TypedIdentifiable = MessageData | ComponentData | SelectMenuChoiceData;
-
-type TypedIdentifiableWithParent<
-  T extends TypedIdentifiable = TypedIdentifiable,
-> = {
+type TypedIdentifiableWithParent<T extends Identifiable = Identifiable> = {
   element: T;
-  parent: TypedIdentifiable[];
+  parent: Identifiable[];
 };
 
 export function findNextId(config: RolesConfigData) {
   return Math.max(...getAllIdentifiables(config).map((t) => t.element.id));
 }
 
-export function findDraftObj<T extends TypedIdentifiable>(
+export function findDraftObj<T extends Identifiable>(
   draft: RolesConfigData,
   target: T,
 ): TypedIdentifiableWithParent<T> | undefined {
@@ -76,7 +67,7 @@ function getAllIdentifiables(
   return identifiables;
 }
 
-function associateArrayChildren<T, R extends TypedIdentifiable>(
+function associateArrayChildren<T, R extends Identifiable>(
   container: T,
   valuesFn: (t: T) => R[],
 ): TypedIdentifiableWithParent<R>[] {
