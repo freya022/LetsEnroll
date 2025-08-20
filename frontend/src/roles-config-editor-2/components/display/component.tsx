@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import ActionRow from "@/roles-config-editor-2/components/display/action-row.tsx";
 import Button from "@/roles-config-editor-2/components/display/button.tsx";
 import SelectMenu from "@/roles-config-editor-2/components/display/select-menu.tsx";
-import { ComponentData } from "@/roles-config-editor-2/types/components.ts";
+import { ComponentData } from "@/roles-config-editor-2/types/component-data.ts";
 
 export default function Component({
   component,

@@ -1,4 +1,4 @@
-import { ComponentData } from "@/roles-config-editor-2/types/components.ts";
+import { ComponentData } from "@/roles-config-editor-2/types/component-data.ts";
 
 export type MessageData = {
   type: "message";

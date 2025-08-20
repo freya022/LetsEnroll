@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils.ts";
 import { UnicodeEmoji } from "@/emoji-picker/components/unicode-emoji.tsx";
-import { ButtonData } from "@/roles-config-editor-2/types/components.ts";
+import { ButtonData } from "@/roles-config-editor-2/types/component-data.ts";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 import ButtonProperties from "@/roles-config-editor-2/components/properties/button.tsx";
 import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-node-context.ts";

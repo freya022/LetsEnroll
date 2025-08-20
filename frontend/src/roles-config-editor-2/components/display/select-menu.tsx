@@ -8,7 +8,7 @@ import Properties from "@/roles-config-editor-2/components/properties/base/prope
 import {
   SelectMenuChoiceData,
   SelectMenuData,
-} from "@/roles-config-editor-2/types/components.ts";
+} from "@/roles-config-editor-2/types/component-data.ts";
 import SelectMenuChoiceProperties from "@/roles-config-editor-2/components/properties/select-menu-choice.tsx";
 import SelectMenuProperties from "@/roles-config-editor-2/components/properties/select-menu.tsx";
 import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-node-context.ts";

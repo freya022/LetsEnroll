@@ -4,7 +4,7 @@ import { ChevronDown, ChevronUp, X } from "lucide-react";
 import {
   SelectMenuChoiceData,
   SelectMenuData,
-} from "@/roles-config-editor-2/types/components.ts";
+} from "@/roles-config-editor-2/types/component-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
 import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 

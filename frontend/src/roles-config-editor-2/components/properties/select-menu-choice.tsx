@@ -1,6 +1,6 @@
 import SingleLineProperty from "@/roles-config-editor-2/components/properties/primitive/single-line.tsx";
 import EmojiProperty from "@/roles-config-editor-2/components/properties/primitive/emoji.tsx";
-import { SelectMenuChoiceData } from "@/roles-config-editor-2/types/components.ts";
+import { SelectMenuChoiceData } from "@/roles-config-editor-2/types/component-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
 import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 

@@ -1,7 +1,7 @@
 import {
   ComponentData,
   RowData,
-} from "@/roles-config-editor-2/types/components.ts";
+} from "@/roles-config-editor-2/types/component-data.ts";
 import AddRowComponentDropdown from "@/roles-config-editor-2/components/display/add-row-component-dropdown.tsx";
 import Component from "@/roles-config-editor-2/components/display/component.tsx";
 
