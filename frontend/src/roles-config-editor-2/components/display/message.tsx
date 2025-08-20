@@ -12,7 +12,7 @@ import Properties from "@/roles-config-editor-2/components/properties/base/prope
 import MessageProperties from "@/roles-config-editor-2/components/properties/message.tsx";
 import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
 import { createPortal } from "react-dom";
-import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel.ts";
+import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel-context.ts";
 
 const MAX_COMPONENT_COUNT = 5;
 

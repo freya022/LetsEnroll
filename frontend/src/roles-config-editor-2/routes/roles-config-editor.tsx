@@ -1,13 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable.tsx";
-import {
-  MutableSelectedNodeContext,
-  SelectedNode,
-} from "@/roles-config-editor-2/hooks/selected-node-context.ts";
 import { RolesConfigData } from "@/roles-config-editor-2/types/roles-config-data.ts";
 import {
   getCustomEmojis,
@@ -15,9 +11,10 @@ import {
 } from "@/emoji-picker/queries/custom-emojis.ts";
 import { useQuery } from "@tanstack/react-query";
 import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
-import { PropertiesPanelRefContext } from "@/roles-config-editor-2/hooks/properties-panel.ts";
+import { PropertiesPanelRefContext } from "@/roles-config-editor-2/hooks/properties-panel-context.ts";
 import { RolesConfig } from "@/roles-config-editor-2/components/display/roles-config.tsx";
 import { RolesConfigProvider } from "@/roles-config-editor-2/components/roles-config-provider.tsx";
+import MutableSelectedNodeProvider from "@/roles-config-editor-2/components/mutable-selected-node-provider.tsx";
 
 const testData: RolesConfigData = {
   messages: [
@@ -69,9 +66,6 @@ const testData: RolesConfigData = {
 export default function RolesConfigEditor() {
   const { id: guildId } = useSelectedGuild();
 
-  // State
-  const [selectedNode, setSelectedNode] = useState<SelectedNode | null>(null);
-
   // Prefetch custom emojis
   useQuery({
     queryKey: getCustomEmojisQueryKey(guildId),
@@ -85,7 +79,7 @@ export default function RolesConfigEditor() {
 
   return (
     <RolesConfigProvider data={testData}>
-      <MutableSelectedNodeContext value={{ selectedNode, setSelectedNode }}>
+      <MutableSelectedNodeProvider>
         <PropertiesPanelRefContext value={propPanelRef}>
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel defaultSize={60}>
@@ -99,7 +93,7 @@ export default function RolesConfigEditor() {
             </ResizablePanel>
           </ResizablePanelGroup>
         </PropertiesPanelRefContext>
-      </MutableSelectedNodeContext>
+      </MutableSelectedNodeProvider>
     </RolesConfigProvider>
   );
 }

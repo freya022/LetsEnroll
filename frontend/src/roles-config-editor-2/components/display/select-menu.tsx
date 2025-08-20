@@ -15,7 +15,7 @@ import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-n
 import ScrollableResizablePanel from "@/roles-config-editor-2/components/scrollable-resizable-panel.tsx";
 import { cn } from "@/lib/utils.ts";
 import { createPortal } from "react-dom";
-import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel.ts";
+import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel-context.ts";
 
 export default function SelectMenu({
   selectMenu,

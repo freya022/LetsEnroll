@@ -11,7 +11,7 @@ import {
   UnicodeEmojiCandidate,
 } from "@/emoji-picker/types/emojis.ts";
 import { createPortal } from "react-dom";
-import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel.ts";
+import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel-context.ts";
 
 export default function Button({
   button,
