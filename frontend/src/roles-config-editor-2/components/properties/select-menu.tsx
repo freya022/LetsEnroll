@@ -5,23 +5,24 @@ import {
   SelectMenuChoiceData,
   SelectMenuData,
 } from "@/roles-config-editor-2/types/components.ts";
-import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
+import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
+import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 
 export default function SelectMenuProperties({
   menu,
-  controls,
   selectedChoiceId,
   setSelectedChoiceId,
 }: {
   menu: SelectMenuData;
-  controls: Controls<SelectMenuData>;
   selectedChoiceId: number | undefined;
   setSelectedChoiceId: (choiceId: number) => void;
 }) {
+  const dispatch = useRolesConfigDispatch();
+
   function onPlaceholderChange(value: string) {
-    controls.update({
-      ...menu,
-      placeholder: value,
+    dispatch!({
+      type: "edit",
+      fn: (draft) => (findDraftObj(draft, menu)!.element.placeholder = value),
     });
   }
 

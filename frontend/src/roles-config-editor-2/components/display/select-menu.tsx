@@ -11,8 +11,6 @@ import {
 } from "@/roles-config-editor-2/types/components.ts";
 import SelectMenuChoiceProperties from "@/roles-config-editor-2/components/properties/select-menu-choice.tsx";
 import SelectMenuProperties from "@/roles-config-editor-2/components/properties/select-menu.tsx";
-import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
-import { replaceIdentifiable } from "@/roles-config-editor-2/utils/identifiable.ts";
 import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-node-context.ts";
 import ScrollableResizablePanel from "@/roles-config-editor-2/components/ScrollableResizablePanel.tsx";
 import { cn } from "@/lib/utils.ts";
@@ -21,10 +19,8 @@ import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-pan
 
 export default function SelectMenu({
   selectMenu,
-  controls,
 }: {
   selectMenu: SelectMenuData;
-  controls: Controls<SelectMenuData>;
 }) {
   const { selectedNode, setSelectedNode } = useMutableSelectedNode();
   const propPanel = usePropertiesPanel();
@@ -53,10 +49,7 @@ export default function SelectMenu({
       {selectedNode?.id === selectMenu.id &&
         propPanel &&
         createPortal(
-          <SelectMenuPropertiesPanels
-            selectMenu={selectMenu}
-            controls={controls}
-          />,
+          <SelectMenuPropertiesPanels selectMenu={selectMenu} />,
           propPanel,
         )}
     </div>
@@ -65,10 +58,8 @@ export default function SelectMenu({
 
 function SelectMenuPropertiesPanels({
   selectMenu,
-  controls,
 }: {
   selectMenu: SelectMenuData;
-  controls: Controls<SelectMenuData>;
 }) {
   const [selectedChoiceId, setSelectedChoiceId] = useState<number>();
   const selectedChoice = selectMenu.choices.find(
@@ -81,51 +72,23 @@ function SelectMenuPropertiesPanels({
         <Properties name="Select menu" onDelete={() => {}}>
           <SelectMenuProperties
             menu={selectMenu}
-            controls={controls}
             selectedChoiceId={selectedChoiceId}
             setSelectedChoiceId={setSelectedChoiceId}
           />
         </Properties>
       </ScrollableResizablePanel>
-      {selectedChoice && (
-        <SelectMenuChoicePanel
-          choice={selectedChoice}
-          controls={getChoiceControls(selectMenu, controls)}
-        />
-      )}
+      {selectedChoice && <SelectMenuChoicePanel choice={selectedChoice} />}
     </ResizablePanelGroup>
   );
 }
 
-function getChoiceControls(
-  parent: SelectMenuData,
-  parentControls: Controls<SelectMenuData>,
-): Controls<SelectMenuChoiceData> {
-  function onChoiceUpdate(choice: SelectMenuChoiceData) {
-    parentControls.update({
-      ...parent,
-      choices: replaceIdentifiable(parent.choices, choice),
-    });
-  }
-
-  return {
-    update: onChoiceUpdate,
-  };
-}
-
-function SelectMenuChoicePanel({
-  choice,
-  controls,
-}: {
-  choice: SelectMenuChoiceData;
-  controls: Controls<SelectMenuChoiceData>;
-}) {
+function SelectMenuChoicePanel({ choice }: { choice: SelectMenuChoiceData }) {
   return (
     <>
       <ResizableHandle />
       <ScrollableResizablePanel order={1}>
         <Properties name="Choice">
-          <SelectMenuChoiceProperties choice={choice} controls={controls} />
+          <SelectMenuChoiceProperties choice={choice} />
         </Properties>
       </ScrollableResizablePanel>
     </>

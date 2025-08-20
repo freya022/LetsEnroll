@@ -4,23 +4,20 @@ import { ButtonData } from "@/roles-config-editor-2/types/components.ts";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 import ButtonProperties from "@/roles-config-editor-2/components/properties/button.tsx";
 import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-node-context.ts";
-import { MouseEvent } from "react";
+import { Fragment, MouseEvent } from "react";
 import Emoji from "@/emoji-picker/components/emoji.tsx";
 import {
   CustomEmojiCandidate,
   UnicodeEmojiCandidate,
 } from "@/emoji-picker/types/emojis.ts";
-import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
 import { createPortal } from "react-dom";
 import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel.ts";
 
 export default function Button({
   button,
-  controls,
   hasError,
 }: {
   button: ButtonData;
-  controls: Controls<ButtonData>;
   hasError: boolean;
 }) {
   const { selectedNode, setSelectedNode } = useMutableSelectedNode();
@@ -57,18 +54,12 @@ export default function Button({
         formattedEmoji={button.emoji}
         onUnicode={ButtonUnicodeEmoji}
         onCustom={ButtonCustomEmoji}
-        onUnknown={() => {
-          if (button.emoji != null) controls.update({ ...button, emoji: null });
-          return <></>;
-        }}
+        onUnknown={Fragment}
       />
       <span className="text-sm font-semibold">{button.label}</span>
       {selectedNode?.id === button.id &&
         propPanel &&
-        createPortal(
-          <ButtonPropertiesPanel button={button} controls={controls} />,
-          propPanel,
-        )}
+        createPortal(<ButtonPropertiesPanel button={button} />, propPanel)}
     </button>
   );
 }
@@ -95,16 +86,10 @@ function ButtonCustomEmoji({ emoji }: { emoji: CustomEmojiCandidate }) {
   return <img src={src} alt={alt} className="size-5" />;
 }
 
-function ButtonPropertiesPanel({
-  button,
-  controls,
-}: {
-  button: ButtonData;
-  controls: Controls<ButtonData>;
-}) {
+function ButtonPropertiesPanel({ button }: { button: ButtonData }) {
   return (
     <Properties name="Button" onDelete={() => {}}>
-      <ButtonProperties button={button} controls={controls} />
+      <ButtonProperties button={button} />
     </Properties>
   );
 }

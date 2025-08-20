@@ -9,40 +9,37 @@ import {
   ButtonStyle,
   ButtonStyles,
 } from "@/roles-config-editor-2/types/components.ts";
-import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
+import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
+import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 
-export default function ButtonProperties({
-  button,
-  controls,
-}: {
-  button: ButtonData;
-  controls: Controls<ButtonData>;
-}) {
+export default function ButtonProperties({ button }: { button: ButtonData }) {
+  const dispatch = useRolesConfigDispatch();
+
   function onStyleChange(value: ButtonStyle) {
-    controls.update({
-      ...button,
-      style: value,
+    dispatch!({
+      type: "edit",
+      fn: (draft) => (findDraftObj(draft, button)!.element.style = value),
     });
   }
 
   function onRoleNameChange(value: string) {
-    controls.update({
-      ...button,
-      roleName: value,
+    dispatch!({
+      type: "edit",
+      fn: (draft) => (findDraftObj(draft, button)!.element.roleName = value),
     });
   }
 
   function onLabelChange(value: string) {
-    controls.update({
-      ...button,
-      label: value,
+    dispatch!({
+      type: "edit",
+      fn: (draft) => (findDraftObj(draft, button)!.element.label = value),
     });
   }
 
   function onEmojiChange(value: string | null) {
-    controls.update({
-      ...button,
-      emoji: value,
+    dispatch!({
+      type: "edit",
+      fn: (draft) => (findDraftObj(draft, button)!.element.emoji = value),
     });
   }
 

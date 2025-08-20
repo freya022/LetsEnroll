@@ -4,7 +4,6 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable.tsx";
-import Message from "@/roles-config-editor-2/components/display/message.tsx";
 import {
   MutableSelectedNodeContext,
   SelectedNode,
@@ -16,14 +15,14 @@ import {
 } from "@/emoji-picker/queries/custom-emojis.ts";
 import { useQuery } from "@tanstack/react-query";
 import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
-import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
-import { replaceIdentifiable } from "@/roles-config-editor-2/utils/identifiable.ts";
-import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
 import { PropertiesPanelRefContext } from "@/roles-config-editor-2/hooks/properties-panel.ts";
+import { RolesConfig } from "@/roles-config-editor-2/components/display/roles-config.tsx";
+import { RolesConfigProvider } from "@/roles-config-editor-2/components/roles-config-provider.tsx";
 
 const testData: RolesConfigData = {
   messages: [
     {
+      type: "message",
       id: 1,
       content: "Message content idk",
       components: [
@@ -51,6 +50,7 @@ const testData: RolesConfigData = {
               placeholder: "",
               choices: [
                 {
+                  type: "select_menu_choice",
                   id: 6,
                   label: "Choice label idk",
                   roleName: "Role name idk",
@@ -70,7 +70,6 @@ export default function RolesConfigEditor() {
   const { id: guildId } = useSelectedGuild();
 
   // State
-  const [data, setData] = useState(testData);
   const [selectedNode, setSelectedNode] = useState<SelectedNode | null>(null);
 
   // Prefetch custom emojis
@@ -81,44 +80,27 @@ export default function RolesConfigEditor() {
     notifyOnChangeProps: [],
   });
 
-  // Handlers
-  function onMessageChange(m: MessageData) {
-    setData((data) => ({
-      messages: replaceIdentifiable(data.messages, m),
-    }));
-  }
-
-  const messageControls: Controls<MessageData> = {
-    update: onMessageChange,
-  };
-
   // So the selected nodes can create portals to it
   const propPanelRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <MutableSelectedNodeContext value={{ selectedNode, setSelectedNode }}>
-      <PropertiesPanelRefContext value={propPanelRef}>
-        <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel defaultSize={60}>
-            <div className="h-screen overflow-auto">
-              <div className="pt-4 pr-2 pb-2 pl-4">
-                {data.messages.map((message) => (
-                  <Message
-                    message={message}
-                    controls={messageControls}
-                    key={message.id}
-                  />
-                ))}
+    <RolesConfigProvider data={testData}>
+      <MutableSelectedNodeContext value={{ selectedNode, setSelectedNode }}>
+        <PropertiesPanelRefContext value={propPanelRef}>
+          <ResizablePanelGroup direction="horizontal">
+            <ResizablePanel defaultSize={60}>
+              <div className="h-screen overflow-auto">
+                <RolesConfig />
               </div>
-            </div>
-          </ResizablePanel>
-          <ResizableHandle />
-          <ResizablePanel>
-            <div className="size-full" ref={propPanelRef} />
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </PropertiesPanelRefContext>
-    </MutableSelectedNodeContext>
+            </ResizablePanel>
+            <ResizableHandle />
+            <ResizablePanel>
+              <div className="size-full" ref={propPanelRef} />
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </PropertiesPanelRefContext>
+      </MutableSelectedNodeContext>
+    </RolesConfigProvider>
   );
 }
 

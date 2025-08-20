@@ -11,21 +11,12 @@ import { cn } from "@/lib/utils.ts";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 import MessageProperties from "@/roles-config-editor-2/components/properties/message.tsx";
 import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
-import { replaceIdentifiable } from "@/roles-config-editor-2/utils/identifiable.ts";
-import { ComponentData } from "@/roles-config-editor-2/types/components.ts";
-import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
 import { createPortal } from "react-dom";
 import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel.ts";
 
 const MAX_COMPONENT_COUNT = 5;
 
-export default function Message({
-  message,
-  controls,
-}: {
-  message: MessageData;
-  controls: Controls<MessageData>;
-}) {
+export default function Message({ message }: { message: MessageData }) {
   const { user } = useRouteLoaderData<{ user: UserDTO }>("root")!;
   const { selectedNode, setSelectedNode } = useMutableSelectedNode();
   const propPanel = usePropertiesPanel();
@@ -41,17 +32,6 @@ export default function Message({
       id: message.id,
     });
   }
-
-  function onComponentChange(c: ComponentData) {
-    controls.update({
-      ...message,
-      components: replaceIdentifiable(message.components, c),
-    });
-  }
-
-  const componentsControls: Controls<ComponentData> = {
-    update: onComponentChange,
-  };
 
   return (
     <>
@@ -77,11 +57,7 @@ export default function Message({
             <span>{message.content}</span>
             <Components>
               {message.components.map((component) => (
-                <Component
-                  component={component}
-                  controls={componentsControls}
-                  key={component.id}
-                />
+                <Component component={component} key={component.id} />
               ))}
               {message.components.length < MAX_COMPONENT_COUNT && (
                 <AddTopLevelComponentDropdown />
@@ -91,10 +67,7 @@ export default function Message({
         </div>
         {selectedNode?.id == message.id &&
           propPanel &&
-          createPortal(
-            <MessagePropertiesPanel message={message} controls={controls} />,
-            propPanel,
-          )}
+          createPortal(<MessagePropertiesPanel message={message} />, propPanel)}
       </div>
       <div className="mt-1 pl-12">
         <AddMessage />
@@ -103,16 +76,10 @@ export default function Message({
   );
 }
 
-function MessagePropertiesPanel({
-  message,
-  controls,
-}: {
-  message: MessageData;
-  controls: Controls<MessageData>;
-}) {
+function MessagePropertiesPanel({ message }: { message: MessageData }) {
   return (
     <Properties name="Message" onDelete={() => {}}>
-      <MessageProperties message={message} controls={controls} />
+      <MessageProperties message={message} />
     </Properties>
   );
 }

@@ -23,6 +23,7 @@ export type ButtonData = Identifiable<{
 }>;
 
 export type SelectMenuChoiceData = Identifiable<{
+  type: "select_menu_choice";
   roleName: string;
   label: string;
   description: string | null;

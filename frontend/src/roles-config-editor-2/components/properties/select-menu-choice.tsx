@@ -1,40 +1,41 @@
 import SingleLineProperty from "@/roles-config-editor-2/components/properties/primitive/single-line.tsx";
 import EmojiProperty from "@/roles-config-editor-2/components/properties/primitive/emoji.tsx";
 import { SelectMenuChoiceData } from "@/roles-config-editor-2/types/components.ts";
-import { Controls } from "@/roles-config-editor-2/components/properties/types/controls.ts";
+import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
+import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 
 export default function SelectMenuChoiceProperties({
   choice,
-  controls,
 }: {
   choice: SelectMenuChoiceData;
-  controls: Controls<SelectMenuChoiceData>;
 }) {
+  const dispatch = useRolesConfigDispatch();
+
   function onRoleNameChange(value: string) {
-    controls.update({
-      ...choice,
-      roleName: value,
+    dispatch!({
+      type: "edit",
+      fn: (draft) => (findDraftObj(draft, choice)!.element.roleName = value),
     });
   }
 
   function onLabelChange(value: string) {
-    controls.update({
-      ...choice,
-      label: value,
+    dispatch!({
+      type: "edit",
+      fn: (draft) => (findDraftObj(draft, choice)!.element.label = value),
     });
   }
 
   function onDescriptionChange(value: string) {
-    controls.update({
-      ...choice,
-      description: value,
+    dispatch!({
+      type: "edit",
+      fn: (draft) => (findDraftObj(draft, choice)!.element.description = value),
     });
   }
 
   function onEmojiChange(value: string | null) {
-    controls.update({
-      ...choice,
-      emoji: value,
+    dispatch!({
+      type: "edit",
+      fn: (draft) => (findDraftObj(draft, choice)!.element.emoji = value),
     });
   }
 
