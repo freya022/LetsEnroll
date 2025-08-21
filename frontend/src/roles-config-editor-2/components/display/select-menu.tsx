@@ -87,7 +87,7 @@ function SelectMenuChoicePanel({ choice }: { choice: SelectMenuChoiceData }) {
     <>
       <ResizableHandle />
       <ScrollableResizablePanel order={1}>
-        <Properties name="Choice">
+        <Properties name="Choice" onDelete={() => {}}>
           <SelectMenuChoiceProperties choice={choice} />
         </Properties>
       </ScrollableResizablePanel>
