@@ -6,10 +6,6 @@ type TypedIdentifiableWithParent<T extends Identifiable = Identifiable> = {
   parent: Identifiable[];
 };
 
-export function findNextId(config: RolesConfigData) {
-  return Math.max(...getAllIdentifiables(config).map((t) => t.element.id));
-}
-
 export function findDraftObj<T extends Identifiable>(
   draft: RolesConfigData,
   target: T,
@@ -21,7 +17,7 @@ export function findDraftObj<T extends Identifiable>(
   }
 }
 
-function getAllIdentifiables(
+export function getAllIdentifiables(
   config: RolesConfigData,
 ): TypedIdentifiableWithParent[] {
   const stack: TypedIdentifiableWithParent[] = associateArrayChildren(

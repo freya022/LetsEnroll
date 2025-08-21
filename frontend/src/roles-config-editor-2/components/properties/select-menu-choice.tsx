@@ -2,7 +2,6 @@ import SingleLineProperty from "@/roles-config-editor-2/components/properties/pr
 import EmojiProperty from "@/roles-config-editor-2/components/properties/primitive/emoji.tsx";
 import { SelectMenuChoiceData } from "@/roles-config-editor-2/types/component-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
-import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 import { ResizableHandle } from "@/components/ui/resizable.tsx";
 import ScrollableResizablePanel from "@/roles-config-editor-2/components/scrollable-resizable-panel.tsx";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
@@ -43,28 +42,28 @@ function SelectMenuChoiceProperties({
   function onRoleNameChange(value: string) {
     dispatch!({
       type: "edit",
-      fn: (draft) => (findDraftObj(draft, choice)!.element.roleName = value),
+      fn: (draft) => (draft.find(choice)!.roleName = value),
     });
   }
 
   function onLabelChange(value: string) {
     dispatch!({
       type: "edit",
-      fn: (draft) => (findDraftObj(draft, choice)!.element.label = value),
+      fn: (draft) => (draft.find(choice)!.label = value),
     });
   }
 
   function onDescriptionChange(value: string) {
     dispatch!({
       type: "edit",
-      fn: (draft) => (findDraftObj(draft, choice)!.element.description = value),
+      fn: (draft) => (draft.find(choice)!.description = value),
     });
   }
 
   function onEmojiChange(value: string | null) {
     dispatch!({
       type: "edit",
-      fn: (draft) => (findDraftObj(draft, choice)!.element.emoji = value),
+      fn: (draft) => (draft.find(choice)!.emoji = value),
     });
   }
 

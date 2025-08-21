@@ -10,7 +10,6 @@ import {
   ButtonStyles,
 } from "@/roles-config-editor-2/types/component-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
-import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 
 export default function ButtonPropertiesPanel({
@@ -40,28 +39,28 @@ function ButtonProperties({ button }: { button: ButtonData }) {
   function onStyleChange(value: ButtonStyle) {
     dispatch!({
       type: "edit",
-      fn: (draft) => (findDraftObj(draft, button)!.element.style = value),
+      fn: (draft) => (draft.find(button)!.style = value),
     });
   }
 
   function onRoleNameChange(value: string) {
     dispatch!({
       type: "edit",
-      fn: (draft) => (findDraftObj(draft, button)!.element.roleName = value),
+      fn: (draft) => (draft.find(button)!.roleName = value),
     });
   }
 
   function onLabelChange(value: string) {
     dispatch!({
       type: "edit",
-      fn: (draft) => (findDraftObj(draft, button)!.element.label = value),
+      fn: (draft) => (draft.find(button)!.label = value),
     });
   }
 
   function onEmojiChange(value: string | null) {
     dispatch!({
       type: "edit",
-      fn: (draft) => (findDraftObj(draft, button)!.element.emoji = value),
+      fn: (draft) => (draft.find(button)!.emoji = value),
     });
   }
 

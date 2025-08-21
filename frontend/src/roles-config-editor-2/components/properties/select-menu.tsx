@@ -6,7 +6,6 @@ import {
   SelectMenuData,
 } from "@/roles-config-editor-2/types/component-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
-import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 import { useState } from "react";
 import { ResizablePanelGroup } from "@/components/ui/resizable.tsx";
 import ScrollableResizablePanel from "@/roles-config-editor-2/components/scrollable-resizable-panel.tsx";
@@ -62,7 +61,7 @@ function SelectMenuProperties({
   function onPlaceholderChange(value: string) {
     dispatch!({
       type: "edit",
-      fn: (draft) => (findDraftObj(draft, menu)!.element.placeholder = value),
+      fn: (draft) => (draft.find(menu)!.placeholder = value),
     });
   }
 

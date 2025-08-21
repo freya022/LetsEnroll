@@ -1,7 +1,6 @@
 import MultiLineProperty from "@/roles-config-editor-2/components/properties/primitive/multi-line.tsx";
 import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
-import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 
 export default function MessagePropertiesPanel({
@@ -31,7 +30,7 @@ function MessageProperties({ message }: { message: MessageData }) {
   function onContentChange(value: string) {
     dispatch!({
       type: "edit",
-      fn: (draft) => (findDraftObj(draft, message)!.element.content = value),
+      fn: (draft) => (draft.find(message)!.content = value),
     });
   }
 
