@@ -1,5 +1,6 @@
 import { useRolesConfig } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
 import Message from "@/roles-config-editor-2/components/display/message.tsx";
+import AddMessage from "@/roles-config-editor-2/components/display/add-message.tsx";
 
 export function RolesConfig() {
   const rolesConfig = useRolesConfig()!;
@@ -9,6 +10,9 @@ export function RolesConfig() {
       {rolesConfig.messages.map((message) => (
         <Message message={message} key={message.id} />
       ))}
+      <div className="mt-1 pl-12">
+        <AddMessage />
+      </div>
     </div>
   );
 }
