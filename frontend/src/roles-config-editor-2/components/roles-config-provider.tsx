@@ -14,10 +14,10 @@ export function RolesConfigProvider({
   data: RolesConfigData;
   children: ReactNode;
 }) {
-  const [tasks, dispatch] = useImmerReducer(rolesConfigReducer, data);
+  const [config, dispatch] = useImmerReducer(rolesConfigReducer, data);
 
   return (
-    <RolesConfigContext value={tasks}>
+    <RolesConfigContext value={config}>
       <RolesConfigDispatchContext value={dispatch}>
         {children}
       </RolesConfigDispatchContext>
