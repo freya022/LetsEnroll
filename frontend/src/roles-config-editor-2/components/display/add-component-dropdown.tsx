@@ -4,16 +4,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
+import { MouseEvent } from "react";
 
 type AddComponentItem = {
   label: string;
-  action: () => void;
+  action: (event: MouseEvent) => void;
 };
 
 export default function AddComponentDropdown({
-                                label,
-                                items,
-                              }: {
+  label,
+  items,
+}: {
   label: string;
   items: AddComponentItem[];
 }) {
