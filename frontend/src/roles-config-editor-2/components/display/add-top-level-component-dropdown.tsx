@@ -3,12 +3,18 @@ import AddComponentDropdown from "@/roles-config-editor-2/components/display/add
 export default function AddTopLevelComponentDropdown() {
   return (
     <AddComponentDropdown
-      label="Add top-level component..."
+      label="Add component..."
       items={[
         {
-          label: "Row",
+          label: "Toggle button",
           action: () => {
-            console.log("row");
+            console.log("button");
+          },
+        },
+        {
+          label: "Select menu",
+          action: () => {
+            console.log("select menu");
           },
         },
       ]}
