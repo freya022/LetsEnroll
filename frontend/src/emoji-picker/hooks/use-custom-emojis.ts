@@ -3,7 +3,7 @@ import {
   getCustomEmojis,
   getCustomEmojisQueryKey,
 } from "@/emoji-picker/queries/custom-emojis.ts";
-import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
+import { useSelectedGuild } from "@/hooks/use-selected-guild.ts";
 
 export function useCustomEmojis(guildId: string) {
   const { data: customEmojis } = useQuery({

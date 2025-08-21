@@ -28,7 +28,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip.tsx";
-import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
+import { useSelectedGuild } from "@/hooks/use-selected-guild.ts";
 
 type Params = {
   guildId: string;

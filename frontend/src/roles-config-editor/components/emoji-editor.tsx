@@ -20,7 +20,7 @@ import axios from "axios";
 import { ChevronsUpDown, X } from "lucide-react";
 import { CustomEmojiCandidate } from "@/emoji-picker/types/emojis.ts";
 import { EmojiPicker } from "@/emoji-picker/components/emoji-picker.tsx";
-import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
+import { useSelectedGuild } from "@/hooks/use-selected-guild.ts";
 import { getHumanName, unicodeEmojis } from "@/emoji-picker/unicode-emojis.ts";
 import { UnicodeEmoji } from "@/emoji-picker/components/unicode-emoji.tsx";
 

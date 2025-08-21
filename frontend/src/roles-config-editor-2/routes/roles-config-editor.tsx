@@ -10,7 +10,7 @@ import {
   getCustomEmojisQueryKey,
 } from "@/emoji-picker/queries/custom-emojis.ts";
 import { useQuery } from "@tanstack/react-query";
-import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
+import { useSelectedGuild } from "@/hooks/use-selected-guild.ts";
 import { PropertiesPanelRefContext } from "@/roles-config-editor-2/hooks/properties-panel-context.ts";
 import { RolesConfig } from "@/roles-config-editor-2/components/display/roles-config.tsx";
 import { RolesConfigProvider } from "@/roles-config-editor-2/components/roles-config-provider.tsx";

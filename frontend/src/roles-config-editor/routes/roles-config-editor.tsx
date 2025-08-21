@@ -29,7 +29,7 @@ import { getErrorMessage } from "@/utils.ts";
 import axios, { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { ValidationError } from "@/roles-config-editor/types.ts";
-import { useSelectedGuild } from "@/roles-config-editor/hooks/use-selected-guild.ts";
+import { useSelectedGuild } from "@/hooks/use-selected-guild.ts";
 
 type Params = {
   guildId: string;
