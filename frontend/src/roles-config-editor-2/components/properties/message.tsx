@@ -2,8 +2,18 @@ import MultiLineProperty from "@/roles-config-editor-2/components/properties/pri
 import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
 import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
+import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 
-export default function MessageProperties({
+
+export default function MessagePropertiesPanel({ message }: { message: MessageData }) {
+  return (
+    <Properties name="Message" onDelete={() => {}}>
+      <MessageProperties message={message} />
+    </Properties>
+  );
+}
+
+function MessageProperties({
   message,
 }: {
   message: MessageData;

@@ -11,8 +11,17 @@ import {
 } from "@/roles-config-editor-2/types/component-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
 import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
+import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 
-export default function ButtonProperties({ button }: { button: ButtonData }) {
+export default function ButtonPropertiesPanel({ button }: { button: ButtonData }) {
+  return (
+    <Properties name="Button" onDelete={() => {}}>
+      <ButtonProperties button={button} />
+    </Properties>
+  );
+}
+
+function ButtonProperties({ button }: { button: ButtonData }) {
   const dispatch = useRolesConfigDispatch();
 
   function onStyleChange(value: ButtonStyle) {

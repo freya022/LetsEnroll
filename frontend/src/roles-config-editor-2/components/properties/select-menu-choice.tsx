@@ -3,8 +3,24 @@ import EmojiProperty from "@/roles-config-editor-2/components/properties/primiti
 import { SelectMenuChoiceData } from "@/roles-config-editor-2/types/component-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
 import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
+import { ResizableHandle } from "@/components/ui/resizable.tsx";
+import ScrollableResizablePanel from "@/roles-config-editor-2/components/scrollable-resizable-panel.tsx";
+import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 
-export default function SelectMenuChoiceProperties({
+export default function SelectMenuChoicePanel({ choice }: { choice: SelectMenuChoiceData }) {
+  return (
+    <>
+      <ResizableHandle />
+      <ScrollableResizablePanel order={1}>
+        <Properties name="Choice" onDelete={() => {}}>
+          <SelectMenuChoiceProperties choice={choice} />
+        </Properties>
+      </ScrollableResizablePanel>
+    </>
+  );
+}
+
+function SelectMenuChoiceProperties({
   choice,
 }: {
   choice: SelectMenuChoiceData;

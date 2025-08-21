@@ -1,8 +1,7 @@
 import { cn } from "@/lib/utils.ts";
 import { UnicodeEmoji } from "@/emoji-picker/components/unicode-emoji.tsx";
 import { ButtonData } from "@/roles-config-editor-2/types/component-data.ts";
-import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
-import ButtonProperties from "@/roles-config-editor-2/components/properties/button.tsx";
+import ButtonPropertiesPanel from "@/roles-config-editor-2/components/properties/button.tsx";
 import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-node-context.ts";
 import { Fragment, MouseEvent } from "react";
 import Emoji from "@/emoji-picker/components/emoji.tsx";
@@ -84,12 +83,4 @@ function ButtonCustomEmoji({ emoji }: { emoji: CustomEmojiCandidate }) {
   const alt = `'${emoji.name}' emoji`;
   const src = `https://cdn.discordapp.com/emojis/${emoji.id}.webp?animated=true`;
   return <img src={src} alt={alt} className="size-5" />;
-}
-
-function ButtonPropertiesPanel({ button }: { button: ButtonData }) {
-  return (
-    <Properties name="Button" onDelete={() => {}}>
-      <ButtonProperties button={button} />
-    </Properties>
-  );
 }

@@ -7,8 +7,39 @@ import {
 } from "@/roles-config-editor-2/types/component-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
 import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
+import { useState } from "react";
+import { ResizablePanelGroup } from "@/components/ui/resizable.tsx";
+import ScrollableResizablePanel from "@/roles-config-editor-2/components/scrollable-resizable-panel.tsx";
+import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
+import SelectMenuChoicePanel from "@/roles-config-editor-2/components/properties/select-menu-choice.tsx";
 
-export default function SelectMenuProperties({
+export default function SelectMenuPropertiesPanels({
+  selectMenu,
+}: {
+  selectMenu: SelectMenuData;
+}) {
+  const [selectedChoiceId, setSelectedChoiceId] = useState<number>();
+  const selectedChoice = selectMenu.choices.find(
+    (c) => c.id === selectedChoiceId,
+  );
+
+  return (
+    <ResizablePanelGroup direction="vertical">
+      <ScrollableResizablePanel order={0} defaultSize={selectedChoice && 50}>
+        <Properties name="Select menu" onDelete={() => {}}>
+          <SelectMenuProperties
+            menu={selectMenu}
+            selectedChoiceId={selectedChoiceId}
+            setSelectedChoiceId={setSelectedChoiceId}
+          />
+        </Properties>
+      </ScrollableResizablePanel>
+      {selectedChoice && <SelectMenuChoicePanel choice={selectedChoice} />}
+    </ResizablePanelGroup>
+  );
+}
+
+function SelectMenuProperties({
   menu,
   selectedChoiceId,
   setSelectedChoiceId,

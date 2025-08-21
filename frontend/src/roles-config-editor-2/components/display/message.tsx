@@ -7,8 +7,7 @@ import AddTopLevelComponentDropdown from "@/roles-config-editor-2/components/dis
 import Component from "@/roles-config-editor-2/components/display/component.tsx";
 import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-node-context.ts";
 import { cn } from "@/lib/utils.ts";
-import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
-import MessageProperties from "@/roles-config-editor-2/components/properties/message.tsx";
+import MessagePropertiesPanel from "@/roles-config-editor-2/components/properties/message.tsx";
 import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
 import { createPortal } from "react-dom";
 import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel-context.ts";
@@ -67,13 +66,5 @@ export default function Message({ message }: { message: MessageData }) {
         propPanel &&
         createPortal(<MessagePropertiesPanel message={message} />, propPanel)}
     </div>
-  );
-}
-
-function MessagePropertiesPanel({ message }: { message: MessageData }) {
-  return (
-    <Properties name="Message" onDelete={() => {}}>
-      <MessageProperties message={message} />
-    </Properties>
   );
 }

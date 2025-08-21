@@ -1,18 +1,8 @@
 import { ChevronDown } from "lucide-react";
-import { MouseEvent, useState } from "react";
-import {
-  ResizableHandle,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable.tsx";
-import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
-import {
-  SelectMenuChoiceData,
-  SelectMenuData,
-} from "@/roles-config-editor-2/types/component-data.ts";
-import SelectMenuChoiceProperties from "@/roles-config-editor-2/components/properties/select-menu-choice.tsx";
-import SelectMenuProperties from "@/roles-config-editor-2/components/properties/select-menu.tsx";
+import { MouseEvent } from "react";
+import { SelectMenuData } from "@/roles-config-editor-2/types/component-data.ts";
+import SelectMenuPropertiesPanels from "@/roles-config-editor-2/components/properties/select-menu.tsx";
 import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-node-context.ts";
-import ScrollableResizablePanel from "@/roles-config-editor-2/components/scrollable-resizable-panel.tsx";
 import { cn } from "@/lib/utils.ts";
 import { createPortal } from "react-dom";
 import { usePropertiesPanel } from "@/roles-config-editor-2/hooks/properties-panel-context.ts";
@@ -53,44 +43,5 @@ export default function SelectMenu({
           propPanel,
         )}
     </div>
-  );
-}
-
-function SelectMenuPropertiesPanels({
-  selectMenu,
-}: {
-  selectMenu: SelectMenuData;
-}) {
-  const [selectedChoiceId, setSelectedChoiceId] = useState<number>();
-  const selectedChoice = selectMenu.choices.find(
-    (c) => c.id === selectedChoiceId,
-  );
-
-  return (
-    <ResizablePanelGroup direction="vertical">
-      <ScrollableResizablePanel order={0} defaultSize={selectedChoice && 50}>
-        <Properties name="Select menu" onDelete={() => {}}>
-          <SelectMenuProperties
-            menu={selectMenu}
-            selectedChoiceId={selectedChoiceId}
-            setSelectedChoiceId={setSelectedChoiceId}
-          />
-        </Properties>
-      </ScrollableResizablePanel>
-      {selectedChoice && <SelectMenuChoicePanel choice={selectedChoice} />}
-    </ResizablePanelGroup>
-  );
-}
-
-function SelectMenuChoicePanel({ choice }: { choice: SelectMenuChoiceData }) {
-  return (
-    <>
-      <ResizableHandle />
-      <ScrollableResizablePanel order={1}>
-        <Properties name="Choice" onDelete={() => {}}>
-          <SelectMenuChoiceProperties choice={choice} />
-        </Properties>
-      </ScrollableResizablePanel>
-    </>
   );
 }
