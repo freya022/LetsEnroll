@@ -5,6 +5,12 @@ import {
 } from "@/roles-config-editor-2/utils/identifiable.ts";
 import { MessageData } from "@/roles-config-editor-2/types/message-data.ts";
 import { Identifiable } from "@/roles-config-editor-2/types/identifiable.ts";
+import {
+  ButtonData,
+  ComponentData,
+  RowData,
+  SelectMenuData,
+} from "@/roles-config-editor-2/types/component-data.ts";
 
 export class RolesConfigDraft {
   private maxId: number;
@@ -36,6 +42,34 @@ export class RolesConfigDraft {
       id: ++this.maxId,
       content: "",
       components: [],
+    };
+  }
+
+  newRow(...children: ComponentData[]): RowData {
+    return {
+      type: "row",
+      id: ++this.maxId,
+      components: children,
+    };
+  }
+
+  newButton(): ButtonData {
+    return {
+      type: "button",
+      id: ++this.maxId,
+      style: "PRIMARY",
+      roleName: "",
+      label: "Label",
+      emoji: null,
+    };
+  }
+
+  newSelectMenu(): SelectMenuData {
+    return {
+      type: "string_select_menu",
+      id: ++this.maxId,
+      placeholder: null,
+      choices: [],
     };
   }
 }

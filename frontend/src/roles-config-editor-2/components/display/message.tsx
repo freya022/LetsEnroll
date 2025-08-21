@@ -57,7 +57,7 @@ export default function Message({ message }: { message: MessageData }) {
               <Component component={component} key={component.id} />
             ))}
             {message.components.length < MAX_COMPONENT_COUNT && (
-              <AddTopLevelComponentDropdown />
+              <AddTopLevelComponentDropdown message={message} />
             )}
           </Components>
         </div>
