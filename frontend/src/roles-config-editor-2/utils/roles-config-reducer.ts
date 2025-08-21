@@ -1,5 +1,9 @@
 import { RolesConfigData } from "@/roles-config-editor-2/types/roles-config-data.ts";
-import { findNextId } from "@/roles-config-editor-2/utils/identifiable.ts";
+import {
+  findDraftObj,
+  findNextId,
+} from "@/roles-config-editor-2/utils/identifiable.ts";
+import { Identifiable } from "@/roles-config-editor-2/types/identifiable.ts";
 
 type RolesConfigReducerAddMessageAction = {
   type: "add_message";
@@ -10,9 +14,15 @@ type RolesConfigReducerEditAction = {
   fn: (draft: RolesConfigData) => void;
 };
 
+type RolesConfigReducerDeleteAction = {
+  type: "delete";
+  obj: Identifiable;
+};
+
 export type RolesConfigReducerAction =
   | RolesConfigReducerAddMessageAction
-  | RolesConfigReducerEditAction;
+  | RolesConfigReducerEditAction
+  | RolesConfigReducerDeleteAction;
 
 export function rolesConfigReducer(
   draft: RolesConfigData,
@@ -29,6 +39,15 @@ export function rolesConfigReducer(
     }
     case "edit": {
       return void action.fn(draft);
+    }
+    case "delete": {
+      const draftObj = findDraftObj(draft, action.obj);
+      if (!draftObj) return;
+
+      const index = draftObj.parent.findIndex((t) => t.id === action.obj.id);
+      if (index == -1) return;
+
+      return void draftObj.parent.splice(index, 1);
     }
     default:
       throw new Error("Unknown action type");

@@ -4,20 +4,28 @@ import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-conf
 import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 
+export default function MessagePropertiesPanel({
+  message,
+}: {
+  message: MessageData;
+}) {
+  const dispatch = useRolesConfigDispatch();
 
-export default function MessagePropertiesPanel({ message }: { message: MessageData }) {
+  function onDelete() {
+    dispatch!({
+      type: "delete",
+      obj: message,
+    });
+  }
+
   return (
-    <Properties name="Message" onDelete={() => {}}>
+    <Properties name="Message" onDelete={onDelete}>
       <MessageProperties message={message} />
     </Properties>
   );
 }
 
-function MessageProperties({
-  message,
-}: {
-  message: MessageData;
-}) {
+function MessageProperties({ message }: { message: MessageData }) {
   const dispatch = useRolesConfigDispatch();
 
   function onContentChange(value: string) {

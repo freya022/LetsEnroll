@@ -7,12 +7,25 @@ import { ResizableHandle } from "@/components/ui/resizable.tsx";
 import ScrollableResizablePanel from "@/roles-config-editor-2/components/scrollable-resizable-panel.tsx";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 
-export default function SelectMenuChoicePanel({ choice }: { choice: SelectMenuChoiceData }) {
+export default function SelectMenuChoicePanel({
+  choice,
+}: {
+  choice: SelectMenuChoiceData;
+}) {
+  const dispatch = useRolesConfigDispatch();
+
+  function onDelete() {
+    dispatch!({
+      type: "delete",
+      obj: choice,
+    });
+  }
+
   return (
     <>
       <ResizableHandle />
       <ScrollableResizablePanel order={1}>
-        <Properties name="Choice" onDelete={() => {}}>
+        <Properties name="Choice" onDelete={onDelete}>
           <SelectMenuChoiceProperties choice={choice} />
         </Properties>
       </ScrollableResizablePanel>

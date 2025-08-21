@@ -18,15 +18,24 @@ export default function SelectMenuPropertiesPanels({
 }: {
   selectMenu: SelectMenuData;
 }) {
+  const dispatch = useRolesConfigDispatch();
+
   const [selectedChoiceId, setSelectedChoiceId] = useState<number>();
   const selectedChoice = selectMenu.choices.find(
     (c) => c.id === selectedChoiceId,
   );
 
+  function onDelete() {
+    dispatch!({
+      type: "delete",
+      obj: selectMenu,
+    });
+  }
+
   return (
     <ResizablePanelGroup direction="vertical">
       <ScrollableResizablePanel order={0} defaultSize={selectedChoice && 50}>
-        <Properties name="Select menu" onDelete={() => {}}>
+        <Properties name="Select menu" onDelete={onDelete}>
           <SelectMenuProperties
             menu={selectMenu}
             selectedChoiceId={selectedChoiceId}

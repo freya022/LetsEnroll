@@ -13,9 +13,22 @@ import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-conf
 import { findDraftObj } from "@/roles-config-editor-2/utils/identifiable.ts";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 
-export default function ButtonPropertiesPanel({ button }: { button: ButtonData }) {
+export default function ButtonPropertiesPanel({
+  button,
+}: {
+  button: ButtonData;
+}) {
+  const dispatch = useRolesConfigDispatch();
+
+  function onDelete() {
+    dispatch!({
+      type: "delete",
+      obj: button,
+    });
+  }
+
   return (
-    <Properties name="Button" onDelete={() => {}}>
+    <Properties name="Button" onDelete={onDelete}>
       <ButtonProperties button={button} />
     </Properties>
   );
