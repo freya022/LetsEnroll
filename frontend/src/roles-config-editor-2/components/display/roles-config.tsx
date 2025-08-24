@@ -6,11 +6,11 @@ export function RolesConfig() {
   const rolesConfig = useRolesConfig()!;
 
   return (
-    <div className="pt-4 pr-2 pb-2 pl-4">
+    <div className="grid gap-2 pt-4 pr-2 pb-2 pl-4">
       {rolesConfig.messages.map((message) => (
         <Message message={message} key={message.id} />
       ))}
-      <div className="mt-1 pl-12">
+      <div className="pl-12">
         <AddMessage />
       </div>
     </div>
