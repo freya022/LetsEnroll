@@ -61,6 +61,11 @@
   --discord-button-accent-danger: rgb(180, 40, 49);
   --discord-button-border-danger: rgba(255, 255, 255, 0.08);
   --discord-button-foreground-danger: rgb(255, 255, 255);
+
+  /* Discord select menu colors */
+  --discord-select-menu-background: oklab(0 0 0 / 0.0784314);
+  --discord-select-menu-border: oklab(0.678888 0.00325716 -0.011175 / 0.360784);
+  --discord-select-menu-placeholder-foreground: oklab(0.491651 0.00312106 -0.0155715);
 }
 
 .dark {
@@ -119,6 +124,11 @@
   --discord-button-accent-danger: rgb(180, 40, 49);
   --discord-button-border-danger: rgba(255, 255, 255, 0.08);
   --discord-button-foreground-danger: rgb(255, 255, 255);
+
+  /* Discord select menu colors */
+  --discord-select-menu-background: oklab(0 0 0 / 0.0784314);
+  --discord-select-menu-border: oklab(0.678888 0.00325716 -0.011175 / 0.2);
+  --discord-select-menu-placeholder-foreground: oklab(0.740158 0.00280195 -0.00954258);
 }
 
 @theme inline {
@@ -181,6 +191,11 @@
   --color-discord-button-accent-danger: var(--discord-button-accent-danger);
   --color-discord-button-border-danger: var(--discord-button-border-danger);
   --color-discord-button-foreground-danger: var(--discord-button-foreground-danger);
+
+  /* Discord select menu colors */
+  --color-discord-select-menu-background: var(--discord-select-menu-background);
+  --color-discord-select-menu-border: var(--discord-select-menu-border);
+  --color-discord-select-menu-placeholder-foreground: var(--discord-select-menu-placeholder-foreground);
 }
 
 @utility outline-selected {

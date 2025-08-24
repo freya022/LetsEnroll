@@ -25,13 +25,13 @@ export default function SelectMenu({
   return (
     <div
       className={cn(
-        "flex min-h-[44px] w-[400px] cursor-pointer items-center justify-between rounded-[8px] border-[0.8px] bg-[#18181c] p-[8px]",
+        "bg-discord-select-menu-background border-discord-select-menu-border flex min-h-[44px] w-[400px] cursor-pointer items-center justify-between rounded-[8px] border-[0.8px] p-[8px]",
         selectedNode?.id === selectMenu.id && "outline-selected",
       )}
       role="list"
       onClick={handleSelectMenuClick}
     >
-      <span className="text-sm text-[#a8abb1]">
+      <span className="text-sm text-discord-select-menu-placeholder-foreground">
         {selectMenu.placeholder || "Make a selection"}
       </span>
       <ChevronDown className="size-4" aria-hidden="true" />
