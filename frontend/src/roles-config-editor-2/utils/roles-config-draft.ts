@@ -70,7 +70,7 @@ export class RolesConfigDraft {
       type: "string_select_menu",
       id: ++this.maxId,
       placeholder: null,
-      choices: [],
+      choices: [this.newSelectMenuChoice()],
     };
   }
 
