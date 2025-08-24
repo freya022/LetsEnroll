@@ -115,11 +115,13 @@ function SelectMenuChoices({
 }) {
   return (
     <div className="border-accent grid rounded-sm border-2 *:first:rounded-t-sm *:last:rounded-b-sm">
-      {choices.map((choice) => (
+      {choices.map((choice, index) => (
         <SelectMenuChoiceItem
           choice={choice}
+          index={index}
+          maxIndex={choices.length}
+          setSelectedChoiceId={setSelectedChoiceId}
           selected={selectedChoiceId === choice.id}
-          onToggle={() => setSelectedChoiceId(choice.id)}
           key={choice.id}
         />
       ))}
@@ -129,27 +131,84 @@ function SelectMenuChoices({
 
 function SelectMenuChoiceItem({
   choice,
+  index,
+  maxIndex,
+  setSelectedChoiceId,
   selected,
-  onToggle,
 }: {
   choice: SelectMenuChoiceData;
+  index: number;
+  maxIndex: number;
+  setSelectedChoiceId: (choiceId: number) => void;
   selected: boolean;
-  onToggle: () => void;
 }) {
+  const dispatch = useRolesConfigDispatch();
+
+  const canMoveUp = index !== 0;
+  const canMoveDown = index !== maxIndex - 1;
+
+  function handleToggle() {
+    setSelectedChoiceId(choice.id);
+  }
+
+  function handleMoveUp() {
+    dispatch!({
+      type: "swap",
+      item: choice,
+      newPosition: index - 1,
+    });
+  }
+
+  function handleMoveDown() {
+    dispatch!({
+      type: "swap",
+      item: choice,
+      newPosition: index + 1,
+    });
+  }
+
+  function handleDelete() {
+    dispatch!({
+      type: "delete",
+      obj: choice,
+    });
+  }
+
   return (
     <div
       className={cn(
         "odd:bg-accent/60 flex *:h-full *:py-0.5",
         selected && "outline-ring outline-1",
       )}
-      onClick={onToggle}
     >
-      <span className="hover:bg-accent grow cursor-pointer border-r-2 pl-1 select-none">
+      <span
+        className="hover:bg-accent grow cursor-pointer border-r-2 pl-1 select-none"
+        onClick={handleToggle}
+      >
         {choice.label}
       </span>
-      <ChevronDown className="hover:bg-accent cursor-pointer border-r-2" />
-      <ChevronUp className="hover:bg-accent cursor-pointer border-r-2" />
-      <X className="text-destructive hover:bg-destructive/60 cursor-pointer" />
+      <button
+        className="hover:bg-accent cursor-pointer border-r-2 disabled:pointer-events-none disabled:opacity-50"
+        onClick={handleMoveDown}
+        disabled={!canMoveDown}
+        aria-label="Move down"
+      >
+        <ChevronDown aria-hidden={true} />
+      </button>
+      <button
+        className="hover:bg-accent cursor-pointer border-r-2 disabled:pointer-events-none disabled:opacity-50"
+        onClick={handleMoveUp}
+        disabled={!canMoveUp}
+        aria-label="Move up"
+      >
+        <ChevronUp aria-hidden={true} />
+      </button>
+      <button
+        className="text-destructive hover:bg-destructive/60 cursor-pointer"
+        onClick={handleDelete}
+      >
+        <X aria-hidden={true} />
+      </button>
     </div>
   );
 }

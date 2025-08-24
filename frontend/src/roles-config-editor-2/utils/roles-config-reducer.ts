@@ -12,6 +12,12 @@ type RolesConfigReducerEditAction = {
   fn: (draft: RolesConfigDraft) => void;
 };
 
+type RolesConfigReducerSwapAction = {
+  type: "swap";
+  item: Identifiable;
+  newPosition: number;
+};
+
 type RolesConfigReducerDeleteAction = {
   type: "delete";
   obj: Identifiable;
@@ -20,6 +26,7 @@ type RolesConfigReducerDeleteAction = {
 export type RolesConfigReducerAction =
   | RolesConfigReducerAddMessageAction
   | RolesConfigReducerEditAction
+  | RolesConfigReducerSwapAction
   | RolesConfigReducerDeleteAction;
 
 export function rolesConfigReducer(
@@ -32,6 +39,18 @@ export function rolesConfigReducer(
     }
     case "edit": {
       return void action.fn(new RolesConfigDraft(draft));
+    }
+    case "swap": {
+      const draftContainer = findDraftObj(draft, action.item)?.parent;
+      if (!draftContainer) return;
+
+      // swap
+      const itemIndex = draftContainer.findIndex((c) => c.id == action.item.id);
+      const previousItem = draftContainer[action.newPosition];
+      draftContainer[action.newPosition] = draftContainer[itemIndex];
+      draftContainer[itemIndex] = previousItem;
+
+      return;
     }
     case "delete": {
       const draftObj = findDraftObj(draft, action.obj);
