@@ -1,0 +1,14 @@
+:root {
+  --blurple: hsl(235 86% 65%);
+  --blurple-accent: hsl(235 86% 70%);
+}
+
+.dark {
+  --blurple: hsl(235 86% 65%);
+  --blurple-accent: hsl(235 86% 60%);
+}
+
+@theme inline {
+  --color-blurple: var(--blurple);
+  --color-blurple-accent: var(--blurple);
+}

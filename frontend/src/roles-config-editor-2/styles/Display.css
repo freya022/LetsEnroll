@@ -1,0 +1,4 @@
+@utility outline-selected {
+    outline: var(--ring) dashed 2px;
+    outline-offset: 1px;
+}

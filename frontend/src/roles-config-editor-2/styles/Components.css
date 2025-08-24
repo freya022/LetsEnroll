@@ -1,0 +1,83 @@
+:root {
+  /* Discord button colors */
+  --discord-button-background-primary: rgb(88, 101, 242);
+  --discord-button-accent-primary: rgb(70, 84, 192);
+  --discord-button-border-primary: rgba(255, 255, 255, 0.08);
+  --discord-button-foreground-primary: rgb(255, 255, 255);
+
+  --discord-button-background-secondary: rgba(151, 151, 159, 0.16);
+  --discord-button-accent-secondary: rgba(151, 151, 159, 0.28);
+  --discord-button-border-secondary: oklab(0.678888 0.00325716 -0.011175 / 0.2);
+  --discord-button-foreground-secondary: rgb(12, 12, 14);
+
+  --discord-button-background-success: rgb(0, 134, 58);
+  --discord-button-accent-success: rgb(4, 126, 55);
+  --discord-button-border-success: rgba(255, 255, 255, 0.08);
+  --discord-button-foreground-success: rgb(255, 255, 255);
+
+  --discord-button-background-danger: rgb(210, 45, 57);
+  --discord-button-accent-danger: rgb(180, 40, 49);
+  --discord-button-border-danger: rgba(255, 255, 255, 0.08);
+  --discord-button-foreground-danger: rgb(255, 255, 255);
+
+  /* Discord select menu colors */
+  --discord-select-menu-background: oklab(0 0 0 / 0.0784314);
+  --discord-select-menu-border: oklab(0.678888 0.00325716 -0.011175 / 0.360784);
+  --discord-select-menu-placeholder-foreground: oklab(0.491651 0.00312106 -0.0155715);
+}
+
+.dark {
+  /* Discord button colors */
+  --discord-button-background-primary: rgb(88, 101, 242);
+  --discord-button-accent-primary: rgb(70, 84, 192);
+  --discord-button-border-primary: rgba(255, 255, 255, 0.08);
+  --discord-button-foreground-primary: rgb(255, 255, 255);
+
+  --discord-button-background-secondary: rgba(151, 151, 159, 0.12);
+  --discord-button-accent-secondary: rgba(151, 151, 159, 0.2);
+  --discord-button-border-secondary: oklab(0.678888 0.00325716 -0.011175 / 0.160784);
+  --discord-button-foreground-secondary: rgb(255, 255, 255);
+
+  --discord-button-background-success: rgb(0, 134, 58);
+  --discord-button-accent-success: rgb(4, 126, 55);
+  --discord-button-border-success: rgba(255, 255, 255, 0.08);
+  --discord-button-foreground-success: rgb(255, 255, 255);
+
+  --discord-button-background-danger: rgb(210, 45, 57);
+  --discord-button-accent-danger: rgb(180, 40, 49);
+  --discord-button-border-danger: rgba(255, 255, 255, 0.08);
+  --discord-button-foreground-danger: rgb(255, 255, 255);
+
+  /* Discord select menu colors */
+  --discord-select-menu-background: oklab(0 0 0 / 0.0784314);
+  --discord-select-menu-border: oklab(0.678888 0.00325716 -0.011175 / 0.2);
+  --discord-select-menu-placeholder-foreground: oklab(0.740158 0.00280195 -0.00954258);
+}
+
+@theme inline {
+  /* Discord button colors */
+  --color-discord-button-background-primary: var(--discord-button-background-primary);
+  --color-discord-button-accent-primary: var(--discord-button-accent-primary);
+  --color-discord-button-border-primary: var(--discord-button-border-primary);
+  --color-discord-button-foreground-primary: var(--discord-button-foreground-primary);
+
+  --color-discord-button-background-secondary: var(--discord-button-background-secondary);
+  --color-discord-button-accent-secondary: var(--discord-button-accent-secondary);
+  --color-discord-button-border-secondary: var(--discord-button-border-secondary);
+  --color-discord-button-foreground-secondary: var(--discord-button-foreground-secondary);
+
+  --color-discord-button-background-success: var(--discord-button-background-success);
+  --color-discord-button-accent-success: var(--discord-button-accent-success);
+  --color-discord-button-border-success: var(--discord-button-border-success);
+  --color-discord-button-foreground-success: var(--discord-button-foreground-success);
+
+  --color-discord-button-background-danger: var(--discord-button-background-danger);
+  --color-discord-button-accent-danger: var(--discord-button-accent-danger);
+  --color-discord-button-border-danger: var(--discord-button-border-danger);
+  --color-discord-button-foreground-danger: var(--discord-button-foreground-danger);
+
+  /* Discord select menu colors */
+  --color-discord-select-menu-background: var(--discord-select-menu-background);
+  --color-discord-select-menu-border: var(--discord-select-menu-border);
+  --color-discord-select-menu-placeholder-foreground: var(--discord-select-menu-placeholder-foreground);
+}
