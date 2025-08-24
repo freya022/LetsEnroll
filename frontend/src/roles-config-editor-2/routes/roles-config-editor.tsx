@@ -15,6 +15,7 @@ import { PropertiesPanelRefContext } from "@/roles-config-editor-2/hooks/propert
 import { RolesConfig } from "@/roles-config-editor-2/components/display/roles-config.tsx";
 import { RolesConfigProvider } from "@/roles-config-editor-2/components/roles-config-provider.tsx";
 import MutableSelectedNodeProvider from "@/roles-config-editor-2/components/mutable-selected-node-provider.tsx";
+import { useMutableSelectedNode } from "@/roles-config-editor-2/hooks/selected-node-context.ts";
 
 const testData: RolesConfigData = {
   messages: [
@@ -89,12 +90,28 @@ export default function RolesConfigEditor() {
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel>
-              <div className="size-full" ref={propPanelRef} />
+              <div className="size-full" ref={propPanelRef}>
+                <NoSelectedNodeTip />
+              </div>
             </ResizablePanel>
           </ResizablePanelGroup>
         </PropertiesPanelRefContext>
       </MutableSelectedNodeProvider>
     </RolesConfigProvider>
+  );
+}
+
+function NoSelectedNodeTip() {
+  const { selectedNode } = useMutableSelectedNode();
+
+  if (selectedNode) return <></>;
+
+  return (
+    <div className="size-full content-center text-center">
+      <span className="text-muted-foreground">
+        Click a component on the left to edit it
+      </span>
+    </div>
   );
 }
 
