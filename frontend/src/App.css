@@ -183,6 +183,11 @@
   --color-discord-button-foreground-danger: var(--discord-button-foreground-danger);
 }
 
+@utility outline-selected {
+    outline: var(--ring) dashed 2px;
+    outline-offset: 1px;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

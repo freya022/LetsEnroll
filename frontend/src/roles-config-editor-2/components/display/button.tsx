@@ -32,7 +32,7 @@ export default function Button({
   return (
     <button
       className={cn(
-        "flex h-8 cursor-pointer items-center gap-x-1 rounded-[8px] border-[0.8px] px-[11px] py-[3px] outline-offset-1",
+        "flex h-8 cursor-pointer items-center gap-x-1 rounded-[8px] border-[0.8px] px-[11px] py-[3px]",
         button.style === "PRIMARY" &&
           "bg-discord-button-background-primary border-discord-button-border-primary text-discord-button-foreground-primary hover:bg-discord-button-accent-primary",
         button.style === "SECONDARY" &&
@@ -44,8 +44,7 @@ export default function Button({
         hasError &&
           selectedNode?.id !== button.id &&
           "outline-destructive outline-2",
-        selectedNode?.id === button.id &&
-          "outline-ring outline-2 outline-offset-1",
+        selectedNode?.id === button.id && "outline-selected",
       )}
       onClick={handleButtonClick}
     >

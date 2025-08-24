@@ -26,8 +26,7 @@ export default function SelectMenu({
     <div
       className={cn(
         "flex min-h-[44px] w-[400px] cursor-pointer items-center justify-between rounded-[8px] border-[0.8px] bg-[#18181c] p-[8px]",
-        selectedNode?.id === selectMenu.id &&
-          "outline-ring outline-2 outline-offset-1",
+        selectedNode?.id === selectMenu.id && "outline-selected",
       )}
       role="list"
       onClick={handleSelectMenuClick}

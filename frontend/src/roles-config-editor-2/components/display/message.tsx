@@ -35,8 +35,7 @@ export default function Message({ message }: { message: MessageData }) {
     <div
       className={cn(
         "flex gap-4",
-        selectedNode?.id === message.id &&
-          "outline-ring rounded-sm outline-2 outline-offset-1",
+        selectedNode?.id === message.id && "outline-selected rounded-sm",
       )}
       onClick={handleMessageClick}
     >
