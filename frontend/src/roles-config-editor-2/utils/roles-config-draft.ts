@@ -9,6 +9,7 @@ import {
   ButtonData,
   ComponentData,
   RowData,
+  SelectMenuChoiceData,
   SelectMenuData,
 } from "@/roles-config-editor-2/types/component-data.ts";
 
@@ -70,6 +71,17 @@ export class RolesConfigDraft {
       id: ++this.maxId,
       placeholder: null,
       choices: [],
+    };
+  }
+
+  newSelectMenuChoice(): SelectMenuChoiceData {
+    return {
+      type: "select_menu_choice",
+      id: ++this.maxId,
+      roleName: "",
+      label: "Label",
+      description: null,
+      emoji: null,
     };
   }
 }

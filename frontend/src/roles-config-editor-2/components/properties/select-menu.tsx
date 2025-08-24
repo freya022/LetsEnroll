@@ -11,6 +11,7 @@ import { ResizablePanelGroup } from "@/components/ui/resizable.tsx";
 import ScrollableResizablePanel from "@/roles-config-editor-2/components/scrollable-resizable-panel.tsx";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
 import SelectMenuChoicePanel from "@/roles-config-editor-2/components/properties/select-menu-choice.tsx";
+import { Button } from "@/components/ui/button.tsx";
 
 export default function SelectMenuPropertiesPanels({
   selectMenu,
@@ -65,6 +66,15 @@ function SelectMenuProperties({
     });
   }
 
+  function onAddChoice() {
+    dispatch!({
+      type: "edit",
+      fn: (draft) => {
+        draft.find(menu)!.choices.push(draft.newSelectMenuChoice());
+      },
+    });
+  }
+
   return (
     <>
       <SingleLineProperty
@@ -73,8 +83,17 @@ function SelectMenuProperties({
         defaultValue={menu.placeholder ?? ""}
         onChange={onPlaceholderChange}
       />
-      <div>
-        <h3 className="text-center text-lg font-semibold">Choices</h3>
+      <div className="grid gap-2">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold">Choices</h3>
+          <Button
+            variant="secondary"
+            className="cursor-pointer"
+            onClick={onAddChoice}
+          >
+            Add
+          </Button>
+        </div>
         <SelectMenuChoices
           choices={menu.choices}
           selectedChoiceId={selectedChoiceId}
