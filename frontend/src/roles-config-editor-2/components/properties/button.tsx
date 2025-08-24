@@ -11,6 +11,7 @@ import {
 } from "@/roles-config-editor-2/types/component-data.ts";
 import { useRolesConfigDispatch } from "@/roles-config-editor-2/hooks/roles-config-context.ts";
 import Properties from "@/roles-config-editor-2/components/properties/base/properties.tsx";
+import { useState } from "react";
 
 export default function ButtonPropertiesPanel({
   button,
@@ -102,14 +103,22 @@ function ButtonStyleToggleGroupProperty({
   defaultValue: ButtonStyle;
   onChange: (s: ButtonStyle) => void;
 }) {
+  const [value, setValue] = useState(defaultValue);
+
+  function handleChange(value: ButtonStyle) {
+    if (!value) return;
+    setValue(value);
+    onChange(value);
+  }
+
   return (
     <Property>
       <Label>{label}</Label>
       <ToggleGroup
         variant="outline"
         type="single"
-        onValueChange={onChange}
-        defaultValue={defaultValue}
+        onValueChange={handleChange}
+        value={value}
         className="w-full"
       >
         {ButtonStyles.map((style) => (
