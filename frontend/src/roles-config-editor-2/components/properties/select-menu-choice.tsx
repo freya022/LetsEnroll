@@ -25,7 +25,11 @@ export default function SelectMenuChoicePanel({
       <ResizableHandle />
       <ScrollableResizablePanel order={1}>
         <Properties name="Choice" onDelete={onDelete}>
-          <SelectMenuChoiceProperties choice={choice} />
+          <SelectMenuChoiceProperties
+            choice={choice}
+            /* So the fields are reset on each choice */
+            key={choice.id}
+          />
         </Properties>
       </ScrollableResizablePanel>
     </>
