@@ -25,7 +25,7 @@ export default function ActionRow({ row }: { row: RowData }) {
       {row.components.map((rowComponent) => (
         <Component component={rowComponent} key={rowComponent.id} />
       ))}
-      {canInsertMore(row.components) && <AddRowComponentDropdown />}
+      {canInsertMore(row.components) && <AddRowComponentDropdown row={row} />}
     </li>
   );
 }

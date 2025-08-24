@@ -26,12 +26,27 @@ export default function AddComponentDropdown({
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-52">
-        {items.map(({ label, action }) => (
-          <DropdownMenuItem onClick={action} key={label}>
-            {label}
-          </DropdownMenuItem>
+        {items.map((item) => (
+          <ComponentDropdownMenuItem item={item} key={label} />
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function ComponentDropdownMenuItem({
+  item: { label, action },
+}: {
+  item: AddComponentItem;
+}) {
+  function handleClick(event: MouseEvent) {
+    event.stopPropagation();
+    action(event);
+  }
+
+  return (
+    <DropdownMenuItem onClick={handleClick} key={label}>
+      {label}
+    </DropdownMenuItem>
   );
 }
