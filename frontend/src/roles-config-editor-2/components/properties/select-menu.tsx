@@ -146,6 +146,7 @@ function SelectMenuChoiceItem({
 
   const canMoveUp = index !== 0;
   const canMoveDown = index !== maxIndex - 1;
+  const canDelete = canMoveUp || canMoveDown;
 
   function handleToggle() {
     setSelectedChoiceId(choice.id);
@@ -204,8 +205,9 @@ function SelectMenuChoiceItem({
         <ChevronUp aria-hidden={true} />
       </button>
       <button
-        className="text-destructive hover:bg-destructive/60 cursor-pointer"
+        className="text-destructive hover:bg-destructive/60 cursor-pointer disabled:pointer-events-none disabled:opacity-50"
         onClick={handleDelete}
+        disabled={!canDelete}
       >
         <X aria-hidden={true} />
       </button>
