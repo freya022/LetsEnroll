@@ -17,21 +17,18 @@ abstract class GenerateVersionFileTask : DefaultTask() {
 
     @TaskAction
     fun generate() {
-        val jitpackHash = System.getenv("GIT_COMMIT")
-        val hash = jitpackHash ?: run {
-            ProcessBuilder()
-                .directory(File(workingDirectory))
-                .redirectError(ProcessBuilder.Redirect.INHERIT)
-                .command("git", "rev-parse", "--verify", "HEAD")
-                .start()
-                .also {
-                    if (it.waitFor() != 0) {
-                        throw IOException("Unable to get commit hash via Git")
-                    }
+        val hash = ProcessBuilder()
+            .directory(File(workingDirectory))
+            .redirectError(ProcessBuilder.Redirect.INHERIT)
+            .command("git", "rev-parse", "--verify", "HEAD")
+            .start()
+            .also {
+                if (it.waitFor() != 0) {
+                    throw IOException("Unable to get commit hash via Git")
                 }
-                .inputReader()
-                .use { it.readLine() }
-        }
+            }
+            .inputReader()
+            .use { it.readLine() }
 
         val outFile = outputDir.get().file("version.txt").asFile
         outFile.parentFile.mkdirs()
