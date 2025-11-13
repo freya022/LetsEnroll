@@ -2,8 +2,8 @@
 flyway = "11.10.1"
 jackson = "2.19.1"
 jib = "3.4.4"
-kotlin = "2.2.0"
-ktor = "3.2.1"
+kotlin = "2.2.20"
+ktor = "3.3.2"
 mapstruct = "1.6.3"
 
 [plugins]
