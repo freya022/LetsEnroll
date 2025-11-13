@@ -1,16 +1,16 @@
 package dev.freya02.letsenroll.bot.roles.checker
 
+import dev.freya02.botcommands.jda.ktx.coroutines.await
 import dev.freya02.letsenroll.bot.roles.selectors.exceptions.GuildNotFoundException
 import dev.freya02.letsenroll.data.RolesConfigDTO
-import dev.minn.jda.ktx.coroutines.await
 import io.github.freya022.botcommands.api.core.service.annotations.BService
 import io.github.freya022.botcommands.api.utils.EmojiUtils
 import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.components.buttons.Button
+import net.dv8tion.jda.api.components.selections.SelectMenu
+import net.dv8tion.jda.api.components.selections.SelectOption
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.emoji.RichCustomEmoji
-import net.dv8tion.jda.api.interactions.components.buttons.Button
-import net.dv8tion.jda.api.interactions.components.selections.SelectMenu
-import net.dv8tion.jda.api.interactions.components.selections.SelectOption
 import java.util.*
 import kotlin.reflect.KProperty0
 

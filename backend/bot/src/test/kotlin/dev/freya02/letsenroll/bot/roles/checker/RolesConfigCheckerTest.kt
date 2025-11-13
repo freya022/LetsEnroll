@@ -9,11 +9,11 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.components.buttons.Button
+import net.dv8tion.jda.api.components.selections.SelectMenu
+import net.dv8tion.jda.api.components.selections.SelectOption
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.emoji.RichCustomEmoji
-import net.dv8tion.jda.api.interactions.components.buttons.Button
-import net.dv8tion.jda.api.interactions.components.selections.SelectMenu
-import net.dv8tion.jda.api.interactions.components.selections.SelectOption
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

@@ -1,9 +1,9 @@
 package dev.freya02.letsenroll.bot.server.modules
 
+import dev.freya02.botcommands.jda.ktx.retrieve.retrieveMemberByIdOrNull
 import dev.freya02.letsenroll.bot.server.resources.Guilds
 import dev.freya02.letsenroll.data.MemberDTO
 import io.github.freya022.botcommands.api.core.service.annotations.BService
-import io.github.freya022.botcommands.api.core.utils.retrieveMemberByIdOrNull
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.*
 import io.ktor.server.application.*

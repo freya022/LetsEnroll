@@ -20,6 +20,10 @@ dependencies {
         exclude(module = "opus-java")
         exclude(module = "tink")
     }
+    implementation(libs.botcommands.jda.ktx) {
+        exclude(module = "opus-java")
+        exclude(module = "tink")
+    }
     implementation(libs.jda) {
         exclude(module = "opus-java")
         exclude(module = "tink")

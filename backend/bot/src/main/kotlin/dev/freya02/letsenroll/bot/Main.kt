@@ -44,6 +44,10 @@ fun main(args: Array<String>) {
 
             classGraphProcessors += MessageSourceFactoryClassGraphProcessor
 
+            coroutineScopes {
+                eventManagerScopeFactory = defaultFactory("Let's Enroll Coroutine", 4)
+            }
+
             applicationCommands {
                 databaseCache {
                     @OptIn(DevConfig::class)

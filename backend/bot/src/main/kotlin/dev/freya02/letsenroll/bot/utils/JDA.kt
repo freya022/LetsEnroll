@@ -1,19 +1,8 @@
 package dev.freya02.letsenroll.bot.utils
 
-import dev.minn.jda.ktx.coroutines.await
-import dev.minn.jda.ktx.messages.MentionConfig
-import dev.minn.jda.ktx.messages.Mentions
+import dev.freya02.botcommands.jda.ktx.coroutines.await
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Role
-
-private val noMentions = Mentions(
-    MentionConfig.users(emptyList()),
-    MentionConfig.roles(emptyList()),
-    everyone = false,
-    here = false,
-)
-
-fun Mentions.Companion.none(): Mentions = noMentions
 
 suspend fun Guild.getOrCreateRole(name: String): Role {
     val existingRole = getRolesByName(name, false).singleOrNull()

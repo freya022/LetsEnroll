@@ -15,13 +15,14 @@ spring-boot = "org.springframework.boot:3.5.3"
 version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
 
 [libraries]
-botcommands = "io.github.freya022:BotCommands:3.0.0-beta.2"
+botcommands = "io.github.freya022:BotCommands:3.0.0-beta.7"
+botcommands-jda-ktx = "io.github.freya022:BotCommands-jda-ktx:3.0.0-beta.7"
 dotenv-kotlin = "io.github.cdimascio:dotenv-kotlin:6.5.1"
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
 hikaricp = "com.zaxxer:HikariCP:6.3.0"
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
-jda = "net.dv8tion:JDA:5.6.1"
+jda = "net.dv8tion:JDA:6.1.1"
 jib-plugin = { module = "com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib" }
 junit-jupiter-params = "org.junit.jupiter:junit-jupiter-params:5.13.3"
 kotlin-logging = "io.github.oshai:kotlin-logging-jvm:7.0.7"

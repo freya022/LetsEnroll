@@ -1,9 +1,9 @@
 package dev.freya02.letsenroll.bot.roles.selectors
 
+import dev.freya02.botcommands.jda.ktx.coroutines.await
+import dev.freya02.botcommands.jda.ktx.requests.awaitUnit
 import dev.freya02.letsenroll.bot.localization.SetupMessagesFactory
 import dev.freya02.letsenroll.bot.utils.getOrCreateRole
-import dev.minn.jda.ktx.coroutines.await
-import dev.minn.jda.ktx.messages.reply_
 import io.github.freya022.botcommands.api.components.annotations.ComponentData
 import io.github.freya022.botcommands.api.components.annotations.JDAButtonListener
 import io.github.freya022.botcommands.api.components.annotations.JDASelectMenuListener
@@ -11,16 +11,15 @@ import io.github.freya022.botcommands.api.components.event.ButtonEvent
 import io.github.freya022.botcommands.api.components.event.StringSelectEvent
 import io.github.freya022.botcommands.api.components.serialization.annotations.SerializableComponentData
 import io.github.freya022.botcommands.api.core.annotations.Handler
-import io.github.freya022.botcommands.api.core.utils.awaitUnit
+import io.github.freya022.botcommands.api.core.messages.BotCommandsMessagesFactory
 import io.github.freya022.botcommands.api.core.utils.enumSetOf
-import io.github.freya022.botcommands.api.localization.DefaultMessagesFactory
 import net.dv8tion.jda.api.Permission
 
 private typealias RoleName = String
 
 @Handler
 class RoleSelectorsHandler(
-    private val defaultMessagesFactory: DefaultMessagesFactory,
+    private val bcMessagesFactory: BotCommandsMessagesFactory,
     private val setupMessagesFactory: SetupMessagesFactory,
 ) {
 
@@ -31,8 +30,8 @@ class RoleSelectorsHandler(
         val member = event.member!!
         val guild = member.guild
         if (!guild.selfMember.hasPermission(Permission.MANAGE_ROLES)) {
-            val botPermErrorMsg = defaultMessagesFactory.get(event).getBotPermErrorMsg(enumSetOf(Permission.MANAGE_ROLES))
-            return event.reply_(botPermErrorMsg, ephemeral = true).awaitUnit()
+            val missingBotPermMsg = bcMessagesFactory.get(event).missingBotPermissions(event, enumSetOf(Permission.MANAGE_ROLES))
+            return event.reply(missingBotPermMsg).setEphemeral(true).awaitUnit()
         }
 
         val messages = setupMessagesFactory.create(event)
@@ -64,9 +63,8 @@ class RoleSelectorsHandler(
         val member = event.member!!
         val guild = member.guild
         if (!guild.selfMember.hasPermission(Permission.MANAGE_ROLES)) {
-            val botPermErrorMsg =
-                defaultMessagesFactory.get(event).getBotPermErrorMsg(enumSetOf(Permission.MANAGE_ROLES))
-            return event.reply_(botPermErrorMsg, ephemeral = true).awaitUnit()
+            val missingBotPermMsg = bcMessagesFactory.get(event).missingBotPermissions(event, enumSetOf(Permission.MANAGE_ROLES))
+            return event.reply(missingBotPermMsg).setEphemeral(true).awaitUnit()
         }
 
         val messages = setupMessagesFactory.create(event)

@@ -35,7 +35,7 @@ object MessageSourceFactoryClassGraphProcessor : ClassGraphProcessor {
         require(classInfo.implementsInterface(IMessageSourceFactory::class.java)) {
             "${classInfo.shortQualifiedName} must implement ${IMessageSourceFactory::class.simpleName}"
         }
-        serviceContainer as DefaultServiceContainer
+        serviceContainer as BCServiceContainer
 
         val messageSourceFactoryType = kClass as KClass<IMessageSourceFactory<*>>
         val messageSourceType = kClass.superErasureAt<IMessageSourceFactory<*>>(0).jvmErasure as KClass<out IMessageSource>
