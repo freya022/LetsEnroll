@@ -12,7 +12,6 @@ jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 spring-boot = "org.springframework.boot:3.5.3"
-spring-dependency-management = "io.spring.dependency-management:1.1.7"
 version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
 
 [libraries]
