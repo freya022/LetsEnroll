@@ -1,4 +1,5 @@
 [versions]
+botcommands = "3.0.0-beta.7"
 flyway = "11.10.1"
 jackson = "2.19.1"
 jib = "3.4.4"
@@ -15,8 +16,9 @@ spring-boot = "org.springframework.boot:3.5.3"
 version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
 
 [libraries]
-botcommands = "io.github.freya022:BotCommands:3.0.0-beta.7"
-botcommands-jda-ktx = "io.github.freya022:BotCommands-jda-ktx:3.0.0-beta.7"
+botcommands = { module = "io.github.freya022:BotCommands", version.ref = "botcommands" }
+botcommands-jda-ktx = { module = "io.github.freya022:BotCommands-jda-ktx", version.ref = "botcommands" }
+botcommands-method-accessors-classfile = { module = "io.github.freya022:BotCommands-method-accessors-classfile", version.ref = "botcommands" }
 dotenv-kotlin = "io.github.cdimascio:dotenv-kotlin:6.5.1"
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
