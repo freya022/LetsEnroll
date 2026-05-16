@@ -1,10 +1,7 @@
 package dev.freya02.letsenroll.bot.roles.checker
 
 import dev.freya02.letsenroll.bot.EXAMPLE_GUILD_ID
-import dev.freya02.letsenroll.bot.NullJDAService
 import dev.freya02.letsenroll.data.RolesConfigDTO
-import io.github.freya022.botcommands.api.core.BotCommands
-import io.github.freya022.botcommands.api.core.service.getService
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -52,20 +49,9 @@ object RolesConfigCheckerTest {
     @JvmStatic
     @BeforeAll
     fun setup() {
-        val context = BotCommands.create {
-            addClass<NullJDAService>()
-            addClass<RolesConfigChecker>()
-
-            textCommands { enable = false }
-            applicationCommands { enable = false }
-            components { enable = false }
-            modals { enable = false }
-            appEmojis { enable = false }
-        }
-
-        checker = context.getService<RolesConfigChecker>()
+        checker = RolesConfigChecker()
         jda = mockk {
-            every { getGuildById(any<Long>())!!.retrieveEmojis().submit() } returns CompletableFuture.completedFuture(
+            every { getGuildById(any<Long>())!!.retrieveEmojis().submit(true) } returns CompletableFuture.completedFuture(
                 listOf(mockk<RichCustomEmoji> {
                     every { idLong } returns EXAMPLE_CUSTOM_EMOJI.discordId
                 })
