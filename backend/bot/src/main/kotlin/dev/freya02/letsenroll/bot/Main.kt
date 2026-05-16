@@ -4,7 +4,6 @@ import ch.qos.logback.classic.ClassicConstants
 import dev.freya02.botcommands.method.accessors.api.MethodAccessorsConfig
 import dev.freya02.botcommands.method.accessors.api.annotations.ExperimentalMethodAccessorsApi
 import dev.freya02.letsenroll.bot.config.Config
-import dev.freya02.letsenroll.bot.localization.messages.MessageSourceFactoryClassGraphProcessor
 import io.github.freya022.botcommands.api.core.BotCommands
 import io.github.freya022.botcommands.api.core.config.DevConfig
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -31,8 +30,6 @@ fun main() {
             disableExceptionsInDMs = config.isDev
 
             addSearchPath("dev.freya02.letsenroll.bot")
-
-            classGraphProcessors += MessageSourceFactoryClassGraphProcessor
 
             coroutineScopes {
                 eventManagerScopeFactory = defaultFactory("Let's Enroll Coroutine", 4)
