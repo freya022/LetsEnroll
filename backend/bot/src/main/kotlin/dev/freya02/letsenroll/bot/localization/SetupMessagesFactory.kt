@@ -1,7 +1,9 @@
 package dev.freya02.letsenroll.bot.localization
 
-import dev.freya02.letsenroll.bot.localization.annotations.MessageSourceFactory
-import dev.freya02.letsenroll.bot.localization.messages.IMessageSourceFactory
+import dev.freya02.botcommands.typesafe.messages.api.IMessageSourceFactory
+import dev.freya02.botcommands.typesafe.messages.api.annotations.ExperimentalTypesafeMessagesApi
+import dev.freya02.botcommands.typesafe.messages.api.annotations.MessageSourceFactory
 
-@MessageSourceFactory("responses")
+@OptIn(ExperimentalTypesafeMessagesApi::class)
+@MessageSourceFactory("responses", ignoreEmptyLocales = true)
 interface SetupMessagesFactory : IMessageSourceFactory<SetupMessages>

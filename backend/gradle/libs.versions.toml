@@ -8,7 +8,6 @@ ktor = "3.4.3"
 mapstruct = "1.6.3"
 
 [plugins]
-jmh = "me.champeau.jmh:0.7.3"
 jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
@@ -19,6 +18,8 @@ version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
 botcommands = { module = "io.github.freya022:BotCommands", version.ref = "botcommands" }
 botcommands-jda-ktx = { module = "io.github.freya022:BotCommands-jda-ktx", version.ref = "botcommands" }
 botcommands-method-accessors-classfile = { module = "io.github.freya022:BotCommands-method-accessors-classfile", version.ref = "botcommands" }
+botcommands-typesafe-messages-core = { module = "io.github.freya022:BotCommands-typesafe-messages-core", version.ref = "botcommands" }
+botcommands-typesafe-messages-bc = { module = "io.github.freya022:BotCommands-typesafe-messages-bc", version.ref = "botcommands" }
 dotenv-kotlin = "io.github.cdimascio:dotenv-kotlin:6.5.1"
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }

@@ -1,5 +1,5 @@
 setup:
   done: Done
-  added_role: Successfully added <@&{roleId}>!
-  removed_role: Successfully removed <@&{roleId}>!
-  applied_roles: Successfully set <@&{roleId}>!
+  added_role: Successfully added <@&{role_id}>!
+  removed_role: Successfully removed <@&{role_id}>!
+  applied_roles: Successfully set <@&{role_id}>!

@@ -1,11 +1,11 @@
 package dev.freya02.letsenroll.bot.localization
 
-import dev.freya02.letsenroll.bot.localization.annotations.LocalizedContent
-import dev.freya02.letsenroll.bot.localization.messages.IMessageSource
+import dev.freya02.botcommands.typesafe.messages.api.IMessageSource
+import dev.freya02.botcommands.typesafe.messages.api.annotations.ExperimentalTypesafeMessagesApi
+import dev.freya02.botcommands.typesafe.messages.api.annotations.LocalizedContent
 
+@OptIn(ExperimentalTypesafeMessagesApi::class)
 interface SetupMessages : IMessageSource {
-    //TODO make those accept a (discord)locale as they're mostly used with the guild locale
-    // maybe the annotation itself can contain a user/guild locale switch
     @LocalizedContent("setup.added_role")
     fun getRoleAddedResponse(roleId: String): String
 

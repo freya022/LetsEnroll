@@ -1,3 +1,0 @@
-test:
-  args0: nothing
-  args3: string is {string}, int is {int}, any is {any}
