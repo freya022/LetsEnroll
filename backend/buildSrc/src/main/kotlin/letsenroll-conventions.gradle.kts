@@ -16,11 +16,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_24
 }
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-}
-
 kotlin {
     compilerOptions {
         jvmTarget = JvmTarget.JVM_24
