@@ -1,5 +1,5 @@
 [versions]
-botcommands = "3.1.0"
+botcommands = "e7fd8ac79a408448accf22357fae0805ce652d50-SNAPSHOT"
 flyway = "12.1.0"
 jackson = "2.21.2"
 jib = "3.4.4"
@@ -15,7 +15,9 @@ spring-boot = "org.springframework.boot:3.5.8"
 version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
 
 [libraries]
-botcommands = { module = "io.github.freya022:BotCommands", version.ref = "botcommands" }
+botcommands-core = { module = "io.github.freya022:BotCommands-core", version.ref = "botcommands" }
+botcommands-database = { module = "io.github.freya022:BotCommands-database", version.ref = "botcommands" }
+botcommands-components = { module = "io.github.freya022:BotCommands-components", version.ref = "botcommands" }
 botcommands-jda-ktx = { module = "io.github.freya022:BotCommands-jda-ktx", version.ref = "botcommands" }
 botcommands-method-accessors-classfile = { module = "io.github.freya022:BotCommands-method-accessors-classfile", version.ref = "botcommands" }
 botcommands-typesafe-messages-core = { module = "io.github.freya022:BotCommands-typesafe-messages-core", version.ref = "botcommands" }

@@ -14,7 +14,9 @@ dependencies {
     implementation(libs.jackson.dataformat.yaml)
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.botcommands)
+    implementation(libs.botcommands.core)
+    implementation(libs.botcommands.database)
+    implementation(libs.botcommands.components)
     runtimeOnly(libs.botcommands.method.accessors.classfile)
     implementation(libs.botcommands.jda.ktx)
     implementation(libs.botcommands.typesafe.messages.core)
