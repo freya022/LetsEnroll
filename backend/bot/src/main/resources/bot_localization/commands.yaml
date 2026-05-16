@@ -1,5 +1,0 @@
-setup:
-  description: Setup the reaction roles in the given channel
-  options:
-    channel:
-      description: The channel in which to send the role select menus

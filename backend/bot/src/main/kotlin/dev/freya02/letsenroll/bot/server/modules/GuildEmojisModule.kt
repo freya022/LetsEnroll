@@ -30,7 +30,7 @@ object GuildEmojisModule : KtorModule {
             return@get call.respondText("Guild not found", status = HttpStatusCode.NotFound)
         }
 
-        call.respond(guild.emojiCache.applyStream { it.map { it.toDTO() }.toList() })
+        call.respond(guild.emojiCache.applyStream { stream -> stream.map { it.toDTO() }.toList() })
     }
 
     private fun RichCustomEmoji.toDTO(): CustomEmojiDTO = CustomEmojiDTO(

@@ -5,7 +5,6 @@ import dev.freya02.botcommands.method.accessors.api.MethodAccessorsConfig
 import dev.freya02.botcommands.method.accessors.api.annotations.ExperimentalMethodAccessorsApi
 import dev.freya02.letsenroll.bot.config.Config
 import io.github.freya022.botcommands.api.core.BotCommands
-import io.github.freya022.botcommands.api.core.config.DevConfig
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlin.io.path.*
 import kotlin.system.exitProcess
@@ -33,15 +32,6 @@ fun main() {
 
             coroutineScopes {
                 eventManagerScopeFactory = defaultFactory("Let's Enroll Coroutine", 4)
-            }
-
-            applicationCommands {
-                databaseCache {
-                    @OptIn(DevConfig::class)
-                    checkOnline = config.isDev
-                }
-
-                addLocalizations("commands")
             }
 
             components {
