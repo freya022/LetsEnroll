@@ -100,5 +100,6 @@ jib {
 
     container {
         mainClass = "dev.freya02.letsenroll.bot.MainKt"
+        jvmFlags = listOf("-XX:+UseCompactObjectHeaders")
     }
 }

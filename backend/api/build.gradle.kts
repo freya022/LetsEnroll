@@ -76,5 +76,6 @@ jib {
 
 	container {
 		mainClass = "dev.freya02.letsenroll.api.ApiApplicationKt"
+		jvmFlags = listOf("-XX:+UseCompactObjectHeaders")
 	}
 }
