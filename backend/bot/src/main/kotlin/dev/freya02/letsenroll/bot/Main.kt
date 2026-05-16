@@ -1,6 +1,7 @@
 package dev.freya02.letsenroll.bot
 
 import ch.qos.logback.classic.ClassicConstants
+import dev.freya02.botcommands.method.accessors.api.MethodAccessorsConfig
 import dev.freya02.botcommands.method.accessors.api.annotations.ExperimentalMethodAccessorsApi
 import dev.freya02.letsenroll.bot.config.Config
 import dev.freya02.letsenroll.bot.localization.messages.MessageSourceFactoryClassGraphProcessor
@@ -23,7 +24,7 @@ fun main() {
         }
 
         @OptIn(ExperimentalMethodAccessorsApi::class)
-        BotCommands.preferClassFileAccessors()
+        MethodAccessorsConfig.preferClassFileAccessors()
 
         val config = Config.instance
         BotCommands.create {

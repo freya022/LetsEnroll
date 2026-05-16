@@ -1,10 +1,10 @@
 [versions]
-botcommands = "3.0.0-beta.7"
-flyway = "11.10.1"
-jackson = "2.19.1"
+botcommands = "3.1.0"
+flyway = "12.1.0"
+jackson = "2.21.2"
 jib = "3.4.4"
-kotlin = "2.2.20"
-ktor = "3.3.2"
+kotlin = "2.3.10"
+ktor = "3.4.3"
 mapstruct = "1.6.3"
 
 [plugins]
@@ -12,7 +12,7 @@ jmh = "me.champeau.jmh:0.7.3"
 jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
-spring-boot = "org.springframework.boot:3.5.3"
+spring-boot = "org.springframework.boot:3.5.8"
 version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
 
 [libraries]
@@ -24,9 +24,9 @@ flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
 hikaricp = "com.zaxxer:HikariCP:6.3.0"
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
-jda = "net.dv8tion:JDA:6.1.1"
+jda = "net.dv8tion:JDA:6.4.1"
 jib-plugin = { module = "com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib" }
-junit-jupiter-params = "org.junit.jupiter:junit-jupiter-params:5.13.3"
+junit-jupiter-params = "org.junit.jupiter:junit-jupiter-params:6.0.1"
 kotlin-logging = "io.github.oshai:kotlin-logging-jvm:7.0.7"
 kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
