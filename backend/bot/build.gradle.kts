@@ -16,14 +16,13 @@ dependencies {
     implementation(libs.jackson.dataformat.yaml)
     implementation(libs.kotlinx.serialization.json)
 
-    val excludeAudio: ExternalModuleDependency.() -> Unit = {
+    implementation(libs.botcommands)
+    runtimeOnly(libs.botcommands.method.accessors.classfile)
+    implementation(libs.botcommands.jda.ktx)
+    implementation(libs.jda) {
         exclude(module = "opus-java")
         exclude(module = "tink")
     }
-    implementation(libs.botcommands, excludeAudio)
-    runtimeOnly(libs.botcommands.method.accessors.classfile, excludeAudio)
-    implementation(libs.botcommands.jda.ktx, excludeAudio)
-    implementation(libs.jda, excludeAudio)
 
     implementation(libs.postgresql)
     implementation(libs.hikaricp)
