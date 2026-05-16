@@ -20,6 +20,8 @@ services:
     volumes:
       - ./config:/config
       - ./logs/api:/logs
+    environment:
+      JDK_JAVA_OPTIONS: -Xmx64M
   bot:
     image: ghcr.io/freya022/letsenroll-bot:latest
     restart: unless-stopped
@@ -29,6 +31,8 @@ services:
     volumes:
       - ./config:/config
       - ./logs/bot:/logs
+    environment:
+      JDK_JAVA_OPTIONS: -Xmx64M
 
 networks:
   letsenroll: {}
